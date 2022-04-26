@@ -1,4 +1,4 @@
-const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, getContentType } = require('@adiwajshing/baileys')
+const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, makeInMemoryStore, getContentType } = require('@adiwajshing/baileys')
 const { state, saveState } = useSingleFileAuthState('./lib/session/session.json')
 const fs = require('fs')
 const P = require('pino')
@@ -29,12 +29,16 @@ nocache('./lib/functions.js', module => console.log('El archivo functions.js ha 
 require('./message/upsert.js')
 nocache('./message/upsert.js', module => console.log('El archivo upsert.js ha sido actualizado'))
 
+const store = makeInMemoryStore({ logger: P().child({ level: 'silent', stream: 'store' }) })
+
 const start = () => {
 	const inky = makeWASocket({
 		logger: P({ level: 'silent' }),
 		printQRInTerminal: true,
 		auth: state,
 	})
+	
+	store.bind(inky.ev)
 	
 	inky.ev.on('connection.update', v => {
 		const { connection, lastDisconnect } = v
@@ -56,8 +60,8 @@ const start = () => {
 		v.message = (getContentType(v.message) === 'ephemeralMessage') ? v.message.ephemeralMessage.message : v.message
 		if (v.key && v.key.remoteJid === 'status@broadcast') return
 		
-		v = sms(inky, v)
-		require('./message/upsert')(inky, v)
+		v = sms(inky, v, store)
+		require('./message/upsert')(inky, v, store)
 	})
 }
 
