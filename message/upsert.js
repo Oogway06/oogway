@@ -1,12 +1,26 @@
 require('../config')
 
+/*
+	Libreria
+*/
+
 const { exec } = require('child_process')
 const fs = require('fs')
 const hx = require('hxz-api')
 const util = require('util')
 const yts = require('yt-search')
 
+/*
+	Js
+*/
+
 const { getBuffer, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
+
+/*
+	Database
+*/
+
+const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 
 module.exports = async(inky, v, store) => {
 	try {
@@ -33,28 +47,42 @@ module.exports = async(inky, v, store) => {
 		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
 		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
 		
+		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
+		
 		const replyTempLoc = (teks, footer, buttons = [], img) => {
 			inky.sendMessage(v.chat, { location: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
-		const menu = async() => {
-			var teks = 'Menu en mantenimiento'
-			var buttons = [
-				{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}
-			]
-			try {
-				var ppimg = await inky.profilePictureUrl(v.sender, 'image')
-			} catch {
-				var ppimg = 'https://wallpapercave.com/wp/wp6898322.jpg'
+		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
+			var teks = `\t\t\t*AntiViewOnce*
+
+│ ➼ *Enviado por:* @{senderNumber}
+│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
+			if (v.msg.type === 'imageMessage') {
+				var nameJpg = getRandom('.jpg')
+				v.replyImg(await v.download(nameJpg), teks)
+				await fs.unlinkSync(nameJpg)
+			} else if (v.msg.type === 'videoMessage') {
+				var nameMp4 = getRandom('.mp4')
+				v.replyVid(await v.download(nameMp4), teks)
+				await fs.unlinkSync(nameMp4)
 			}
-			var image = await getBuffer(ppimg)
-			replyTempLoc(teks, `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`, buttons, image)
 		}
 		
 		switch (command) {
 
 case 'menu':
-menu()
+var teks = 'Menu en mantenimiento'
+var buttons = [
+	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}
+]
+try {
+	var ppimg = await inky.profilePictureUrl(v.sender, 'image')
+} catch {
+	var ppimg = 'https://wallpapercave.com/wp/wp6898322.jpg'
+}
+var image = await getBuffer(ppimg)
+replyTempLoc(teks, `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`, buttons, image)
 break
 
 /*
