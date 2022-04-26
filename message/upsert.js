@@ -37,7 +37,7 @@ module.exports = async(inky, v) => {
 			inky.sendMessage(v.chat, { location: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
-		const menu = () => {
+		const menu = async() => {
 			var teks = 'Menu en mantenimiento'
 			var buttons = [
 				{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}
