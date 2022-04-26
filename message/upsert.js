@@ -108,8 +108,17 @@ var buffer = await getBuffer(play.all[0].image)
 replyTempLoc(teks, fake, buttons, buffer)
 break
 
+case 'tiktok':
+if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+v.reply(mess.wait)
+hx.ttdownloader(q)
+	.then(x => {
+	v.replyVid({url: v.nowm}, fake)
+})
+break
+
 case 'ytmp3':
-if (!q || !isUrl(q) && !q.includes('youtu')) return m.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
 	.then(x => {
@@ -119,17 +128,17 @@ hx.youtube(q)
 break
 
 case 'ytmp4':
-if (!q || !isUrl(q) && !q.includes('youtu')) return m.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
 	.then(x => {
-	v.replyVid({url: x.link})
+	v.replyVid({url: x.link}, fake)
 })
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
 case 'ytmp3doc':
-if (!q || !isUrl(q) && !q.includes('youtu')) return m.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
 	.then(async(x) => {
