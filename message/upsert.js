@@ -8,7 +8,7 @@ const yts = require('yt-search')
 
 const { getBuffer, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 
-module.exports = async(inky, v) => {
+module.exports = async(inky, v, store) => {
 	try {
 		const isCmd = v.body.startsWith(prefix)
 		const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
