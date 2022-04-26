@@ -115,6 +115,7 @@ hx.ttdownloader(q)
 	.then(x => {
 	v.replyVid({url: v.nowm}, fake)
 })
+	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
 case 'ytmp3':
