@@ -14,7 +14,7 @@ const yts = require('yt-search')
 	Js
 */
 
-const { getBuffer, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
+const { getBuffer, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 
 /*
 	Database
