@@ -6,7 +6,7 @@ const hx = require('hxz-api')
 const util = require('util')
 const yts = require('yt-search')
 
-const { getBuffer, h2k, isUrl, Json, runtime } = require('../lib/functions')
+const { getBuffer, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 
 module.exports = async(inky, v) => {
 	try {
