@@ -57,7 +57,7 @@ module.exports = async(inky, v, store) => {
 			var teks = `\t\t\t*AntiViewOnce*
 
 │ ➼ *Enviado por:* @{senderNumber}
-│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
+│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('.jpg')
 				v.replyImg(await v.download(nameJpg), teks)
