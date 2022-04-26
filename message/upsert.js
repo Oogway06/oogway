@@ -26,6 +26,13 @@ module.exports = async(inky, v) => {
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isMe || isOwner
 		
+		const isMedia = (v.type === 'imageMessage' || v.type === 'videoMessage')
+		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : false
+		const isQuotedImage = v.quoted ? (v.quoted.type === 'imageMessage') : false
+		const isQuotedVideo = v.quoted ? (v.quoted.type === 'videoMessage') : false
+		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
+		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
+		
 		const replyTempLoc = (teks, footer, buttons = [], img) => {
 			inky.sendMessage(v.chat, { location: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
@@ -96,6 +103,7 @@ hx.youtube(q)
 break
 
 			default:
+				
 				if (isStaff) {
 					if (v.body.startsWith('x')) {
 						try {
@@ -120,9 +128,6 @@ break
 					}
 				}
 				
-				if (v.body.toLowerCase().includes('las de') && v.body.toLowerCase().includes('son go')) {
-					v.replyAud(fs.readFileSync('./media/audio/sonGood.mp3'), true)
-				}
 		}
 		
 	} catch (e) {
