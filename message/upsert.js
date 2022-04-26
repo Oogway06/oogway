@@ -6,7 +6,7 @@ const hx = require('hxz-api')
 const util = require('util')
 const yts = require('yt-search')
 
-const { getBuffer, h2k, isUrl, Json } = require('../lib/functions')
+const { getBuffer, h2k, isUrl, Json, runtime } = require('../lib/functions')
 
 module.exports = async(inky, v) => {
 	try {
@@ -37,20 +37,29 @@ module.exports = async(inky, v) => {
 			inky.sendMessage(v.chat, { location: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
+		const menu = () => {
+			var teks = 'Menu en mantenimiento'
+			var buttons = [
+				{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}
+			]
+			try {
+				var ppimg = await inky.profilePictureUrl(v.sender, 'image')
+			} catch {
+				var ppimg = 'https://wallpapercave.com/wp/wp6898322.jpg'
+			}
+			var image = await getBuffer(ppimg)
+			replyTempLoc(teks, `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`, buttons, image)
+		}
+		
 		switch (command) {
 
-case 'bc':
-if (!isOwner) return
-var getGroups = await inky.groupFetchAllParticipating()
-var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
-for (let id of groupsID) {
-	var jids = []
-	var groupMdata = await inky.groupMetadata(id)
-	var groupMem = groupMdata.participants
-	groupMem.map(x => jids.push(x.id))
-	v.reply(q, id, jids)
-}
+case 'menu':
+menu()
 break
+
+/*
+	Descarga
+*/
 
 case 'play':
 if (!q) return v.reply('Use *' + prefix + command + ' <texto>*')
@@ -100,6 +109,23 @@ hx.youtube(q)
 	inky.sendMessage(v.chat, { document: buffer, mimetype: 'audio/mp4', fileName: x.title + '.mp3' }, { quoted: v })
 })
 	.catch(e => v.reply(e))
+break
+
+/*
+	Staff
+*/
+
+case 'bc':
+if (!isOwner) return
+var getGroups = await inky.groupFetchAllParticipating()
+var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
+for (let id of groupsID) {
+	var jids = []
+	var groupMdata = await inky.groupMetadata(id)
+	var groupMem = groupMdata.participants
+	groupMem.map(x => jids.push(x.id))
+	v.reply(q, id, jids)
+}
 break
 
 			default:
