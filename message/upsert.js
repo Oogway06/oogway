@@ -9,31 +9,28 @@ const yts = require('yt-search')
 const { getBuffer, h2k, isUrl, Json } = require('../lib/functions')
 
 module.exports = async(inky, v) => {
-    try {
-        const isCmd = v.body.startsWith(prefix)
-        const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
+	try {
+		const isCmd = v.body.startsWith(prefix)
+		const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
 		const commandstik = (v.type === 'stickerMessage') ? v.msg.fileSha256.toString('base64') : ''
-
-        const args = v.body.trim().split(/ +/).slice(1)
-        const q = args.join(' ')
-        const senderNumber = v.sender.split('@')[0]
-        const botNumber = inky.user.id.split(':')[0]
+		
+		const args = v.body.trim().split(/ +/).slice(1)
+		const q = args.join(' ')
+		const senderNumber = v.sender.split('@')[0]
+		const botNumber = inky.user.id.split(':')[0]
 		
 		const groupMetadata = v.isGroup ? await inky.groupMetadata(v.chat) : ''
 		const groupMembers = v.isGroup ? groupMetadata.participants : ''
-
-        const isMe = botNumber.includes(senderNumber)
-        const isOwner = owner.includes(senderNumber)
-        const isStaff = staff.includes(senderNumber) || isMe || isOwner
+		
+		const isMe = botNumber.includes(senderNumber)
+		const isOwner = owner.includes(senderNumber)
+		const isStaff = staff.includes(senderNumber) || isMe || isOwner
 		
 		const replyTempLoc = (teks, footer, buttons = [], img) => {
 			inky.sendMessage(v.chat, { location: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
-
-		switch (commandstik) {
-		}
-
-        switch (command) {
+		
+		switch (command) {
 
 case 'bc':
 if (!isOwner) return
@@ -98,39 +95,40 @@ hx.youtube(q)
 	.catch(e => v.reply(e))
 break
 
-            default:
-                if (isStaff) {
-                    if (v.body.startsWith('x')) {
+			default:
+				if (isStaff) {
+					if (v.body.startsWith('x')) {
 						try {
 							v.reply(Json(eval(q)))
 						} catch(e) {
 							v.reply(String(e))
 						}
 					}
-                    if (v.body.startsWith('>')) {
-                        try {
+					if (v.body.startsWith('>')) {
+						try {
 							var value = await eval(`(async () => {${v.body.slice(1)}})()`)
 							v.reply(util.format(value))
 						} catch(e){
 							v.reply(util.format(e))
 						}
-                    }
-                    if (v.body.startsWith('$')) {
+					}
+					if (v.body.startsWith('$')) {
 						exec(v.body.slice(1), (err, stdout) => {
 							if (err) return v.reply(err)
 							if (stdout) return v.reply(stdout)
 						})
 					}
-                }
+				}
+				
 				if (v.body.toLowerCase().includes('las de') && v.body.toLowerCase().includes('son go')) {
 					v.replyAud(fs.readFileSync('./media/audio/sonGood.mp3'), true)
 				}
-        }
-
-    } catch (e) {
-        const isError = String(e)
-
-        v.reply(isError)
-        console.log(e)
-    }
+		}
+		
+	} catch (e) {
+		const isError = String(e)
+		
+		v.reply(isError)
+		console.log(e)
+	}
 }
