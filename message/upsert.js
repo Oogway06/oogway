@@ -54,10 +54,7 @@ module.exports = async(inky, v, store) => {
 		}
 		
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
-			var teks = `\t\t\t\t*AntiViewOnce*
-
-│ ➼ *Enviado por:* @${senderNumber}
-│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
+			var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('.jpg')
 				v.replyImg(await v.download(nameJpg), teks)
