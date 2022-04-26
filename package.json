@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@adiwajshing/baileys": "^4.1.0",
+    "@adiwajshing/keyed-db": "^0.2.4",
     "axios": "^0.26.1",
     "hxz-api": "^1.0.1",
     "pino": "^7.0.5",
