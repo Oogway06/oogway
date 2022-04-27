@@ -33,6 +33,7 @@ module.exports = async(inky, v, store) => {
 		const q = args.join(' ')
 		const senderNumber = v.sender.split('@')[0]
 		const botNumber = inky.user.id.split(':')[0]
+		const bio = try { (await inky.fetchStatus(v.sender)).status } catch { 'Sin Bio' }
 		
 		const groupMetadata = v.isGroup ? await inky.groupMetadata(v.chat) : ''
 		const groupMembers = v.isGroup ? groupMetadata.participants : ''
