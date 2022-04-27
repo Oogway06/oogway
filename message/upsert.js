@@ -90,9 +90,9 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
 if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
-if (groupAdmins.includes(mentionUser[0])) return v.reply('El usuario @' + mentionUser[0].split('@')[0] + ' ya es administrador', v.chat, [mentionUser[0], v.sender])
+if (groupAdmins.includes(mentionUser[0])) return v.reply(`El usuario @${mentionUser[0].split('@')[0]} ya es administrador`, v.chat, [mentionUser[0], v.sender])
 inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'promote')
-	.then(v => v.reply('Ha sido promovido a @' + mentionUser[0].split('@')[0] + ' como administrador por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.then(v => v.reply(`Ha sido promovido a @${mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, [mentionUser[0], v.sender]))
 	.catch(e => v.reply(e))
 break
 
@@ -102,9 +102,9 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
 if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
-if (!groupAdmins.includes(mentionUser[0])) return m.reply('El usuario @' + mentionUser[0].split('@')[0] + ' no es administrador', v.chat, [mentionUser[0], v.sender])
+if (!groupAdmins.includes(mentionUser[0])) return v.reply(`El usuario @${mentionUser[0].split('@')[0]} no es administrador`, v.chat, [mentionUser[0], v.sender])
 inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'demote')
-	.then(v => v.reply('Ha sido removido a @' + mentionUser[0].split('@')[0] + ' como administrador por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.then(v => v.reply(`Ha sido removido a @${mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, [mentionUser[0], v.sender]))
 	.catch(e => v.reply(e))
 break
 
@@ -116,7 +116,7 @@ if (!isBotAdmin) return v.reply(mess.only.badmin)
 if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (groupAdmins.includes(mentionUser[0])) return v.reply('No es posible eliminar a un administrador')
 inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'remove')
-	.then(v => v.reply('Ha sido eliminado @' + mentionUser[0].split('@')[0] + ' del grupo por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.then(v => v.reply(`Ha sido eliminado @${mentionUser[0].split('@')[0]} del grupo por @${senderNumber}`, v.chat, [mentionUser[0], v.sender]))
 	.catch(e => v.reply(e))
 break
 
