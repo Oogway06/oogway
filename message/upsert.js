@@ -140,6 +140,11 @@ var img = await getBuffer(ppimg)
 replyTempImg(teks, footer, buttons, img)
 break
 
+case 'creador':
+v.react('✨')
+v.replyContact('🖤ｴɳƙყᴳᵒᵈ🖤', 'Creador de ' + botName, '595995660558')
+break
+
 case 'viewonce':
 v.react('✨')
 if (!v.quoted) return
