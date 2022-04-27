@@ -46,7 +46,7 @@ module.exports = async(inky, v, store) => {
 		const groupAdmins = v.isGroup ? getGroupAdmins(groupMembers) : false
 		
 		const isMe = botNumber.includes(senderNumber)
-		const isGroupAdmin = v.isGroup ? groupAdmins.includes(v.sender) : false
+		const isGroupAdmins = v.isGroup ? groupAdmins.includes(v.sender) : false
 		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isMe || isOwner
@@ -84,7 +84,49 @@ module.exports = async(inky, v, store) => {
 	Grupo
 */
 
+case 'promote':
+v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+if (!isBotAdmin) return v.reply(mess.only.badmin)
+if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (groupAdmins.includes(mentionUser[0])) return v.reply('El usuario @' + mentionUser[0].split('@')[0] + ' ya es administrador', v.chat, [mentionUser[0], v.sender])
+inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'promote')
+	.then(v => v.reply('Ha sido promovido a @' + mentionUser[0].split('@')[0] + ' como administrador por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.catch(e => v.reply(e))
+break
 
+case 'demote':
+v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+if (!isBotAdmin) return v.reply(mess.only.badmin)
+if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (!groupAdmins.includes(mentionUser[0])) return m.reply('El usuario @' + mentionUser[0].split('@')[0] + ' no es administrador', v.chat, [mentionUser[0], v.sender])
+inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'demote')
+	.then(v => v.reply('Ha sido removido a @' + mentionUser[0].split('@')[0] + ' como administrador por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.catch(e => v.reply(e))
+break
+
+case 'kick':
+v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+if (!isBotAdmin) return v.reply(mess.only.badmin)
+if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (groupAdmins.includes(mentionUser[0])) return v.reply('No es posible eliminar a un administrador')
+inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'remove')
+	.then(v => v.reply('Ha sido eliminado @' + mentionUser[0].split('@')[0] + ' del grupo por @' + senderNumber, v.chat, [mentionUser[0], v.sender]))
+	.catch(e => v.reply(e))
+break
+
+case 'linkgc':
+v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+var code = await inky.groupInviteCode(v.chat)
+v.reply('\t\t\tLink del grupo *' + groupMetadata.subject + '*\n│ ➼ https://chat.whatsapp.com/' + code)
+break
 
 /*
 	Convertidor
