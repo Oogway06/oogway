@@ -115,6 +115,8 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
 ➼ ${prefix}sticker
+➼ ${prefix}robar <texto>
+➼ ${prefix}toimg
 
 \t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
 ➼ ${prefix}play <texto>
@@ -230,6 +232,45 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 } else {
 	v.reply('Responda a una imagen o video con el comando ' + prefix + command)
 }
+break
+
+case 'robar':
+v.react('✨')
+if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command + ' <texto>')
+var pack = q.split('|')[0]
+var author = q.split('|')[1]
+v.reply(mess.wait)
+var nameWebp = getRandom('.webp')
+var media = await v.quoted.download(nameWebp)
+await writeExif(media, {packname: pack, author: author})
+	.then(x => v.replyS(x))
+await fs.unlinkSync(nameWebp)
+break
+
+case 'inkys':
+v.react('✨')
+if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
+v.reply(mess.wait)
+var nameWebp = getRandom('.webp')
+var media = await v.quoted.download(nameWebp)
+await writeExif(media)
+	.then(x => v.replyS(x))
+await fs.unlinkSync(nameWebp)
+break
+
+case 'toimg':
+v.react('✨')
+if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
+v.reply(mess.wait)
+var nameWebp = getRandom('.webp')
+var nameJpg = getRandom('.jpg')
+await v.quoted.download(nameWebp)
+exec(`ffmpeg -i ${nameWebp} ${nameJpg}`, (err) => {
+	fs.unlinkSync(nameWebp)
+	if (err) return v.reply(String(err))
+	await v.replyImg(fs.readFileSync(nameJpg))
+	fs.unlinkSync(nameJpg)
+})
 break
 
 /*
