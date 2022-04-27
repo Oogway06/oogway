@@ -43,7 +43,7 @@ module.exports = async(inky, v, store) => {
 		
 		const isMedia = (v.type === 'imageMessage' || v.type === 'videoMessage')
 		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : false
-		const isQuotedImage = v.quoted ? ((v.quoted.type === 'imageMessage') || ((v.quoted.type === 'viewOnceMessage') ? (v.quoted.msg.type === 'imageMessage') : false)) : false
+		const isQuotedImage = v.quoted ? (v.quoted.type === 'imageMessage') : false
 		const isQuotedVideo = v.quoted ? (v.quoted.type === 'videoMessage') : false
 		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
 		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
