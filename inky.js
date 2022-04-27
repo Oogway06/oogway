@@ -61,6 +61,7 @@ const start = () => {
 		if (v.key && v.key.remoteJid === 'status@broadcast') return
 		
 		v = sms(inky, v, store)
+		if (v.isBaileys) return
 		require('./message/upsert')(inky, v, store)
 	})
 }
