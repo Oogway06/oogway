@@ -29,6 +29,12 @@ module.exports = async(inky, v, store) => {
 		const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
 		const commandStik = (v.type === 'stickerMessage') ? v.msg.fileSha256.toString('base64') : ''
 		
+		const quotedMention = v.msg.contextInfo != null ? v.msg.contextInfo.participant : ''
+		const tagMention = v.msg.contextInfo != null ? v.msg.contextInfo.mentionedJid : []
+		const mention = typeof(tagMention) == 'string' ? [tagMention] : tagMention
+		mention != undefined ? mention.push(quotedMention) : []
+		const mentionUser = mention != undefined ? mention.filter(x => x) : []
+		
 		const args = v.body.trim().split(/ +/).slice(1)
 		const q = args.join(' ')
 		const senderNumber = v.sender.split('@')[0]
@@ -73,6 +79,12 @@ module.exports = async(inky, v, store) => {
 		}
 		
 		switch (command) {
+
+/*
+	Grupo
+*/
+
+
 
 /*
 	Convertidor
