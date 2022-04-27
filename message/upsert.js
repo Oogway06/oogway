@@ -78,7 +78,7 @@ case 's':
 case 'stik':
 case 'stiker':
 case 'sticker':
-v.react('✔')
+v.react('✨')
 if ((v.type === 'imageMessage') || isQuotedImage) {
 	v.reply(mess.wait)
 	var nameJpg = getRandom('.jpg')
@@ -103,7 +103,7 @@ break
 */
 
 case 'play':
-v.react('✔')
+v.react('✨')
 if (!q) return v.reply('Use *' + prefix + command + ' <texto>*')
 var play = await yts(q)
 var teks = `\t\t\t► ${botName} Youtube
@@ -123,7 +123,7 @@ replyTempLoc(teks, fake, buttons, buffer)
 break
 
 case 'tiktok':
-v.react('✔')
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.ttdownloader(q)
@@ -134,7 +134,7 @@ hx.ttdownloader(q)
 break
 
 case 'ytmp3':
-v.react('✔')
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -145,7 +145,7 @@ hx.youtube(q)
 break
 
 case 'ytmp4':
-v.react('✔')
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -156,7 +156,7 @@ hx.youtube(q)
 break
 
 case 'ytmp3doc':
-v.react('✔')
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -172,7 +172,7 @@ break
 */
 
 case 'bc':
-v.react('✔')
+v.react('✨')
 if (!isOwner) return
 var getGroups = await inky.groupFetchAllParticipating()
 var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
@@ -189,7 +189,7 @@ break
 				
 				if (isStaff) {
 					if (v.body.startsWith('x')) {
-						v.react('✔')
+						v.react('✨')
 						try {
 							v.reply(Json(eval(q)))
 						} catch(e) {
@@ -197,7 +197,7 @@ break
 						}
 					}
 					if (v.body.startsWith('>')) {
-						v.react('✔')
+						v.react('✨')
 						try {
 							var value = await eval(`(async () => {${v.body.slice(1)}})()`)
 							v.reply(util.format(value))
@@ -206,7 +206,7 @@ break
 						}
 					}
 					if (v.body.startsWith('$')) {
-						v.react('✔')
+						v.react('✨')
 						exec(v.body.slice(1), (err, stdout) => {
 							if (err) return v.reply(err)
 							if (stdout) return v.reply(stdout)
