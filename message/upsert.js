@@ -131,12 +131,7 @@ var buttons = [
 	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}},
 	{quickReplyButton: {displayText: '👑 Creador 👑', id: prefix + 'creador'}}
 ]
-try {
-	var ppimg = await inky.profilePictureUrl(v.sender, 'image')
-} catch {
-	var ppimg = 'https://wallpaper.dog/large/5439702.jpg'
-}
-var img = await getBuffer(ppimg)
+var img = await getBuffer('https://fondosmil.com/fondo/6275.jpg')
 replyTempImg(teks, footer, buttons, img)
 break
 
