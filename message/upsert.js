@@ -204,6 +204,10 @@ break
 					}
 				}
 				
+				if (isCmd) {
+					v.react('❌')
+				}
+				
 		}
 		
 	} catch (e) {
