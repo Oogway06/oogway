@@ -82,6 +82,21 @@ var image = await getBuffer(ppimg)
 replyTempLoc(teks, `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`, buttons, image)
 break
 
+case 'viewonce':
+if (!v.quoted) return
+if (!(v.quoted.type === 'viewOnceMessage')) return
+var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
+if (v.quoted.msg.type === 'imageMessage') {
+	var nameJpg = getRandom('.jpg')
+	v.replyImg(await v.quoted.download(nameJpg), teks)
+	await fs.unlinkSync(nameJpg)
+} else if (v.quoted.msg.type === 'videoMessage') {
+	var nameMp4 = getRandom('.mp4')
+	v.replyVid(await v.quoted.download(nameMp4), teks)
+	await fs.unlinkSync(nameMp4)
+}
+break
+
 /*
 	Descarga
 */
