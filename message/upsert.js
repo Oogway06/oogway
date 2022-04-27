@@ -68,10 +68,6 @@ module.exports = async(inky, v, store) => {
 			}
 		}
 		
-		if (isCmd) {
-			v.react('✨')
-		}
-		
 		switch (command) {
 
 /*
@@ -82,6 +78,7 @@ case 's':
 case 'stik':
 case 'stiker':
 case 'sticker':
+v.react('✨')
 if ((v.type === 'imageMessage') || isQuotedImage) {
 	v.reply(mess.wait)
 	var nameJpg = getRandom('.jpg')
@@ -106,6 +103,7 @@ break
 */
 
 case 'play':
+v.react('✨')
 if (!q) return v.reply('Use *' + prefix + command + ' <texto>*')
 var play = await yts(q)
 var teks = `\t\t\t► ${botName} Youtube
@@ -125,6 +123,7 @@ replyTempLoc(teks, fake, buttons, buffer)
 break
 
 case 'tiktok':
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.ttdownloader(q)
@@ -135,6 +134,7 @@ hx.ttdownloader(q)
 break
 
 case 'ytmp3':
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -145,6 +145,7 @@ hx.youtube(q)
 break
 
 case 'ytmp4':
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -155,6 +156,7 @@ hx.youtube(q)
 break
 
 case 'ytmp3doc':
+v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
@@ -170,7 +172,8 @@ break
 */
 
 case 'bc':
-if (!isOwner) return
+if (!isOwner) return v.react('❌')
+v.react('✨')
 var getGroups = await inky.groupFetchAllParticipating()
 var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
 for (let id of groupsID) {
