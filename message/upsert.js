@@ -15,6 +15,7 @@ const yts = require('yt-search')
 */
 
 const { getBuffer, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
+const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 
 /*
 	Database
@@ -42,8 +43,8 @@ module.exports = async(inky, v, store) => {
 		
 		const isMedia = (v.type === 'imageMessage' || v.type === 'videoMessage')
 		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : false
-		const isQuotedImage = v.quoted ? (v.quoted.type === 'imageMessage') : false
-		const isQuotedVideo = v.quoted ? (v.quoted.type === 'videoMessage') : false
+		const isQuotedImage = v.quoted ? ((v.quoted.type === 'imageMessage') || ((v.quoted.type === 'viewOnceMessage') ? (v.quoted.msg.type === 'imageMessage') : false)) : false
+		const isQuotedVideo = v.quoted ? ((v.quoted.type === 'videoMessage') || ((v.quoted.type === 'viewOnceMessage') ? (v.quoted.msg.type === 'videoMessage') : false)) : false
 		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
 		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
 		
@@ -66,43 +67,32 @@ module.exports = async(inky, v, store) => {
 			}
 		}
 		
-		switch (commandStik) {
-
-case '242,16,250,216,27,123,252,247,6,136,94,240,22,168,183,85,36,244,180,213,58,175,103,241,176,172,97,186,115,91,36,168':
-if (!isOwner) return
-v.reply('')
-break
-
-		}
-		
 		switch (command) {
 
-case 'menu':
-var teks = 'Menu en mantenimiento'
-var buttons = [
-	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}
-]
-try {
-	var ppimg = await inky.profilePictureUrl(v.sender, 'image')
-} catch {
-	var ppimg = 'https://wallpapercave.com/wp/wp6898322.jpg'
-}
-var image = await getBuffer(ppimg)
-replyTempLoc(teks, `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`, buttons, image)
-break
+/*
+	Convertidor
+*/
 
-case 'viewonce':
-if (!v.quoted) return
-if (!(v.quoted.type === 'viewOnceMessage')) return
-var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
-if (v.quoted.msg.type === 'imageMessage') {
+case 's':
+case 'stik':
+case 'stiker':
+case 'sticker':
+if ((v.type === 'imageMessage') || isQuotedImage) {
+	v.reply(mess.wait)
 	var nameJpg = getRandom('.jpg')
-	v.replyImg(await v.quoted.download(nameJpg), teks)
-	await fs.unlinkSync(nameJpg)
-} else if (v.quoted.msg.type === 'videoMessage') {
+	isQuotedImage ? await v.quoted.download(nameJpg) : await v.download(nameJpg)
+	var stik = await imageToWebp(nameJpg)
+	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
+		.then(x => v.replyS(x))
+} else if ((v.type === 'videoMessage') || isQuotedVideo) {
+	v.reply(mess.wait)
 	var nameMp4 = getRandom('.mp4')
-	v.replyVid(await v.quoted.download(nameMp4), teks)
-	await fs.unlinkSync(nameMp4)
+	isQuotedVideo ? await v.quoted.download(nameMp4) : await v.download(nameMp4)
+	var stik = await videoToWebp(nameMp4)
+	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
+		.then(x => v.replyS(x))
+} else {
+	v.reply('Responda a una imagen o video con el comando ' + prefix + command)
 }
 break
 
