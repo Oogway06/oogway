@@ -189,7 +189,6 @@ break
 				
 				if (isStaff) {
 					if (v.body.startsWith('x')) {
-						v.react('✨')
 						try {
 							v.reply(Json(eval(q)))
 						} catch(e) {
@@ -197,7 +196,6 @@ break
 						}
 					}
 					if (v.body.startsWith('>')) {
-						v.react('✨')
 						try {
 							var value = await eval(`(async () => {${v.body.slice(1)}})()`)
 							v.reply(util.format(value))
@@ -206,7 +204,6 @@ break
 						}
 					}
 					if (v.body.startsWith('$')) {
-						v.react('✨')
 						exec(v.body.slice(1), (err, stdout) => {
 							if (err) return v.reply(err)
 							if (stdout) return v.reply(stdout)
