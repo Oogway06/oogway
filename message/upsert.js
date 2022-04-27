@@ -14,7 +14,7 @@ const yts = require('yt-search')
 	Js
 */
 
-const { getBuffer, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 
 /*
@@ -35,10 +35,13 @@ module.exports = async(inky, v, store) => {
 		const botNumber = inky.user.id.split(':')[0]
 		try { var bio = (await inky.fetchStatus(v.sender)).status } catch { var bio = 'Sin Bio' }
 		
-		const groupMetadata = v.isGroup ? await inky.groupMetadata(v.chat) : ''
-		const groupMembers = v.isGroup ? groupMetadata.participants : ''
+		const groupMetadata = v.isGroup ? await inky.groupMetadata(v.chat) : {}
+		const groupMembers = v.isGroup ? groupMetadata.participants : []
+		const groupAdmins = v.isGroup ? getGroupAdmins(groupMembers) : false
 		
 		const isMe = botNumber.includes(senderNumber)
+		const isGroupAdmin = v.isGroup ? groupAdmins.includes(v.sender) : false
+		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isMe || isOwner
 		
