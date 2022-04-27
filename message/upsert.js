@@ -26,7 +26,7 @@ module.exports = async(inky, v, store) => {
 	try {
 		const isCmd = v.body.startsWith(prefix)
 		const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
-		const commandstik = (v.type === 'stickerMessage') ? v.msg.fileSha256.toString('base64') : ''
+		const commandStik = (v.type === 'stickerMessage') ? v.msg.fileSha256.toString('base64') : ''
 		
 		const args = v.body.trim().split(/ +/).slice(1)
 		const q = args.join(' ')
@@ -64,6 +64,15 @@ module.exports = async(inky, v, store) => {
 				v.replyVid(await v.download(nameMp4), teks)
 				await fs.unlinkSync(nameMp4)
 			}
+		}
+		
+		switch (commandStik) {
+
+case '242,16,250,216,27,123,252,247,6,136,94,240,22,168,183,85,36,244,180,213,58,175,103,241,176,172,97,186,115,91,36,168':
+if (!isOwner) return
+v.reply('')
+break
+
 		}
 		
 		switch (command) {
