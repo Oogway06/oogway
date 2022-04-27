@@ -70,7 +70,7 @@ module.exports = async(inky, v, store) => {
 		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
 		
 		const replyTempImg = (teks, footer, buttons = [], img) => {
-			inky.sendMessage(v.chat, { image: img, text: teks, footer: footer, templateButtons: buttons })
+			inky.sendMessage(v.chat, { image: { jpegThumbnail: img }, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
