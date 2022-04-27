@@ -22,6 +22,7 @@ const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 */
 
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
+const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
 
 module.exports = async(inky, v, store) => {
 	try {
@@ -68,6 +69,7 @@ module.exports = async(inky, v, store) => {
 		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
 		
 		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
+		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : false
 		
 		const replyTempImg = (teks, footer, buttons = [], img) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
@@ -84,6 +86,13 @@ module.exports = async(inky, v, store) => {
 				v.replyVid(await v.download(nameMp4), teks)
 				await fs.unlinkSync(nameMp4)
 			}
+		}
+		
+		if (!isAntiLink && isBotAdmin && !isGroupAdmins && v.body.includes('chat.whatsapp.com/')) {
+			if (v.body.split('chat.whatsapp.com/')[1].split(' ')[0] === (await inky.groupInviteCode(v.chat))) return
+			inky.groupParticipantsUpdate(v.chat [v.sender], 'remove')
+				.then(x => v.reply('@' + senderNumber + ' ha sido eliminado por mandar link de otro grupo'))
+				.catch(e => v.reply(e))
 		}
 		
 		switch (command) {
@@ -204,6 +213,25 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var code = await inky.groupInviteCode(v.chat)
 v.reply('\t\t\tLink del grupo *' + groupMetadata.subject + '*\n│ ➼ https://chat.whatsapp.com/' + code)
+break
+
+case 'antilink':
+v.react('✨')
+if (v.isGroup) return v.reply(mess.only.group)
+if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+if (Number(q) === 1) {
+	if (isAntiLink) return v.reply('El antilink ya estaba activo')
+	antilink.push(v.chat)
+	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
+	v.reply('Se ha activado el antilink')
+} else if (Number(q) === 0) {
+	if (!isAntiLink) return v.reply('El antilink ya estaba desactivado')
+	antilink.splice(v.chat)
+	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
+	v.reply('Se ha desactivado el antilink')
+} else {
+	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+}
 break
 
 /*
