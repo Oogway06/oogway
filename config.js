@@ -7,5 +7,10 @@ global.staff = ['50768666666']
 global.owner = ['595995660558', '5492612301593', '522213483793']
 
 global.mess = {
-	wait: 'Por favor espere...'
+	wait: 'Por favor espere...',
+	only: {
+		group: 'Comando solo para grupos',
+		admins: 'Necesitas ser admin para ejecutar este comando',
+		botadmin: botName + ' necesita ser admin',
+	}
 }
