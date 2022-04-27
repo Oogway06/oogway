@@ -293,7 +293,7 @@ v.reply(mess.wait)
 var nameWebp = getRandom('.webp')
 var nameJpg = getRandom('.jpg')
 await v.quoted.download(nameWebp)
-exec(`ffmpeg -i ${nameWebp} ${nameJpg}`, (err) => {
+exec(`ffmpeg -i ${nameWebp} ${nameJpg}`, async(err) => {
 	fs.unlinkSync(nameWebp)
 	if (err) return v.reply(String(err))
 	await v.replyImg(fs.readFileSync(nameJpg))
