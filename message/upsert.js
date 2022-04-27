@@ -51,6 +51,14 @@ module.exports = async(inky, v, store) => {
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isMe || isOwner
 		
+		if (isOwner) {
+			var rank = '👑 Owner 👑'
+		} else if (isStaff) {
+			var rank = '🎮 Staff 🎮'
+		} else {
+			var rank = 'Usuario'
+		}
+		
 		const isMedia = (v.type === 'imageMessage' || v.type === 'videoMessage')
 		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : false
 		const isQuotedViewOnce = v.quoted ? (v.quoted.type === 'viewOnceMessage') : false
