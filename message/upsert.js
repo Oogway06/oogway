@@ -375,7 +375,7 @@ break
 */
 
 case 'bc':
-if (!isOwner) return v.react('❌')
+if (!isStaff) return v.react('❌')
 await v.react('✨')
 var getGroups = await inky.groupFetchAllParticipating()
 var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
@@ -384,7 +384,41 @@ for (let id of groupsID) {
 	var groupMdata = await inky.groupMetadata(id)
 	var groupMem = groupMdata.participants
 	groupMem.map(x => jids.push(x.id))
-	v.reply(q, id, jids)
+	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, jids)
+}
+break
+
+case 'save':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if (!q) return v.reply('Nombre para el archivo?')
+if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
+if (!isQuotedSticker) {
+	var nameWebp = getRandom('.webp')
+	var media = await v.quoted.download(nameWebp)
+	await fs.writeFileSync('./media/sticker/' + q + '.webp', media)
+	fs.unlinkSync(nameWebp)
+	v.reply('Sticker guardado exitosamente')
+} else if (isQuotedAudio) {
+	var nameMp3 = getRandom('.mp3')
+	var media = await v.quoted.download(nameMp3)
+	await fs.writeFileSync('./media/audio/' + q + '.mp3', media)
+	fs.unlinkSync(nameMp3)
+	v.reply('Audio guardado exitosamente')
+} else if (isQuotedImage) {
+	var nameJpg = getRandom('.jpg')
+	var media = await v.quoted.download(nameJpg)
+	await fs.writeFileSync('./media/image/' + q + '.jpg', media)
+	fs.unlinkSync(nameJpg)
+	v.reply('Imagen guardado exitosamente')
+} else if (isQuotedVideo) {
+	var nameMp4 = getRandom('.mp4')
+	var media = await v.quoted.download(nameMp4)
+	await fs.writeFileSync('./media/video/' + q + '.mp4', media)
+	fs.unlinkSync(nameMp4)
+	v.reply('Video guardado exitosamente')
+} else {
+	v.reply('Responde a un archivo para guardarlo')
 }
 break
 
