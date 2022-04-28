@@ -1,7 +1,15 @@
+/*
+	Librerias
+*/
+
 const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, makeInMemoryStore, getContentType } = require('@adiwajshing/baileys')
 const { state, saveState } = useSingleFileAuthState('./lib/session/session.json')
 const fs = require('fs')
 const P = require('pino')
+
+/*
+	Js
+*/
 
 const { sms } = require('./lib/simple')
 
