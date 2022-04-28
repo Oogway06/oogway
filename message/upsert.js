@@ -98,7 +98,7 @@ module.exports = async(inky, v, store) => {
 		switch (command) {
 
 case 'menu':
-v.react('✨')
+await v.react('✨')
 var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 \t\t\t『༺࿕༒🖤Iɴᴋʏ🖤༒࿖༻』
 \t\t╚═══❖•ೋ° °ೋ•❖═══╝
@@ -147,12 +147,12 @@ replyTempImg(teks, footer, buttons, img)
 break
 
 case 'creador':
-v.react('✨')
+await v.react('✨')
 v.replyContact('🖤ｴɳƙყᴳᵒᵈ🖤', 'Creador de ' + botName, '595995660558')
 break
 
 case 'viewonce':
-v.react('✨')
+await v.react('✨')
 if (!v.quoted) return
 if (!isQuotedViewOnce) return
 var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
@@ -172,7 +172,7 @@ break
 */
 
 case 'promote':
-v.react('✨')
+await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
@@ -184,7 +184,7 @@ inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'promote')
 break
 
 case 'demote':
-v.react('✨')
+await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
@@ -196,7 +196,7 @@ inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'demote')
 break
 
 case 'kick':
-v.react('✨')
+await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
@@ -208,7 +208,7 @@ inky.groupParticipantsUpdate(v.chat, [mentionUser[0]], 'remove')
 break
 
 case 'linkgc':
-v.react('✨')
+await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var code = await inky.groupInviteCode(v.chat)
@@ -216,8 +216,8 @@ v.reply('\t\t\tLink del grupo *' + groupMetadata.subject + '*\n│ ➼ https://c
 break
 
 case 'antilink':
-v.react('✨')
-if (v.isGroup) return v.reply(mess.only.group)
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
 if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
 if (Number(q) === 1) {
 	if (isAntiLink) return v.reply('El antilink ya estaba activo')
@@ -242,7 +242,7 @@ case 's':
 case 'stik':
 case 'stiker':
 case 'sticker':
-v.react('✨')
+await v.react('✨')
 if ((v.type === 'imageMessage') || isQuotedImage) {
 	v.reply(mess.wait)
 	var nameJpg = getRandom('.jpg')
@@ -263,7 +263,7 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 break
 
 case 'robar':
-v.react('✨')
+await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command + ' <texto>')
 var pack = q.split('|')[0]
 var author = q.split('|')[1]
@@ -276,7 +276,7 @@ await fs.unlinkSync(nameWebp)
 break
 
 case 'inkys':
-v.react('✨')
+await await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
 v.reply(mess.wait)
 var nameWebp = getRandom('.webp')
@@ -287,7 +287,7 @@ await fs.unlinkSync(nameWebp)
 break
 
 case 'toimg':
-v.react('✨')
+await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
 v.reply(mess.wait)
 var nameWebp = getRandom('.webp')
@@ -306,7 +306,7 @@ break
 */
 
 case 'play':
-v.react('✨')
+await v.react('✨')
 if (!q) return v.reply('Use *' + prefix + command + ' <texto>*')
 var play = await yts(q)
 var teks = `\t\t\t► ${botName} Youtube
@@ -326,47 +326,38 @@ replyTempImg(teks, fake, buttons, buffer)
 break
 
 case 'tiktok':
-v.react('✨')
+await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.ttdownloader(q)
-	.then(x => {
-	v.replyVid({url: v.nowm}, fake)
-})
+	.then(x => v.replyVid({url: x.nowm}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
 case 'ytmp3':
-v.react('✨')
+await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(x => {
-	v.replyAud({url: x.mp3}, true)
-})
+	.then(x => v.replyAud({url: x.mp3}, true))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
 case 'ytmp4':
-v.react('✨')
+await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(x => {
-	v.replyVid({url: x.link}, fake)
-})
+	.then(x => v.replyVid({url: x.link}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
 case 'ytmp3doc':
-v.react('✨')
+await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(async(x) => {
-	var buffer = await getBuffer(x.mp3)
-	inky.sendMessage(v.chat, { document: buffer, mimetype: 'audio/mp4', fileName: x.title + '.mp3' }, { quoted: v })
-})
+	.then(async(x) => inky.sendMessage(v.chat, { document: await getBuffer(x.mp3), mimetype: 'audio/mp4', fileName: x.title + '.mp3' }, { quoted: v }))
 	.catch(e => v.reply(e))
 break
 
@@ -376,7 +367,7 @@ break
 
 case 'bc':
 if (!isOwner) return v.react('❌')
-v.react('✨')
+await v.react('✨')
 var getGroups = await inky.groupFetchAllParticipating()
 var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
 for (let id of groupsID) {
