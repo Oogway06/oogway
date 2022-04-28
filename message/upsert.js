@@ -393,7 +393,7 @@ if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
-if (!isQuotedSticker) {
+if (isQuotedSticker) {
 	var nameWebp = getRandom('.webp')
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
