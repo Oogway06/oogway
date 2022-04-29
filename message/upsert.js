@@ -454,7 +454,13 @@ if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
 }
+teks += '\nUsa *' + prefix + 'rfile <nombre del archivo>* para visualizar el archivo'
 v.reply(teks)
+break
+
+case 'rfile':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
 break
 
 			default:
