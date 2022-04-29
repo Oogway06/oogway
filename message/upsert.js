@@ -23,6 +23,7 @@ const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
+const sFiles = JSON.parse(fs.readFileSync('./media/files.json'))
 
 module.exports = async(inky, v, store) => {
 	try {
@@ -398,24 +399,32 @@ if (isQuotedSticker) {
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
 	fs.unlinkSync(nameWebp)
+	sFiles.sticker.push(q)
+	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Sticker guardado exitosamente')
 } else if (isQuotedAudio) {
 	var nameMp3 = getRandom('.mp3')
 	var media = await v.quoted.download(nameMp3)
 	await fs.writeFileSync(`./media/audio/${q}.mp3`, media)
 	fs.unlinkSync(nameMp3)
+	sFiles.audio.push(q)
+	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Audio guardado exitosamente')
 } else if (isQuotedImage) {
 	var nameJpg = getRandom('.jpg')
 	var media = await v.quoted.download(nameJpg)
 	await fs.writeFileSync(`./media/image/${q}.jpg`, media)
 	fs.unlinkSync(nameJpg)
+	sFiles.image.push(q)
+	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Imagen guardado exitosamente')
 } else if (isQuotedVideo) {
 	var nameMp4 = getRandom('.mp4')
 	var media = await v.quoted.download(nameMp4)
 	await fs.writeFileSync(`./media/video/${q}.mp4`, media)
 	fs.unlinkSync(nameMp4)
+	sFiles.video.push(q)
+	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Video guardado exitosamente')
 } else {
 	v.reply('Responde a un archivo para guardarlo')
