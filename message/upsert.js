@@ -434,18 +434,21 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var teks = '\t\t\t' + botName + ' Storage\n\n'
+var teks = '\t\t\t' + botName + ' Storage\n\nღ *Stickers*\n\n'
 for (let x of sFiles.sticker) {
-	teks += `➼ ${x}\n`
+	teks += `| ➼ ${x}\n`
 }
+teks += '\nღ *Audios*\n'
 for (let x of sFiles.audio) {
 	teks += `➼ ${x}\n`
 }
+teks += '\nღ *Image*\n'
 for (let x of sFiles.image) {
-	teks += `➼ ${x}\n`
+	teks += `| ➼ ${x}\n`
 }
+teks += '\nღ *Videos*\n'
 for (let x of sFiles.video) {
-	teks += `➼ ${x}\n`
+	teks += `| ➼ ${x}\n`
 }
 v.reply(teks)
 break
