@@ -431,6 +431,25 @@ if (isQuotedSticker) {
 }
 break
 
+case 'storage':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+var teks = '\t\t\t' + botName + ' Storage\n\n'
+for (let x of sFiles.sticker) {
+	teks += `➼ ${x}\n`
+}
+for (let x of sFiles.audio) {
+	teks += `➼ ${x}\n`
+}
+for (let x of sFiles.image) {
+	teks += `➼ ${x}\n`
+}
+for (let x of sFiles.video) {
+	teks += `➼ ${x}\n`
+}
+v.reply(teks)
+break
+
 			default:
 				
 				if (isStaff) {
