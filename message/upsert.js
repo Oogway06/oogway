@@ -435,22 +435,22 @@ case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 var teks = '\t\t\t' + botName + ' Storage\n\nღ *Stickers*\n\n'
-if (sFiles.sticker.length === 0) teks += '| ➼ '
+if (sFiles.sticker.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.sticker) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nღ *Audios*\n'
-if (sFiles.audio.length === 0) teks += '| ➼ '
+teks += '\nღ *Audios*\n\n'
+if (sFiles.audio.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.audio) {
 	teks += `➼ ${x}\n`
 }
-teks += '\nღ *Image*\n'
-if (sFiles.image.length === 0) teks += '| ➼ '
+teks += '\nღ *Image*\n\n'
+if (sFiles.image.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.image) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nღ *Videos*\n'
-if (sFiles.video.length === 0) teks += '| ➼ '
+teks += '\nღ *Videos*\n\n'
+if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
 }
