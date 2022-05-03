@@ -158,6 +158,9 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}balance
 ➼ ${prefix}shop
 
+\t●Ⓙⓤⓔⓖⓞⓢ●
+➼ ${prefix}blackjack <monto>
+
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
 ➼ ${prefix}sticker
 ➼ ${prefix}robar <texto>
