@@ -581,7 +581,7 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(async(x) => inky.sendMessage(v.chat, { document: await getBuffer(x.mp3), mimetype: 'audio/mp4', fileName: x.title + '.mp3' }, { quoted: v }))
+	.then(async(x) => inky.sendMessage(v.chat, { document: await getBuffer(x.mp3), mimetype: 'audio/mp4', fileName: x.title + '.m4a' }, { quoted: v }))
 	.catch(e => v.reply(e))
 break
 
