@@ -150,6 +150,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
 ➼ ${prefix}balance
+➼ ${prefix}shop
 
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
 ➼ ${prefix}sticker
@@ -335,6 +336,7 @@ case 'money':
 case 'dinero':
 case 'plata':
 case 'guita':
+await v.react('✨')
 v.reply(`\t\t\t*${botName} Balance*
 
 │ ➼ Usuario: *@${senderNumber}*
@@ -344,6 +346,7 @@ break
 
 case 'shop':
 case 'tienda':
+await v.react('✨')
 var teks = `\t\t\t${botName} Shop
 
 \t\t\t\t\t*༒ Rangos ༒*
