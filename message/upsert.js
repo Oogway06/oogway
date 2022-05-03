@@ -120,6 +120,20 @@ module.exports = async(inky, v, store) => {
 				.catch(e => v.reply(e))
 		}
 		
+		switch (commandStik) {
+
+/*
+case '':
+if (!isStaff) return
+if (!v.isGroup) return
+if (!isBotAdmin) return
+inky.groupParticipantsUpdate(v.chat, [v.sender], 'promote')
+	.then(async(x) => await v.react('✔'))
+break
+*/
+
+		}
+		
 		switch (command) {
 
 case 'menu':
