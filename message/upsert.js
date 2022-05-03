@@ -522,6 +522,7 @@ hx.igstalk(q)
 ღ Cuenta ${x.isPrivate ? 'privada' : 'publica'} y ${x.isVerified ? 'verificada' : 'no verificada'}`
 	v.replyImg({url: x.profilePicHD}, teks)
 })
+	.catch(e => v.reply(String(e)))
 break
 
 /*
