@@ -126,6 +126,7 @@ case '156,10,65,245,83,150,59,26,158,25,48,241,118,186,166,252,91,2,243,3,8,205,
 if (!isStaff) return
 if (!v.isGroup) return
 if (!isBotAdmin) return
+if (groupAdmins.includes(v.sender)) return
 await inky.groupParticipantsUpdate(v.chat, [v.sender], 'promote')
 	.then(async(x) => await v.react('✔'))
 break
