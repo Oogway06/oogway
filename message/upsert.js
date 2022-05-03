@@ -461,6 +461,20 @@ break
 case 'rfile':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
+if (!q) return v.reply('Y el nombre del archivo?')
+v.reply(mess.wait)
+if (sFiles.sticker.includes(q)) {
+	v.replyS(fs.readFileSync(`./media/sticker/${q}.webp`))
+}
+if (sFiles.audio.includes(q)) {
+	v.replyAud(fs.readFileSync(`./media/audio/${q}.mp3`), true)
+}
+if (sFiles.image.includes(q)) {
+	v.replyImg(fs.readFileSync(`./media/image/${q}.jpg`))
+}
+if (sFiles.video.includes(q)) {
+	v.replyVid(fs.readFileSync(`./media/video/${q}.mp4`))
+}
 break
 
 			default:
