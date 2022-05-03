@@ -14,9 +14,13 @@ const yts = require('yt-search')
 	Js
 */
 
+const bj = []
+
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { addUser, addBal, checkBal, checkBalReg, removeBal } = require('../lib/money')
+
+const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require('../lib/game/blackjack')
 
 /*
 	Database
@@ -80,6 +84,8 @@ module.exports = async(inky, v, store) => {
 		const isQuotedVideo = v.quoted ? ((v.quoted.type === 'videoMessage') || (isQuotedViewOnce ? (v.quoted.msg.type === 'videoMessage') : false)) : false
 		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
 		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
+		
+		const buttonsResponseID = (v.type == 'buttonsResponseMessage') ? v.message.buttonsResponseMessage.selectedButtonId : ''
 		
 		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
 		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : false
@@ -373,6 +379,24 @@ if (q.toLowerCase().includes('vip')) {
 } else {
 	v.reply(teks)
 }
+break
+
+/*
+	Juego
+*/
+
+case 'bj':
+case 'blackjack':
+await v.react('✨')
+if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
+if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
+if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
+if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
+if (userBal < q) return v.reply('No tienes suficiente dinero')
+var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
+bj.push(obj)
+removeBal(senderNumber, q)
+inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bj[position(bj, v.chat, v.sender)].pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *${getHandValue(bj[position(bj, v.chat, v.sender)].balance).slice(1)}$*\nBalance: *${userBal-getHandValue(bj[position(bj, v.chat, v.sender)].balance)}$*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1 }, { quoted: v })
 break
 
 /*
@@ -671,6 +695,39 @@ break
 				
 				if (isCmd) {
 					v.react('❌')
+				}
+				
+				if (v.body.toLowerCase().startsWith('hit') || buttonsResponseID.includes('bHit')) {
+					await v.react('✨')
+					if (!(isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false)) return
+					var bjPosition = bj[position(bj, v.chat, v.sender)]
+					bjPosition.pHand.push(drawRandomCard())
+					if (getHandValue(bjPosition.bHand) <= 9) {
+						bjPosition.bHand.push(drawRandomCard())
+					}
+					if (getHandValue(bjPosition.pHand) > 21) {
+						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Has perdido ${bjPosition.balance}$* 🃏`)
+						bj.splice(bj.indexOf(bjPosition), 1)
+					} else {
+						inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bjPosition.pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *${bjPosition.balance}$*\nBalance: *${userBal}$*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1 }, { quoted: v })
+					}
+				}
+				if (v.body.toLowerCase().startsWith('stand') || buttonsResponseID.includes('bStand')) {
+					await v.react('✨')
+					if (!(isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false)) return
+					var bjPosition = bj[position(bj, v.chat, v.sender)]
+					bj.splice(bj.indexOf(bjPosition), 1)
+					if (getHandValue(bjPosition.pHand) < getHandValue(bjPosition.bHand)) {
+						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Has perdido ${bjPosition.balance}$* 🃏`)
+					} else if (getHandValue(bjPosition.pHand) == getHandValue(bjPosition.bHand)) {
+						var result = ((bjPosition.balance*2)/2)
+						addBal(senderNumber, result)
+						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Ha sido un empate* 🃏`)
+					} else {
+						var result = bjPosition.balance*2
+						addBal(senderNumber, result)
+						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de ${pushname}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Felicidades has ganado ${result}$* 🃏`)
+					}
 				}
 				
 		}
