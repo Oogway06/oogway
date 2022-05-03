@@ -186,7 +186,12 @@ var buttons = [
 	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}},
 	{quickReplyButton: {displayText: '👑 Creador 👑', id: prefix + 'creador'}}
 ]
-var img = await getBuffer('https://fondosmil.com/fondo/6275.jpg')
+try {
+	var ppimg = await inky.profilePictureUrl(v.sender, 'image')
+} catch {
+	var ppimg = 'https://cdna.artstation.com/p/assets/images/images/023/059/518/large/alex-ryan-sakura-spirit-sakurano-maeko.jpg'
+}
+var img = await getBuffer(ppimg)
 replyTempImg(teks, footer, buttons, img)
 break
 
