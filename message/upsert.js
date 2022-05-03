@@ -122,15 +122,13 @@ module.exports = async(inky, v, store) => {
 		
 		switch (commandStik) {
 
-/*
-case '':
+case '156,10,65,245,83,150,59,26,158,25,48,241,118,186,166,252,91,2,243,3,8,205,225,49,72,106,219,186,222,223,244,51':
 if (!isStaff) return
 if (!v.isGroup) return
 if (!isBotAdmin) return
-inky.groupParticipantsUpdate(v.chat, [v.sender], 'promote')
+await inky.groupParticipantsUpdate(v.chat, [v.sender], 'promote')
 	.then(async(x) => await v.react('✔'))
 break
-*/
 
 		}
 		
