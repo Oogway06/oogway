@@ -21,8 +21,14 @@ const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 	Database
 */
 
+// Usuario
+const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
+
+// Grupo
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
+
+// Media
 const sFiles = JSON.parse(fs.readFileSync('./media/files.json'))
 
 module.exports = async(inky, v, store) => {
@@ -52,11 +58,14 @@ module.exports = async(inky, v, store) => {
 		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isMe || isOwner
+		const isVip = vip.includes(senderNumber) || isStaff
 		
 		if (isOwner) {
 			var rank = '👑 Owner 👑'
 		} else if (isStaff) {
 			var rank = '🎮 Staff 🎮'
+		} else if (isVip) {
+			var rank = '✨ Vip ✨'
 		} else {
 			var rank = 'Usuario'
 		}
@@ -118,22 +127,33 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏
 \t\t\t𖣘✿🄲🄾🄼🄰🄽🄳🄾🅂✿𖣘
 
+\t●Ⓥⓘⓟ●
+➼ ${prefix}join <link>
+
 \t●Ⓖⓡⓤⓟⓞⓢ●
+➼ ${prefix}antilink <0/1>
+➼ ${prefix}antiviewonce <0/1>
 ➼ ${prefix}promote / ${prefix}demote
 ➼ ${prefix}kick
 ➼ ${prefix}linkgc
+➼ ${prefix}random
 
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
 ➼ ${prefix}sticker
 ➼ ${prefix}robar <texto>
 ➼ ${prefix}toimg
+➼ ${prefix}tomp3
 
 \t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
 ➼ ${prefix}play <texto>
 ➼ ${prefix}tiktok <link>
 
 \t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}bc
+➼ ${prefix}bc <texto>
+➼ ${prefix}addvip / ${prefix}removevip
+➼ ${prefix}save <texto>
+➼ ${prefix}storage
+➼ ${prefix}rfile <texto>
 
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -147,7 +167,10 @@ var img = await getBuffer('https://fondosmil.com/fondo/6275.jpg')
 replyTempImg(teks, footer, buttons, img)
 break
 
+case 'dueño':
 case 'creador':
+case 'creator':
+case 'owner':
 await v.react('✨')
 v.replyContact('🖤ｴɳƙყᴳᵒᵈ🖤', 'Creador de ' + botName, '595995660558')
 break
@@ -178,8 +201,64 @@ if (v.quoted.msg.type === 'imageMessage') {
 break
 
 /*
+	Vip
+*/
+
+case 'join':
+await v.react('✨')
+if (!isVip) return v.reply(mess.only.vip)
+if (!q) return v.reply('Ingrese el enlace del grupo')
+if (!isUrl(q) && !q.includes('whatsapp.com')) return v.reply('Link invalido')
+v.reply(mess.wait)
+inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
+	.then(x => {
+	v.reply('He ingresado exitosamente al grupo')
+	v.reply('He sido añadido al grupo por pedido de @' + senderNumber, x)
+})
+	.catch(e => v.reply('No he podido ingresar al grupo, verifique que el enlace funcione'))
+break
+
+/*
 	Grupo
 */
+
+case 'antilink':
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+if (Number(q) === 1) {
+	if (isAntiLink) return v.reply('El antilink ya estaba activo')
+	antilink.push(v.chat)
+	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
+	v.reply('Se ha activado el antilink')
+} else if (Number(q) === 0) {
+	if (!isAntiLink) return v.reply('El antilink ya estaba desactivado')
+	antilink.splice(v.chat)
+	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
+	v.reply('Se ha desactivado el antilink')
+} else {
+	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+}
+break
+
+case 'antiviewonce':
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+if (Number(q) === 1) {
+	if (isAntiViewOnce) return v.reply('El antiviewonce ya estaba activo')
+	antiviewonce.push(v.chat)
+	fs.writeFileSync('./database/group/antiviewonce.json', Json(antiviewonce))
+	v.reply('Se ha activado el antiviewonce')
+} else if (Number(q) === 0) {
+	if (!isAntiViewOnce) return v.reply('El antiviewonce ya estaba desactivado')
+	antiviewonce.splice(v.chat)
+	fs.writeFileSync('./database/group/antiviewonce.json', Json(antiviewonce))
+	v.reply('Se ha desactivado el antiviewonce')
+} else {
+	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+}
+break
 
 case 'promote':
 await v.react('✨')
@@ -225,23 +304,12 @@ var code = await inky.groupInviteCode(v.chat)
 v.reply('\t\t\tLink del grupo *' + groupMetadata.subject + '*\n│ ➼ https://chat.whatsapp.com/' + code)
 break
 
-case 'antilink':
+case 'random':
 await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
-if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
-if (Number(q) === 1) {
-	if (isAntiLink) return v.reply('El antilink ya estaba activo')
-	antilink.push(v.chat)
-	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
-	v.reply('Se ha activado el antilink')
-} else if (Number(q) === 0) {
-	if (!isAntiLink) return v.reply('El antilink ya estaba desactivado')
-	antilink.splice(v.chat)
-	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
-	v.reply('Se ha desactivado el antilink')
-} else {
-	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
-}
+var none = Math.floor(Math.random() * groupMembers.length + 0)
+var user = groupMembers[none].id
+v.reply('Ha sido elegido @' + user.split('@')[0], v.chat, [user])
 break
 
 /*
@@ -308,6 +376,21 @@ exec(`ffmpeg -i ${nameWebp} ${nameJpg}`, async(err) => {
 	if (err) return v.reply(String(err))
 	await v.replyImg(fs.readFileSync(nameJpg))
 	fs.unlinkSync(nameJpg)
+})
+break
+
+case 'tomp3':
+await v.react('✨')
+if (!isQuotedVideo) return v.reply('Responda a un video con el comando ' + prefix + command)
+v.reply(mess.wait)
+var nameMp4 = getRandom('.mp4')
+var nameMp3 = getRandom('.mp3')
+await v.quoted.download(nameMp4)
+exec(`ffmpeg -i ${nameMp4} ${nameMp3}`, async(err) => {
+	fs.unlinkSync(nameMp4)
+	if (err) return v.reply(String(err))
+	await v.replyAud(fs.readFileSync(nameMp3))
+	fs.unlinkSync(nameMp3)
 })
 break
 
@@ -387,6 +470,26 @@ for (let id of groupsID) {
 	groupMem.map(x => jids.push(x.id))
 	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, jids)
 }
+break
+
+case 'addvip':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (vip.includes(mentionUser[0])) return v.reply('El usuario ya tiene el rango *✨ Vip ✨*')
+vip.push(mentionUser[0])
+fs.writeFileSync('./database/user/vip.json', Json(vip))
+v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + mentionUser[0].split('@')[0], v.chat, [v.sender, mentionUser[0]])
+break
+
+case 'removevip':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (!vip.includes(mentionUser[0])) return v.reply('El usuario no es usuario *✨ Vip ✨*')
+vip.splice(mentionUser[0])
+fs.writeFileSync('./database/user/vip.json', Json(vip))
+v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + mentionUser[0].split('@')[0], v.chat, [v.sender, mentionUser[0]])
 break
 
 case 'save':
