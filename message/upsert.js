@@ -181,6 +181,9 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}toimg
 ➼ ${prefix}tomp3
 
+\t●Ⓑⓤⓢⓠⓤⓔⓓⓐ●
+➼ ${prefix}igstalk <usuario>
+
 \t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
 ➼ ${prefix}play <texto>
 ➼ ${prefix}tiktok <link>
@@ -500,6 +503,26 @@ exec(`ffmpeg -i ${nameMp4} ${nameMp3}`, async(err) => {
 	if (err) return v.reply(String(err))
 	await v.replyAud(fs.readFileSync(nameMp3))
 	fs.unlinkSync(nameMp3)
+})
+break
+
+/*
+	Busqueda
+*/
+
+case 'igstalk':
+await v.react('✨')
+if (!q) return v.reply('Use *' + prefix + command + ' <usuario>*')
+hx.igstalk(q)
+	.then(x => {
+	var teks = `\t\t\t${botName} IG Stalk
+
+ღ Usuario: *${x.username}*
+ღ Biografia: *${x.biography}*
+ღ Seguidores: *${h2k(x.followers)}*
+ღ Siguiendo: *${h2k(x.following)}*
+ღ Cuenta ${x.isPrivate ? 'privada' : 'publica'} y ${x.isVerified ? 'verificada' : 'no verificada'}`
+	v.replyImg({url: x.profilePicHD}, teks)
 })
 break
 
