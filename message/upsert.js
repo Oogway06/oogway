@@ -740,8 +740,8 @@ break
 				}
 				
 				if (v.body.toLowerCase().startsWith('hit') || buttonsResponseID.includes('bHit')) {
-					await v.react('✨')
 					if (!(isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false)) return
+					await v.react('✨')
 					var bjPosition = bj[position(bj, v.chat, v.sender)]
 					bjPosition.pHand.push(drawRandomCard())
 					if (getHandValue(bjPosition.bHand) <= 9) {
@@ -755,8 +755,8 @@ break
 					}
 				}
 				if (v.body.toLowerCase().startsWith('stand') || buttonsResponseID.includes('bStand')) {
-					await v.react('✨')
 					if (!(isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false)) return
+					await v.react('✨')
 					var bjPosition = bj[position(bj, v.chat, v.sender)]
 					bj.splice(bj.indexOf(bjPosition), 1)
 					if (getHandValue(bjPosition.pHand) < getHandValue(bjPosition.bHand)) {
