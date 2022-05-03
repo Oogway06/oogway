@@ -231,7 +231,6 @@ break
 
 case 'viewonce':
 await v.react('✨')
-if (!v.quoted) return
 if (!isQuotedViewOnce) return
 var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
 if (v.quoted.msg.type === 'imageMessage') {
@@ -383,21 +382,21 @@ var teks = `\t\t\t${botName} Shop
 \t\t\t\t\t*༒ Rangos ༒*
 
 ╭───── *✨ Vip ✨* ─────
-│ 	${isVip ? '*Ya tienes el rango*' : 'Usa *' + prefix + command + ' vip* para comprar el rango'}
-│ ➼ *Precio:* _$1 M_
+│ 	${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
+│ ➼ *Precio:* _$250 K_
 │ ➼ *Ventajas:*
 │ 	- Acceso al comando *${prefix}join*
 ╰───────────────╮
 
-
-│ ➼ Tu Dinero: *$${bal}*
-│ ➼ Tu Rango: *${rank}*
+│ ➼ Usuario: *@${senderNumber}*
+│ ➼ Balance: *$${bal}*
+│ ➼ Rango: *${rank}*
 
 Para comprar un articulo use *${prefix + command} <articulo>*`
 if (q.toLowerCase().includes('vip')) {
 	if (isVip) return v.reply('Usted ya tiene el rango *✨ Vip ✨*')
-	if (userBal < 1000000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
-	removeBal(senderNumber, 1000000)
+	if (userBal < 250000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
+	removeBal(senderNumber, 250000)
 	vip.push(senderNumber)
 	fs.writeFileSync('./database/user/vip.json', Json(vip))
 	v.reply('@' + senderNumber + ' has comprado exitosamente el rango *✨ Vip ✨*, espero que lo disfrutes :D')
