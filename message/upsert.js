@@ -70,7 +70,7 @@ module.exports = async(inky, v, store) => {
 		const isGroupAdmins = v.isGroup ? groupAdmins.includes(v.sender) : false
 		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
-		const isStaff = staff.includes(senderNumber) || isMe || isOwner
+		const isStaff = staff.includes(senderNumber) || isOwner
 		const isVip = vip.includes(senderNumber) || isStaff
 		
 		if (isOwner) {
@@ -164,6 +164,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓥⓘⓟ●
 ➼ ${prefix}join <link>
+➼ ${prefix}serbot
 
 \t●Ⓖⓡⓤⓟⓞⓢ●
 ➼ ${prefix}antilink <0/1>
@@ -266,8 +267,8 @@ inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
 break
 
 case 'serbot':
-if (!isOwner) return v.react('❌')
 await v.react('✨')
+if (!isStaff) return v.reply(mess.only.vip)
 var qrcode = require('qrcode')
 var { state, saveState } = useSingleFileAuthState('./lib/session/' + senderNumber + '.json')
 
@@ -433,10 +434,10 @@ var teks = `\t\t\t${botName} Shop
 \t\t\t\t\t*༒ Rangos ༒*
 
 ╭───── *✨ Vip ✨* ─────
-│ 	${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
+│ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
 │ ➼ *Precio:* _$250 K_
 │ ➼ *Ventajas:*
-│ 	- Acceso al comando *${prefix}join*
+│ \t\t- Acceso al comando *${prefix}join*
 ╰───────────────╮
 
 │ ➼ Usuario: *@${senderNumber}*
