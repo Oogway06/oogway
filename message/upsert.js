@@ -699,7 +699,7 @@ if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nUsa *' + prefix + 'rfile <nombre del archivo>* para visualizar el archivo\n\nUsa *' prefix + 'delfile <nombre del archivo>* para eliminar el archivo'
+teks += `\nUsa *${prefix}rfile <nombre del archivo>* para visualizar el archivo\n\nUsa *${prefix}delfile <nombre del archivo>* para eliminar el archivo`
 v.reply(teks)
 break
 
