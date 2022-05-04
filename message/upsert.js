@@ -648,28 +648,28 @@ await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
 if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
 	if (sFiles.sticker.includes(q)) {
-		fs.unlinkSync(`./media/sticker/${q}.webp`)
+		await fs.unlinkSync(`./media/sticker/${q}.webp`)
 		sFiles.sticker.splice(q)
 		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		v.reply('Sticker eliminado exitosamente')
+		await v.reply('Sticker eliminado exitosamente')
 	}
 	if (sFiles.audio.includes(q)) {
-		fs.unlinkSync(`./media/audio/${q}.mp3`)
+		await fs.unlinkSync(`./media/audio/${q}.mp3`)
 		sFiles.audio.splice(q)
 		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		v.reply('Audio eliminado exitosamente')
+		await v.reply('Audio eliminado exitosamente')
 	}
 	if (sFiles.image.includes(q)) {
-		fs.unlinkSync(`./media/image/${q}.jpg`)
+		await fs.unlinkSync(`./media/image/${q}.jpg`)
 		sFiles.image.splice(q)
 		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		v.reply('Imagen eliminado exitosamente')
+		await v.reply('Imagen eliminado exitosamente')
 	}
 	if (sFiles.video.includes(q)) {
-		fs.unlinkSync(`./media/video/${q}.mp3`)
+		await fs.unlinkSync(`./media/video/${q}.mp3`)
 		sFiles.video.splice(q)
 		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		v.reply('Video eliminado exitosamente')
+		await v.reply('Video eliminado exitosamente')
 	}
 } else {
 	v.reply('No existe ningun archivo con ese nombre')
@@ -707,7 +707,7 @@ case 'replyf':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
-v.reply(mess.wait)
+await v.reply(mess.wait)
 if (sFiles.sticker.includes(q)) {
 	v.replyS(fs.readFileSync(`./media/sticker/${q}.webp`))
 }
