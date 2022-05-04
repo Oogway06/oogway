@@ -231,14 +231,14 @@ break
 case 'viewonce':
 await v.react('✨')
 if (!isQuotedViewOnce) return
-var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
+var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${v.quoted.sender.split('@')[0]}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
 if (v.quoted.msg.type === 'imageMessage') {
 	var nameJpg = getRandom('.jpg')
-	v.replyImg(await v.quoted.download(nameJpg), teks)
+	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, [v.quoted.sender, v.sender])
 	await fs.unlinkSync(nameJpg)
 } else if (v.quoted.msg.type === 'videoMessage') {
 	var nameMp4 = getRandom('.mp4')
-	v.replyVid(await v.quoted.download(nameMp4), teks)
+	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, [v.quoted.sender, v.sender])
 	await fs.unlinkSync(nameMp4)
 }
 break
