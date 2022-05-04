@@ -180,9 +180,6 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}toimg
 ➼ ${prefix}tomp3
 
-\t●Ⓑⓤⓢⓠⓤⓔⓓⓐ●
-➼ ${prefix}igstalk <usuario>
-
 \t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
 ➼ ${prefix}play <texto>
 ➼ ${prefix}tiktok <link>
@@ -191,8 +188,9 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}bc <texto>
 ➼ ${prefix}addvip / ${prefix}removevip
 ➼ ${prefix}save <texto>
+➼ ${prefix}delfile <texto>
 ➼ ${prefix}storage
-➼ ${prefix}rfile <texto>
+➼ ${prefix}replyf <texto>
 
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -505,27 +503,6 @@ exec(`ffmpeg -i ${nameMp4} ${nameMp3}`, async(err) => {
 break
 
 /*
-	Busqueda
-*/
-
-case 'igstalk':
-await v.react('✨')
-if (!q) return v.reply('Use *' + prefix + command + ' <usuario>*')
-hx.igstalk(q)
-	.then(x => {
-	var teks = `\t\t\t${botName} IG Stalk
-
-ღ Usuario: *${x.username}*
-ღ Biografia: *${x.biography}*
-ღ Seguidores: *${h2k(x.followers)}*
-ღ Siguiendo: *${h2k(x.following)}*
-ღ Cuenta ${x.isPrivate ? 'privada' : 'publica'} y ${x.isVerified ? 'verificada' : 'no verificada'}`
-	v.replyImg({url: x.profilePicHD}, teks)
-})
-	.catch(e => v.reply(String(e)))
-break
-
-/*
 	Descarga
 */
 
@@ -665,6 +642,41 @@ if (isQuotedSticker) {
 }
 break
 
+case 'delfile':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if (!q) return v.reply('Y el nombre del archivo?')
+v.reply(mess.wait)
+if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
+	if (sFiles.sticker.includes(q)) {
+		fs.unlinkSync(`./media/sticker/${q}.webp`)
+		sFiles.sticker.splice(q)
+		await fs.writeFileSync('./media/files.json', Json(sFiles))
+		v.reply('Sticker eliminado exitosamente')
+	}
+	if (sFiles.audio.includes(q)) {
+		fs.unlinkSync(`./media/audio/${q}.mp3`)
+		sFiles.audio.splice(q)
+		await fs.writeFileSync('./media/files.json', Json(sFiles))
+		v.reply('Audio eliminado exitosamente')
+	}
+	if (sFiles.image.includes(q)) {
+		fs.unlinkSync(`./media/image/${q}.jpg`)
+		sFiles.image.splice(q)
+		await fs.writeFileSync('./media/files.json', Json(sFiles))
+		v.reply('Imagen eliminado exitosamente')
+	}
+	if (sFiles.video.includes(q)) {
+		fs.unlinkSync(`./media/video/${q}.mp3`)
+		sFiles.video.splice(q)
+		await fs.writeFileSync('./media/files.json', Json(sFiles))
+		v.reply('Video eliminado exitosamente')
+	}
+} else {
+	v.reply('No existe ningun archivo con ese nombre')
+}
+break
+
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
@@ -688,11 +700,11 @@ if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nUsa *' + prefix + 'rfile <nombre del archivo>* para visualizar el archivo'
+teks += '\nUsa *' + prefix + 'replyf <nombre del archivo>* para visualizar el archivo'
 v.reply(teks)
 break
 
-case 'rfile':
+case 'replyf':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
