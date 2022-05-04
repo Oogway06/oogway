@@ -606,6 +606,7 @@ await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
 if (isQuotedSticker) {
+	if (sFiles.sticker.includes(q)) return v.reply('Ya existe un sticker con ese nombre')
 	var nameWebp = getRandom('.webp')
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
@@ -614,6 +615,7 @@ if (isQuotedSticker) {
 	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Sticker guardado exitosamente')
 } else if (isQuotedAudio) {
+	if (sFiles.audio.includes(q)) return v.reply('Ya existe un audio con ese nombre')
 	var nameMp3 = getRandom('.mp3')
 	var media = await v.quoted.download(nameMp3)
 	await fs.writeFileSync(`./media/audio/${q}.mp3`, media)
@@ -622,6 +624,7 @@ if (isQuotedSticker) {
 	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Audio guardado exitosamente')
 } else if (isQuotedImage) {
+	if (sFiles.image.includes(q)) return v.reply('Ya existe una imagen con ese nombre')
 	var nameJpg = getRandom('.jpg')
 	var media = await v.quoted.download(nameJpg)
 	await fs.writeFileSync(`./media/image/${q}.jpg`, media)
@@ -630,6 +633,7 @@ if (isQuotedSticker) {
 	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Imagen guardado exitosamente')
 } else if (isQuotedVideo) {
+	if (sFiles.video.includes(q)) return v.reply('Ya existe un video con ese nombre')
 	var nameMp4 = getRandom('.mp4')
 	var media = await v.quoted.download(nameMp4)
 	await fs.writeFileSync(`./media/video/${q}.mp4`, media)
@@ -707,18 +711,22 @@ case 'rfile':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
-await v.reply(mess.wait)
-if (sFiles.sticker.includes(q)) {
-	v.replyS(fs.readFileSync(`./media/sticker/${q}.webp`))
-}
-if (sFiles.audio.includes(q)) {
-	v.replyAud(fs.readFileSync(`./media/audio/${q}.mp3`), true)
-}
-if (sFiles.image.includes(q)) {
-	v.replyImg(fs.readFileSync(`./media/image/${q}.jpg`))
-}
-if (sFiles.video.includes(q)) {
-	v.replyVid(fs.readFileSync(`./media/video/${q}.mp4`))
+if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
+	await v.reply(mess.wait)
+	if (sFiles.sticker.includes(q)) {
+		v.replyS(fs.readFileSync(`./media/sticker/${q}.webp`))
+	}
+	if (sFiles.audio.includes(q)) {
+		v.replyAud(fs.readFileSync(`./media/audio/${q}.mp3`), true)
+	}
+	if (sFiles.image.includes(q)) {
+		v.replyImg(fs.readFileSync(`./media/image/${q}.jpg`))
+	}
+	if (sFiles.video.includes(q)) {
+		v.replyVid(fs.readFileSync(`./media/video/${q}.mp4`))
+	}
+} else {
+	v.reply('No existe ningun archivo con ese nombre, revise los archivos con *' + prefix + 'storage*')
 }
 break
 
