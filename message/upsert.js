@@ -21,6 +21,7 @@ const bj = []
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { addUser, addBal, checkBal, checkBalReg, removeBal } = require('../lib/money')
+const { sms } = require('../lib/simple')
 
 const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require('../lib/game/blackjack')
 
@@ -40,6 +41,9 @@ const sFiles = JSON.parse(fs.readFileSync('./media/files.json'))
 
 module.exports = async(inky, v, store) => {
 	try {
+		v = sms(inky, v)
+		if (v.isBaileys) return
+		
 		const isCmd = v.body.startsWith(prefix)
 		const command = isCmd ? v.body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ''
 		const commandStik = (v.type === 'stickerMessage') ? v.msg.fileSha256.toString('base64') : ''
@@ -265,7 +269,6 @@ case 'serbot':
 if (!isOwner) return v.react('❌')
 await v.react('✨')
 var qrcode = require('qrcode')
-var { sms } = require('../lib/simple')
 var { state, saveState } = useSingleFileAuthState('./lib/session/' + v.sender + '.json')
 
 var start = () => {
@@ -302,8 +305,6 @@ var start = () => {
 		anu.message = (getContentType(anu.message) === 'ephemeralMessage') ? anu.message.ephemeralMessage.message : anu.message
 		if (anu.key && anu.key.remoteJid === 'status@broadcast') return
 		
-		anu = sms(inky, anu)
-		if (anu.isBaileys) return
 		require('./upsert')(conn, anu)
 	})
 }
