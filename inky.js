@@ -57,7 +57,6 @@ const start = () => {
 		} else if (connection === 'open') {
 			console.log('Bot conectado')
 		}
-		console.log(v)
 	})
 	
 	inky.ev.on('creds.update', saveState)
