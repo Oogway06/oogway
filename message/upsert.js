@@ -274,12 +274,20 @@ var start = () => {
 		auth: state,
 	})
 	
-	conn.ev.on('connection.update', anu => {
-		const { connection, lastDisconnect } = anu
+	conn.ev.on('connection.update', async(anu) => {
+		const { connection, lastDisconnect, qr } = anu
 		if (connection === 'close') {
 			if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
 				start()
 			}
+		}
+		if (qr != undefined) {
+			var qrBot = await qrcode.toDataURL(qr, { scale: 8 })
+			var messageBot = await v.replyImg(qrBot, 'Escanee el codigo qr para convertirte en un bot')
+			await inky.sendMessage(v.chat, { delete: messageBot.key })
+		}
+		if (connection === 'open') {
+			v.reply(Json(conn.user))
 		}
 	})
 	
