@@ -285,6 +285,7 @@ var start = () => {
 		if (qr != undefined) {
 			var qrBot = await qrcode.toDataURL(qr, { scale: 8 })
 			var messageBot = await v.replyImg(new Buffer.from(qrBot.replace('data:image/png;base64,', ''), 'base64'), 'Escanee el codigo qr para convertirte en un bot')
+			sleep(30000)
 			await inky.sendMessage(v.chat, { delete: messageBot.key })
 		}
 		if (connection === 'open') {
