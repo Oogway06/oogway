@@ -190,7 +190,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>
 ➼ ${prefix}storage
-➼ ${prefix}replyf <texto>
+➼ ${prefix}rfile <texto>
 
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -699,11 +699,11 @@ if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nUsa *' + prefix + 'replyf <nombre del archivo>* para visualizar el archivo'
+teks += '\nUsa *' + prefix + 'rfile <nombre del archivo>* para visualizar el archivo\n\nUsa *' prefix + 'delfile <nombre del archivo>* para eliminar el archivo'
 v.reply(teks)
 break
 
-case 'replyf':
+case 'rfile':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
