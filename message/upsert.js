@@ -4,6 +4,7 @@ require('../config')
 	Libreria
 */
 
+const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, makeInMemoryStore, getContentType } = require('@adiwajshing/baileys')
 const { exec } = require('child_process')
 const fs = require('fs')
 const hx = require('hxz-api')
@@ -257,6 +258,45 @@ inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
 	v.reply('He sido añadido al grupo por pedido de @' + senderNumber, x)
 })
 	.catch(e => v.reply('No he podido ingresar al grupo, verifique que el enlace funcione'))
+break
+
+case 'serbot':
+if (!isOwner) return v.react('❌')
+await v.react('✨')
+var qrcode = require('qrcode')
+var { sms } = require('../lib/simple')
+var { state, saveState } = useSingleFileAuthState('./lib/session/' + v.sender + '.json')
+
+var start = () => {
+	var conn = makeWASocket({
+		logger: P({ level: 'silent' }),
+		printQRInTerminal: false,
+		auth: state,
+	})
+	
+	conn.ev.on('connection.update', anu => {
+		const { connection, lastDisconnect } = anu
+		if (connection === 'close') {
+			if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
+				start()
+			}
+		}
+	})
+	
+	conn.ev.on('creds.update', saveState)
+	
+	conn.ev.on('messages.upsert', anu => {
+		anu = anu.messages[0]
+		if (!anu.message) return
+		
+		anu.message = (getContentType(anu.message) === 'ephemeralMessage') ? anu.message.ephemeralMessage.message : anu.message
+		if (anu.key && anu.key.remoteJid === 'status@broadcast') return
+		
+		anu = sms(inky, anu)
+		if (anu.isBaileys) return
+		require('./upsert')(conn, anu)
+	})
+}
 break
 
 /*
