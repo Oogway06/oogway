@@ -748,6 +748,10 @@ break
 					}
 				}
 				
+				if (v.body.toLowerCase().includes('teta')) {
+					v.replyS(fs.readFileSync('./media/sticker/Tetas♡.webp'))
+				}
+				
 				if (isCmd) {
 					v.react('❌')
 				}
