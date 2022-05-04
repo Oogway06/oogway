@@ -7,12 +7,6 @@ const { state, saveState } = useSingleFileAuthState('./lib/session/session.json'
 const fs = require('fs')
 const P = require('pino')
 
-/*
-	Js
-*/
-
-const { sms } = require('./lib/simple')
-
 function nocache(module, cb = () => { }) {
 	fs.watchFile(require.resolve(module), async () => {
 		await uncache(require.resolve(module))
@@ -68,8 +62,6 @@ const start = () => {
 		v.message = (getContentType(v.message) === 'ephemeralMessage') ? v.message.ephemeralMessage.message : v.message
 		if (v.key && v.key.remoteJid === 'status@broadcast') return
 		
-		v = sms(inky, v, store)
-		if (v.isBaileys) return
 		require('./message/upsert')(inky, v, store)
 	})
 }
