@@ -305,6 +305,8 @@ var start = () => {
 		require('./upsert')(conn, anu)
 	})
 }
+
+start()
 break
 
 /*
