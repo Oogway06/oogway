@@ -646,7 +646,6 @@ case 'delfile':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
-v.reply(mess.wait)
 if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
 	if (sFiles.sticker.includes(q)) {
 		fs.unlinkSync(`./media/sticker/${q}.webp`)
