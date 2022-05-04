@@ -269,12 +269,12 @@ case 'serbot':
 if (!isOwner) return v.react('❌')
 await v.react('✨')
 var qrcode = require('qrcode')
-var { state, saveState } = useSingleFileAuthState('./lib/session/' + v.sender + '.json')
+var { state, saveState } = useSingleFileAuthState('./lib/session/' + senderNumber + '.json')
 
 var start = () => {
 	var conn = makeWASocket({
 		logger: P({ level: 'silent' }),
-		printQRInTerminal: true,
+		printQRInTerminal: false,
 		auth: state,
 	})
 	
@@ -288,11 +288,12 @@ var start = () => {
 		if (qr != undefined) {
 			var qrBot = await qrcode.toDataURL(qr, { scale: 8 })
 			var messageBot = await v.replyImg(new Buffer.from(qrBot.replace('data:image/png;base64,', ''), 'base64'), 'Escanee el codigo qr para convertirte en un bot')
-			sleep(30000)
+			await sleep(30000)
 			await inky.sendMessage(v.chat, { delete: messageBot.key })
 		}
 		if (connection === 'open') {
-			v.reply(Json(conn.user))
+			var userJid = conn.user.id.split(':')[0] + '@s.whatsapp.net'
+			v.reply('\t\tNuevo bot activo\n\nUsuario: @' + userJid.split('@')[0], v.chat, [userJid])
 		}
 	})
 	
