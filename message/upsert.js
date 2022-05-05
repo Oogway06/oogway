@@ -754,17 +754,17 @@ if (sFiles.sticker.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.sticker) {
 	teks += `| ➼ ${x}\n`
 }
-teks += `\nღ *Audios* (${sFiles.sticker.length})\n\n`
+teks += `\nღ *Audios* (${sFiles.audio.length})\n\n`
 if (sFiles.audio.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.audio) {
 	teks += `➼ ${x}\n`
 }
-teks += `\nღ *Image* (${sFiles.sticker.length})\n\n`
+teks += `\nღ *Image* (${sFiles.image.length})\n\n`
 if (sFiles.image.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.image) {
 	teks += `| ➼ ${x}\n`
 }
-teks += `\nღ *Videos* (${sFiles.sticker.length})\n\n`
+teks += `\nღ *Videos* (${sFiles.video.length})\n\n`
 if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
