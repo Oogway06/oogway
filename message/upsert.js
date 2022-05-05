@@ -192,10 +192,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}tiktok <link>
 
 \t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}bc <texto>
-➼ ${prefix}addvip / ${prefix}removevip
-➼ ${prefix}save <texto>
-➼ ${prefix}delfile <texto>
+➼ ${prefix}bc <texto>${inky.isJadi ? `\n➼ ${prefix}addvip / ${prefix}removevip` : ''}${inky.isJadi ? `\n➼ ${prefix}save <texto>` : ''}${inky.isJadi ? `\n➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}rfile <texto>
 
@@ -647,6 +644,7 @@ break
 
 case 'addvip':
 if (!isStaff) return v.react('❌')
+if (inky.isJadi) return
 await v.react('✨')
 if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (vip.includes(mentionUser[0].split('@')[0])) return v.reply('El usuario ya tiene el rango *✨ Vip ✨*')
@@ -657,6 +655,7 @@ break
 
 case 'removevip':
 if (!isStaff) return v.react('❌')
+if (inky.isJadi) return
 await v.react('✨')
 if (mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (!vip.includes(mentionUser[0].split('@')[0])) return v.reply('El usuario no es usuario *✨ Vip ✨*')
@@ -667,6 +666,7 @@ break
 
 case 'save':
 if (!isStaff) return v.react('❌')
+if (inky.isJadi) return
 await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
@@ -713,6 +713,7 @@ break
 
 case 'delfile':
 if (!isStaff) return v.react('❌')
+if (inky.isJadi) return
 await v.react('✨')
 if (!q) return v.reply('Y el nombre del archivo?')
 if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
