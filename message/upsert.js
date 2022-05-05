@@ -192,7 +192,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}tiktok <link>
 
 \t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}bc <texto>${inky.isJadi ? `\n➼ ${prefix}addvip / ${prefix}removevip` : ''}${inky.isJadi ? `\n➼ ${prefix}save <texto>` : ''}${inky.isJadi ? `\n➼ ${prefix}delfile <texto>` : ''}
+➼ ${prefix}bc <texto>${!inky.isJadi ? `\n➼ ${prefix}addvip / ${prefix}removevip` : ''}${!inky.isJadi ? `\n➼ ${prefix}save <texto>` : ''}${!inky.isJadi ? `\n➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}rfile <texto>
 
