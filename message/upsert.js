@@ -276,7 +276,7 @@ var { state, saveState } = useSingleFileAuthState('./lib/session/' + senderNumbe
 var start = () => {
 	var conn = makeWASocket({
 		logger: P({ level: 'silent' }),
-		printQRInTerminal: false,
+		printQRInTerminal: true,
 		auth: state,
 	})
 	
