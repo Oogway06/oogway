@@ -150,7 +150,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 \t\t\t𖣘✿Ⓑⓞⓣ Ⓘⓝⓕⓞ✿𖣘
 
 │ ➼ Prefijo: *⌜ ${prefix} ⌟*
-│ ➼ Modo: *${inky.self ? 'Privado' : 'Publico'}*${inky.isJadi ? '\n│ ➼ Bot Original: https://wa.me/${inky.botNumber}' : ''}
+│ ➼ Modo: *${inky.self ? 'Privado' : 'Publico'}*${inky.isJadi ? `\n│ ➼ Bot Original: https://wa.me/${inky.botNumber}` : ''}
 │ ➼ Libreria: *@adiwajshing/baileys@4.1.0*
 
 \t\t\t𖣘✿Ⓤⓢⓔⓡ Ⓘⓝⓕⓞ✿𖣘
