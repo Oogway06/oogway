@@ -857,7 +857,6 @@ break
 	} catch (e) {
 		const isError = String(e)
 		
-		v.reply(isError)
 		console.log(e)
 	}
 }
