@@ -150,7 +150,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 \t\t\t𖣘✿Ⓑⓞⓣ Ⓘⓝⓕⓞ✿𖣘
 
 │ ➼ Prefijo: *⌜ ${prefix} ⌟*
-│ ➼ Modo: *${inky.self ? 'Privado' : 'Publico'}*
+│ ➼ Modo: *${inky.self ? 'Privado' : 'Publico'}*${inky.isJadi ? '\n│ ➼ Bot Original: https://wa.me/${inky.botNumber}' : ''}
 │ ➼ Libreria: *@adiwajshing/baileys@4.1.0*
 
 \t\t\t𖣘✿Ⓤⓢⓔⓡ Ⓘⓝⓕⓞ✿𖣘
@@ -269,6 +269,7 @@ break
 case 'serbot':
 await v.react('✨')
 if (!isStaff) return v.reply(mess.only.vip)
+if (inky.isJadi) return v.reply('Comando disponible en el bot original')
 var qrcode = require('qrcode')
 var { state, saveState } = useSingleFileAuthState('./lib/session/' + senderNumber + '.json')
 
@@ -288,9 +289,11 @@ var start = () => {
 		}
 		if (qr != undefined) {
 			var qrBot = await qrcode.toDataURL(qr, { scale: 8 })
-			var messageBot = await v.replyImg(new Buffer.from(qrBot.replace('data:image/png;base64,', ''), 'base64'), 'Escanee el codigo qr para convertirte en un bot')
+			var messageBot = await v.replyImg(new Buffer.from(qrBot.replace('data:image/png;base64,', ''), 'base64'), 'Escanee el codigo qr para convertirte en un bot, el bot se apaga transcurrido las 24hs')
 			await sleep(30000)
 			await inky.sendMessage(v.chat, { delete: messageBot.key })
+			await sleep(86400000)
+			await conn.ws.close()
 		}
 		if (connection === 'open') {
 			var userJid = conn.user.id.split(':')[0] + '@s.whatsapp.net'
@@ -299,6 +302,9 @@ var start = () => {
 	})
 	
 	conn.ev.on('creds.update', saveState)
+	
+	conn.isJadi = true
+	conn.botNumber = botNumber
 	
 	conn.ev.on('messages.upsert', anu => {
 		anu = anu.messages[0]
