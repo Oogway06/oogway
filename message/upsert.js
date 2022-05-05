@@ -738,22 +738,22 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var teks = '\t\t\t' + botName + ' Storage\n\nღ *Stickers*\n\n'
+var teks = `\t\t\t${botName} Storage\n\nღ *Stickers* (${sFiles.sticker.length})\n\n`
 if (sFiles.sticker.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.sticker) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nღ *Audios*\n\n'
+teks += `\nღ *Audios* (${sFiles.sticker.length})\n\n`
 if (sFiles.audio.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.audio) {
 	teks += `➼ ${x}\n`
 }
-teks += '\nღ *Image*\n\n'
+teks += `\nღ *Image* (${sFiles.sticker.length})\n\n`
 if (sFiles.image.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.image) {
 	teks += `| ➼ ${x}\n`
 }
-teks += '\nღ *Videos*\n\n'
+teks += `\nღ *Videos* (${sFiles.sticker.length})\n\n`
 if (sFiles.video.length === 0) teks += '| ➼ \n'
 for (let x of sFiles.video) {
 	teks += `| ➼ ${x}\n`
@@ -857,6 +857,7 @@ break
 	} catch (e) {
 		const isError = String(e)
 		
+		inky.sendMessage(v.key.remoteJid, { text: isError }, { quoted: v })
 		console.log(e)
 	}
 }
