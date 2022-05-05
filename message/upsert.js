@@ -441,6 +441,7 @@ var teks = `\t\t\t${botName} Shop
 │ ➼ *Precio:* _$250 K_
 │ ➼ *Ventajas:*
 │ \t\t- Acceso al comando *${prefix}join*
+│ \t\t- Acceso al comando *${prefix}serbot*
 ╰───────────────╮
 
 │ ➼ Usuario: *@${senderNumber}*
