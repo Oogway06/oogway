@@ -712,6 +712,7 @@ for (var x of sFiles[0].sticker) {
 	if (x === '@InkyGod03') return
 	teks += `\n│ ➼ ${x.replace('.webp', '')}`
 }
+v.reply(teks)
 break
 
 			default:
