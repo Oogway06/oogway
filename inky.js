@@ -24,7 +24,7 @@ function uncache(module = '.') {
 	})
 }
 
-const delSession => async() {
+const delSession = async() => {
 	if (fs.readdirSync('./lib/session').length > 2) {
 		for (var x of fs.readdirSync('./lib/session')) {
 			if (!(fs.readdirSync('./lib/session').includes('@InkyGod03')) || !(fs.readdirSync('./lib/session').includes('session.json'))) {
