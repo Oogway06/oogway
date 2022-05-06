@@ -706,17 +706,14 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-try {
-	teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
-	if (sFiles[0].sticker.length === 1) teks += '\n│ ➼ '
-	for (var x of sFiles[0].sticker) {
-		if (x === '@InkyGod03') return
+teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
+if (sFiles[0].sticker.length === 1) teks += '\n│ ➼ '
+for (var x of sFiles[0].sticker) {
+	if (!(x === '@InkyGod03')) {
 		teks += `\n│ ➼ ${x.replace('.webp', '')}`
 	}
-	v.reply(teks)
-} catch (e) {
-	v.reply(e)
 }
+v.reply(teks)
 break
 
 			default:
