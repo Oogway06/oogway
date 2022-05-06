@@ -29,6 +29,9 @@ const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require
 	Database
 */
 
+// Media
+const sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
+
 // Usuario
 const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
 
@@ -703,8 +706,7 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
-v.reply(sFiles)
+v.reply(Json(sFiles))
 break
 
 			default:
