@@ -734,7 +734,7 @@ for (var x of sFiles[0].video) {
 		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
 	}
 }
-teks += `\n\nUse *${prefix}rfile <nombre del archivo>* para visualizarlo`
+teks += `\n\nUse *${prefix}rfile <nombre del archivo>* para visualizarlo${!inky.isJadi ? `\n\nUse *${prefix}delfile <nombre del archivo>* para eliminarlo` : ''}`
 v.reply(teks)
 break
 
@@ -753,6 +753,32 @@ if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '
 	}
 	if (sFiles[0].video.includes(q + '.mp4')) {
 		v.replyVid(fs.readFileSync('./media/video/' + q + '.mp4'), fake)
+	}
+} else {
+	v.reply('No existe ningun archivo con ese nombre')
+}
+break
+
+case 'delfile':
+if (!isStaff) return v.react('❌')
+if (inky.isJadi) return v.react('❌')
+await v.react('✨')
+if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
+	if (sFiles[0].sticker.includes(q + '.webp')) {
+		await fs.unlinkSync('./media/sticker/' + q + '.webp')
+		v.reply('Sticker eliminado exitosamente')
+	}
+	if (sFiles[0].audio.includes(q + '.mp3')) {
+		await fs.unlinkSync('./media/audio/' + q + '.mp3')
+		v.reply('Audio eliminado exitosamente')
+	}
+	if (sFiles[0].image.includes(q + '.jpg')) {
+		await fs.unlinkSync('./media/image/' + q + '.jpg')
+		v.reply('Imagen eliminado exitosamente')
+	}
+	if (sFiles[0].video.includes(q + '.mp4')) {
+		await fs.unlinkSync('./media/video/' + q + '.mp4')
+		v.reply('Video eliminado exitosamente')
 	}
 } else {
 	v.reply('No existe ningun archivo con ese nombre')
