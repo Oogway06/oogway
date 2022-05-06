@@ -36,9 +36,6 @@ const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
 
-// Media
-const sFiles = JSON.parse(fs.readFileSync('./media/files.json'))
-
 module.exports = async(inky, v, store) => {
 	try {
 		v = sms(inky, v)
@@ -671,129 +668,71 @@ await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
 if (isQuotedSticker) {
-	if (sFiles.sticker.includes(q)) return v.reply('Ya existe un sticker con ese nombre')
+	if (fs.readdirSync('./media/sticker').includes(q + '.webp')) return v.reply('Ya existe un sticker con ese nombre')
 	var nameWebp = getRandom('.webp')
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
 	fs.unlinkSync(nameWebp)
-	sFiles.sticker.push(q)
-	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Sticker guardado exitosamente')
 } else if (isQuotedAudio) {
-	if (sFiles.audio.includes(q)) return v.reply('Ya existe un audio con ese nombre')
+	if (fs.readdirSync('./media/audio').includes(q + '.mp3')) return v.reply('Ya existe un audio con ese nombre')
 	var nameMp3 = getRandom('.mp3')
 	var media = await v.quoted.download(nameMp3)
 	await fs.writeFileSync(`./media/audio/${q}.mp3`, media)
 	fs.unlinkSync(nameMp3)
-	sFiles.audio.push(q)
-	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Audio guardado exitosamente')
 } else if (isQuotedImage) {
-	if (sFiles.image.includes(q)) return v.reply('Ya existe una imagen con ese nombre')
+	if (fs.readdirSync('./media/image').includes(q + '.jpg')) return v.reply('Ya existe una imagen con ese nombre')
 	var nameJpg = getRandom('.jpg')
 	var media = await v.quoted.download(nameJpg)
 	await fs.writeFileSync(`./media/image/${q}.jpg`, media)
 	fs.unlinkSync(nameJpg)
-	sFiles.image.push(q)
-	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Imagen guardado exitosamente')
 } else if (isQuotedVideo) {
-	if (sFiles.video.includes(q)) return v.reply('Ya existe un video con ese nombre')
+	if (fs.readdirSync('./media/video').includes(q + '.mp4')) return v.reply('Ya existe un video con ese nombre')
 	var nameMp4 = getRandom('.mp4')
 	var media = await v.quoted.download(nameMp4)
 	await fs.writeFileSync(`./media/video/${q}.mp4`, media)
 	fs.unlinkSync(nameMp4)
-	sFiles.video.push(q)
-	await fs.writeFileSync('./media/files.json', Json(sFiles))
 	v.reply('Video guardado exitosamente')
 } else {
 	v.reply('Responde a un archivo para guardarlo')
 }
 break
 
-case 'delfile':
-if (!isStaff) return v.react('❌')
-if (inky.isJadi) return v.react('❌')
-await v.react('✨')
-if (!q) return v.reply('Y el nombre del archivo?')
-if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
-	if (sFiles.sticker.includes(q)) {
-		await fs.unlinkSync(`./media/sticker/${q}.webp`)
-		sFiles.sticker.splice(q)
-		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		await v.reply('Sticker eliminado exitosamente')
-	}
-	if (sFiles.audio.includes(q)) {
-		await fs.unlinkSync(`./media/audio/${q}.mp3`)
-		sFiles.audio.splice(q)
-		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		await v.reply('Audio eliminado exitosamente')
-	}
-	if (sFiles.image.includes(q)) {
-		await fs.unlinkSync(`./media/image/${q}.jpg`)
-		sFiles.image.splice(q)
-		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		await v.reply('Imagen eliminado exitosamente')
-	}
-	if (sFiles.video.includes(q)) {
-		await fs.unlinkSync(`./media/video/${q}.mp3`)
-		sFiles.video.splice(q)
-		await fs.writeFileSync('./media/files.json', Json(sFiles))
-		await v.reply('Video eliminado exitosamente')
-	}
-} else {
-	v.reply('No existe ningun archivo con ese nombre')
-}
-break
-
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var teks = `\t\t\t${botName} Storage\n\nღ *Stickers* (${sFiles.sticker.length})\n\n`
-if (sFiles.sticker.length === 0) teks += '| ➼ \n'
-for (let x of sFiles.sticker) {
+var fileS = fs.readdirSync('./media/sticker')
+var teks = `\t\t\t${botName} Storage\n\nღ *Stickers* (${(fileS.length - 1)})\n\n`
+if (fileS.length === 1) teks += '| ➼ \n'
+for (let x of fileS) {
+	if (x === '@InkyGod03') return
 	teks += `| ➼ ${x}\n`
 }
-teks += `\nღ *Audios* (${sFiles.audio.length})\n\n`
-if (sFiles.audio.length === 0) teks += '| ➼ \n'
-for (let x of sFiles.audio) {
+var fileA = fs.readdirSync('./media/audio')
+teks += `\nღ *Audios* (${(fileA.length - 1)})\n\n`
+if (fileA.length === 1) teks += '| ➼ \n'
+for (let x of fileA) {
+	if (x === '@InkyGod03') return
 	teks += `➼ ${x}\n`
 }
-teks += `\nღ *Image* (${sFiles.image.length})\n\n`
-if (sFiles.image.length === 0) teks += '| ➼ \n'
-for (let x of sFiles.image) {
+var fileI = fs.readdirSync('./media/image')
+teks += `\nღ *Image* (${(fileI.length - 1)})\n\n`
+if (fileI.length === 1) teks += '| ➼ \n'
+for (let x of fileI) {
+	if (x === '@InkyGod03') return
 	teks += `| ➼ ${x}\n`
 }
-teks += `\nღ *Videos* (${sFiles.video.length})\n\n`
-if (sFiles.video.length === 0) teks += '| ➼ \n'
-for (let x of sFiles.video) {
+var fileI = fs.readdirSync('./media/video')
+teks += `\nღ *Videos* (${(fileI.length - 1)})\n\n`
+if (fileI.length === 1) teks += '| ➼ \n'
+for (let x of fileI) {
+	if (x === '@InkyGod03') return
 	teks += `| ➼ ${x}\n`
 }
 teks += `\nUsa *${prefix}rfile <nombre del archivo>* para visualizar el archivo\n\nUsa *${prefix}delfile <nombre del archivo>* para eliminar el archivo`
 v.reply(teks)
-break
-
-case 'rfile':
-if (!isStaff) return v.react('❌')
-await v.react('✨')
-if (!q) return v.reply('Y el nombre del archivo?')
-if ((sFiles.sticker.includes(q)) || (sFiles.audio.includes(q)) || (sFiles.image.includes(q)) || (sFiles.video.includes(q))) {
-	await v.reply(mess.wait)
-	if (sFiles.sticker.includes(q)) {
-		v.replyS(fs.readFileSync(`./media/sticker/${q}.webp`))
-	}
-	if (sFiles.audio.includes(q)) {
-		v.replyAud(fs.readFileSync(`./media/audio/${q}.mp3`), true)
-	}
-	if (sFiles.image.includes(q)) {
-		v.replyImg(fs.readFileSync(`./media/image/${q}.jpg`))
-	}
-	if (sFiles.video.includes(q)) {
-		v.replyVid(fs.readFileSync(`./media/video/${q}.mp4`))
-	}
-} else {
-	v.reply('No existe ningun archivo con ese nombre, revise los archivos con *' + prefix + 'storage*')
-}
 break
 
 			default:
