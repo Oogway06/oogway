@@ -702,7 +702,6 @@ if (isQuotedSticker) {
 break
 
 case 'storage':
-if (!isStaff) return v.react('❌')
 await v.react('✨')
 var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
@@ -738,7 +737,6 @@ v.reply(teks)
 break
 
 case 'rfile':
-if (!isStaff) return v.react('❌')
 await v.react('✨')
 var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
