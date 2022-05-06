@@ -703,28 +703,28 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var fileS = fs.readdirSync('./media/sticker')
+var fileS = await fs.readdirSync('./media/sticker')
 var teks = `\t\t\t${botName} Storage\n\nღ *Stickers* (${(fileS.length - 1)})\n\n`
 if (fileS.length === 1) teks += '| ➼ \n'
 for (let x of fileS) {
 	if (x === '@InkyGod03') return
 	teks += `| ➼ ${x}\n`
 }
-var fileA = fs.readdirSync('./media/audio')
+var fileA = await fs.readdirSync('./media/audio')
 teks += `\nღ *Audios* (${(fileA.length - 1)})\n\n`
 if (fileA.length === 1) teks += '| ➼ \n'
 for (let x of fileA) {
 	if (x === '@InkyGod03') return
 	teks += `➼ ${x}\n`
 }
-var fileI = fs.readdirSync('./media/image')
+var fileI = await fs.readdirSync('./media/image')
 teks += `\nღ *Image* (${(fileI.length - 1)})\n\n`
 if (fileI.length === 1) teks += '| ➼ \n'
 for (let x of fileI) {
 	if (x === '@InkyGod03') return
 	teks += `| ➼ ${x}\n`
 }
-var fileI = fs.readdirSync('./media/video')
+var fileI = await fs.readdirSync('./media/video')
 teks += `\nღ *Videos* (${(fileI.length - 1)})\n\n`
 if (fileI.length === 1) teks += '| ➼ \n'
 for (let x of fileI) {
