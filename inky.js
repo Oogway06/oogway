@@ -24,12 +24,10 @@ function uncache(module = '.') {
 	})
 }
 
-function session() {
-	if (fs.readdirSync('./lib/session') > 2) {
-		for (var x of fs.readdirSync('./lib/session')) {
-			if (!(fs.readdirSync('./lib/session').includes('@InkyGod03')) || !(fs.readdirSync('./lib/session').includes('session.json'))) {
-				fs.unlinkSync('./lib/session/' + x)
-			}
+if (fs.readdirSync('./lib/session').length > 2) {
+	for (var x of fs.readdirSync('./lib/session')) {
+		if (!(fs.readdirSync('./lib/session').includes('@InkyGod03')) || !(fs.readdirSync('./lib/session').includes('session.json'))) {
+			fs.unlinkSync('./lib/session/' + x)
 		}
 	}
 }
@@ -44,8 +42,6 @@ nocache('./message/upsert.js', module => console.log('El archivo upsert.js ha si
 const store = makeInMemoryStore({ logger: P().child({ level: 'silent', stream: 'store' }) })
 
 const start = () => {
-	session()
-	
 	const inky = makeWASocket({
 		logger: P({ level: 'silent' }),
 		printQRInTerminal: true,
