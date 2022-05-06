@@ -25,9 +25,10 @@ function uncache(module = '.') {
 }
 
 const delSession = async() => {
-	if (fs.readdirSync('./lib/session').length > 2) {
-		for (var x of fs.readdirSync('./lib/session')) {
-			if (!(fs.readdirSync('./lib/session').includes('@InkyGod03')) || !(fs.readdirSync('./lib/session').includes('session.json'))) {
+	var none = fs.readdirSync('./lib/session')
+	if (none.length > 2) {
+		for (var x of none) {
+			if (!(x.includes('@InkyGod03')) || !(x.includes('session.json'))) {
 				await fs.unlinkSync('./lib/session/' + x)
 			}
 		}
