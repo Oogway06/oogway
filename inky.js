@@ -69,6 +69,7 @@ const start = () => {
 	inky.ev.on('creds.update', saveState)
 	
 	inky.isJadi = false
+	inky.self = false
 	
 	inky.ev.on('messages.upsert', v => {
 		v = v.messages[0]
