@@ -734,7 +734,29 @@ for (var x of sFiles[0].video) {
 		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
 	}
 }
+teks += `\n\nUse *${prefix}rfile <nombre del archivo>* para visualizarlo`
 v.reply(teks)
+break
+
+case 'rfile':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
+	if (sFiles[0].sticker.includes(q + '.webp')) {
+		v.replyS(fs.readFileSync('./media/sticker/' + q + '.webp'))
+	}
+	if (sFiles[0].audio.includes(q + '.mp3')) {
+		v.replyAud(fs.readFileSync('./media/audio/' + q + '.mp3'))
+	}
+	if (sFiles[0].image.includes(q + '.jpg')) {
+		v.replyImg(fs.readFileSync('./media/image/' + q + '.jpg'), fake)
+	}
+	if (sFiles[0].video.includes(q + '.mp4')) {
+		v.replyVid(fs.readFileSync('./media/video/' + q + '.mp4'), fake)
+	}
+} else {
+	v.reply('No existe ningun archivo con ese nombre')
+}
 break
 
 			default:
