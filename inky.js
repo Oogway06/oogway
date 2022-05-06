@@ -28,7 +28,7 @@ const delSession = async() => {
 	var none = fs.readdirSync('./lib/session')
 	if (none.length > 2) {
 		for (var x of none) {
-			if (!(x.includes('@InkyGod03')) || !(x.includes('session.json'))) {
+			if (!x.includes('@InkyGod03') || !x.includes('session.json')) {
 				await fs.unlinkSync('./lib/session/' + x)
 			}
 		}
