@@ -671,28 +671,28 @@ await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
 if (isQuotedSticker) {
-	if (fs.readdirSync('./media/sticker').includes(q + '.webp')) return v.reply('Ya existe un sticker con ese nombre')
+	if (sFiles[0].sticker.includes(q + '.webp')) return v.reply('Ya existe un sticker con ese nombre')
 	var nameWebp = getRandom('.webp')
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
 	fs.unlinkSync(nameWebp)
 	v.reply('Sticker guardado exitosamente')
 } else if (isQuotedAudio) {
-	if (fs.readdirSync('./media/audio').includes(q + '.mp3')) return v.reply('Ya existe un audio con ese nombre')
+	if (sFiles[0].audio.includes(q + '.mp3')) return v.reply('Ya existe un audio con ese nombre')
 	var nameMp3 = getRandom('.mp3')
 	var media = await v.quoted.download(nameMp3)
 	await fs.writeFileSync(`./media/audio/${q}.mp3`, media)
 	fs.unlinkSync(nameMp3)
 	v.reply('Audio guardado exitosamente')
 } else if (isQuotedImage) {
-	if (fs.readdirSync('./media/image').includes(q + '.jpg')) return v.reply('Ya existe una imagen con ese nombre')
+	if (sFiles[0].image.includes(q + '.jpg')) return v.reply('Ya existe una imagen con ese nombre')
 	var nameJpg = getRandom('.jpg')
 	var media = await v.quoted.download(nameJpg)
 	await fs.writeFileSync(`./media/image/${q}.jpg`, media)
 	fs.unlinkSync(nameJpg)
 	v.reply('Imagen guardado exitosamente')
 } else if (isQuotedVideo) {
-	if (fs.readdirSync('./media/video').includes(q + '.mp4')) return v.reply('Ya existe un video con ese nombre')
+	if (sFiles[0].video.includes(q + '.mp4')) return v.reply('Ya existe un video con ese nombre')
 	var nameMp4 = getRandom('.mp4')
 	var media = await v.quoted.download(nameMp4)
 	await fs.writeFileSync(`./media/video/${q}.mp4`, media)
@@ -706,7 +706,12 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-v.reply(Json(sFiles))
+teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
+if (sFiles[0].sticker.length === 1) teks += '\n│ ➼ '
+for (var x of sFiles[0].sticker) {
+	if (x === '@InkyGod03') return
+	teks += `\n│ ➼ ${x.replace('.webp', '')}`
+}
 break
 
 			default:
