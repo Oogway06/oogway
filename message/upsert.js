@@ -713,6 +713,27 @@ for (var x of sFiles[0].sticker) {
 		teks += `\n│ ➼ ${x.replace('.webp', '')}`
 	}
 }
+teks += `\n\nღ *Audios* (${(sFiles[0].audio.length - 1)})\n`
+if (sFiles[0].audio.length === 1) teks += '\n│ ➼ '
+for (var x of sFiles[0].audio) {
+	if (!(x === '@InkyGod03')) {
+		teks += `\n│ ➼ ${x.replace('.mp3', '')}`
+	}
+}
+teks += `\n\nღ *Imagenes* (${(sFiles[0].image.length - 1)})\n`
+if (sFiles[0].image.length === 1) teks += '\n│ ➼ '
+for (var x of sFiles[0].image) {
+	if (!(x === '@InkyGod03')) {
+		teks += `\n│ ➼ ${x.replace('.jpg', '')}`
+	}
+}
+teks += `\n\nღ *Videos* (${(sFiles[0].video.length - 1)})\n`
+if (sFiles[0].video.length === 1) teks += '\n│ ➼ '
+for (var x of sFiles[0].video) {
+	if (!(x === '@InkyGod03')) {
+		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
+	}
+}
 v.reply(teks)
 break
 
