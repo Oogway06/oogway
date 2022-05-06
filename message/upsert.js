@@ -703,36 +703,8 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
-var fileS = await fs.readdirSync('./media/sticker')
-var teks = `\t\t\t${botName} Storage\n\nღ *Stickers* (${(fileS.length - 1)})\n\n`
-if (fileS.length === 1) teks += '| ➼ \n'
-for (let x of fileS) {
-	if (x === '@InkyGod03') return
-	teks += `| ➼ ${x}\n`
-}
-var fileA = await fs.readdirSync('./media/audio')
-teks += `\nღ *Audios* (${(fileA.length - 1)})\n\n`
-if (fileA.length === 1) teks += '| ➼ \n'
-for (let x of fileA) {
-	if (x === '@InkyGod03') return
-	teks += `➼ ${x}\n`
-}
-var fileI = await fs.readdirSync('./media/image')
-teks += `\nღ *Image* (${(fileI.length - 1)})\n\n`
-if (fileI.length === 1) teks += '| ➼ \n'
-for (let x of fileI) {
-	if (x === '@InkyGod03') return
-	teks += `| ➼ ${x}\n`
-}
-var fileI = await fs.readdirSync('./media/video')
-teks += `\nღ *Videos* (${(fileI.length - 1)})\n\n`
-if (fileI.length === 1) teks += '| ➼ \n'
-for (let x of fileI) {
-	if (x === '@InkyGod03') return
-	teks += `| ➼ ${x}\n`
-}
-teks += `\nUsa *${prefix}rfile <nombre del archivo>* para visualizar el archivo\n\nUsa *${prefix}delfile <nombre del archivo>* para eliminar el archivo`
-v.reply(teks)
+var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
+v.reply(sFiles)
 break
 
 			default:
