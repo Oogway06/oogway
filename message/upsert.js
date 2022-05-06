@@ -292,6 +292,7 @@ var start = () => {
 	conn.ev.on('creds.update', saveState)
 	
 	conn.isJadi = true
+	conn.self = false
 	conn.botNumber = botNumber
 	
 	conn.ev.on('messages.upsert', anu => {
