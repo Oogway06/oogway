@@ -189,7 +189,8 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}tiktok <link>
 
 \t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}bc <texto>${!inky.isJadi ? `\n➼ ${prefix}addvip / ${prefix}removevip` : ''}${!inky.isJadi ? `\n➼ ${prefix}save <texto>` : ''}${!inky.isJadi ? `\n➼ ${prefix}delfile <texto>` : ''}
+➼ ${prefix}bc <texto>
+➼ ${prefix}mode <public/self>${!inky.isJadi ? `\n➼ ${prefix}addvip / ${prefix}removevip` : ''}${!inky.isJadi ? `\n➼ ${prefix}save <texto>` : ''}${!inky.isJadi ? `\n➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}rfile <texto>
 
@@ -631,6 +632,20 @@ for (let id of groupsID) {
 	var groupMem = groupMdata.participants
 	groupMem.map(x => jids.push(x.id))
 	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, jids)
+}
+break
+
+case 'mode':
+if (!isStaff) return v.react('❌')
+await v.react('✨')
+if (q.toLowerCase() === 'public') {
+	inky.self = false
+	v.reply('Se ha activado el modo publico')
+} else if (q.toLowerCase() === 'self') {
+	inky.self = true
+	v.reply('Se ha activado el modo privado')
+} else {
+	v.reply('Use *' + prefix + command + ' <public/self>*')
 }
 break
 
