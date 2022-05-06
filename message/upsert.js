@@ -29,9 +29,6 @@ const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require
 	Database
 */
 
-// Media
-const sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
-
 // Usuario
 const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
 
@@ -670,6 +667,7 @@ if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Nombre para el archivo?')
 if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
+var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if (isQuotedSticker) {
 	if (sFiles[0].sticker.includes(q + '.webp')) return v.reply('Ya existe un sticker con ese nombre')
 	var nameWebp = getRandom('.webp')
@@ -706,6 +704,7 @@ break
 case 'storage':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
+var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
 if (sFiles[0].sticker.length === 1) teks += '\n│ ➼ '
 for (var x of sFiles[0].sticker) {
@@ -741,6 +740,7 @@ break
 case 'rfile':
 if (!isStaff) return v.react('❌')
 await v.react('✨')
+var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
 	if (sFiles[0].sticker.includes(q + '.webp')) {
 		v.replyS(fs.readFileSync('./media/sticker/' + q + '.webp'))
@@ -763,6 +763,7 @@ case 'delfile':
 if (!isStaff) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
+var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
 	if (sFiles[0].sticker.includes(q + '.webp')) {
 		await fs.unlinkSync('./media/sticker/' + q + '.webp')
