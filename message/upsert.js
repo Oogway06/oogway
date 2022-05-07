@@ -174,6 +174,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
 ➼ ${prefix}balance
+➼ ${prefix}topbal
 ➼ ${prefix}shop
 
 \t●Ⓙⓤⓔⓖⓞⓢ●
@@ -427,8 +428,18 @@ v.reply(`\t\t\t*${botName} Balance*
 break
 
 case 'baltop':
+case 'topbal':
 await v.react('✨')
+var jidsTop = []
+var teks = '\t\t\t' + botName + ' Balance Top'
 money.sort((a, b) => (a.xp < b.xp) ? 1 : -1)
+var total = 10
+if (money.length < 10) var total = money.length
+for (let i = 0; i < total; i++) {
+	teks += `│ ➼ @${money[i].id} > $${h2k(money[i].money)}\n`
+	jidsTop.push(money[i].id + '@s.whatsapp.net')
+}
+v.reply(teks, v.chat, jidsTop)
 break
 
 case 'shop':
