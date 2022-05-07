@@ -756,7 +756,7 @@ if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '
 		v.replyS(fs.readFileSync('./media/sticker/' + q + '.webp'))
 	}
 	if (sFiles[0].audio.includes(q + '.mp3')) {
-		v.replyAud(fs.readFileSync('./media/audio/' + q + '.mp3'))
+		v.replyAud(fs.readFileSync('./media/audio/' + q + '.mp3'), true)
 	}
 	if (sFiles[0].image.includes(q + '.jpg')) {
 		v.replyImg(fs.readFileSync('./media/image/' + q + '.jpg'), fake)
