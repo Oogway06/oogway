@@ -431,7 +431,7 @@ case 'baltop':
 case 'topbal':
 await v.react('✨')
 var teks = '\t\t\t' + botName + ' Balance Top\n'
-money.sort((a, b) => (a.xp < b.xp) ? 1 : -1)
+money.sort((a, b) => (a.money < b.money) ? 1 : -1)
 let jidsTop = []
 var total = 10
 if (money.length < 10) total = money.length
