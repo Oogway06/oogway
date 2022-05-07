@@ -430,11 +430,11 @@ break
 case 'baltop':
 case 'topbal':
 await v.react('✨')
-var jidsTop = []
 var teks = '\t\t\t' + botName + ' Balance Top\n'
 money.sort((a, b) => (a.xp < b.xp) ? 1 : -1)
+let jidsTop = []
 var total = 10
-if (money.length < 10) var total = money.length
+if (money.length < 10) total = money.length
 for (let i = 0; i < total; i++) {
 	teks += `\n│ ➼ @${money[i].id} > $${h2k(money[i].money)}`
 	jidsTop.push(money[i].id + '@s.whatsapp.net')
