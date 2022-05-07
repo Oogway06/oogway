@@ -431,12 +431,12 @@ case 'baltop':
 case 'topbal':
 await v.react('✨')
 var jidsTop = []
-var teks = '\t\t\t' + botName + ' Balance Top'
+var teks = '\t\t\t' + botName + ' Balance Top\n'
 money.sort((a, b) => (a.xp < b.xp) ? 1 : -1)
 var total = 10
 if (money.length < 10) var total = money.length
 for (let i = 0; i < total; i++) {
-	teks += `│ ➼ @${money[i].id} > $${h2k(money[i].money)}\n`
+	teks += `\n│ ➼ @${money[i].id} > $${h2k(money[i].money)}`
 	jidsTop.push(money[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, jidsTop)
