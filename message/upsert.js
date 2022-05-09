@@ -431,7 +431,7 @@ break
 case 'transfer':
 await v.react('✨')
 if (!q) return v.reply('Ingrese el monto que desea transferir')
-if (!isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
+if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
 if (mentionUser[0] === undefined) return v.reply('Mencione al usuario que desea transferirle')
 if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
