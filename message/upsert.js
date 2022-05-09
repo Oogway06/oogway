@@ -174,6 +174,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
 ➼ ${prefix}balance
+➼ ${prefix}transfer <monto> <@usuario>
 ➼ ${prefix}topbal
 ➼ ${prefix}shop
 
@@ -425,6 +426,18 @@ v.reply(`\t\t\t*${botName} Balance*
 │ ➼ Usuario: *@${senderNumber}*
 │ ➼ Balance: *$${bal}*
 │ ➼ Rango: *${rank}*`)
+break
+
+case 'transfer':
+await v.react('✨')
+if (!q) return v.reply('Ingrese el monto que desea transferir')
+if (!isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
+if (mentionUser[0] === undefined) return v.reply('Mencione al usuario que desea transferirle')
+if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
+if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
+addBal(mentionUser[0].split('@')[0], args[0])
+removeBal(senderNumber, args[0])
+v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${v.sender}\n│ ➼ Transferido a: @${mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`)
 break
 
 case 'baltop':
