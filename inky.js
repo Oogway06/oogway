@@ -80,6 +80,10 @@ const start = () => {
 		
 		require('./message/upsert')(inky, v, store)
 	})
+	
+	inky.ev.on('group-participants.update', v => {
+		require('./message/participantsUpdate.js')(inky, v)
+	})
 }
 
 start()
