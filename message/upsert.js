@@ -263,58 +263,7 @@ inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
 break
 
 case 'serbot':
-await v.react('✨')
-if (!isStaff) return v.reply(mess.only.vip)
-if (inky.isJadi) return v.reply('Comando disponible en el bot original')
-var qrcode = require('qrcode')
-var { state, saveState } = useSingleFileAuthState('./lib/session/' + senderNumber + '.json')
-
-var start = () => {
-	var conn = makeWASocket({
-		logger: P({ level: 'silent' }),
-		printQRInTerminal: true,
-		auth: state,
-	})
-	
-	conn.ev.on('connection.update', async(anu) => {
-		const { connection, lastDisconnect, qr } = anu
-		if (connection === 'close') {
-			if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
-				start()
-			}
-		}
-		if (qr != undefined) {
-			var qrBot = await qrcode.toDataURL(qr, { scale: 8 })
-			var messageBot = await v.replyImg(new Buffer.from(qrBot.replace('data:image/png;base64,', ''), 'base64'), 'Escanee el codigo qr para convertirte en un bot, el bot se apaga transcurrido las 24hs')
-			await sleep(30000)
-			await inky.sendMessage(v.chat, { delete: messageBot.key })
-			await sleep(86400000)
-			await conn.ws.close()
-		}
-		if (connection === 'open') {
-			var userJid = conn.user.id.split(':')[0] + '@s.whatsapp.net'
-			v.reply('\t\tNuevo bot activo\n\nUsuario: @' + userJid.split('@')[0], v.chat, [userJid])
-		}
-	})
-	
-	conn.ev.on('creds.update', saveState)
-	
-	conn.isJadi = true
-	conn.self = false
-	conn.botNumber = botNumber
-	
-	conn.ev.on('messages.upsert', anu => {
-		anu = anu.messages[0]
-		if (!anu.message) return
-		
-		anu.message = (getContentType(anu.message) === 'ephemeralMessage') ? anu.message.ephemeralMessage.message : anu.message
-		if (anu.key && anu.key.remoteJid === 'status@broadcast') return
-		
-		require('./upsert')(conn, anu)
-	})
-}
-
-start()
+var _0x194cfc=_0x56ba;function _0x590d(){var _0x1c6535=['886EXvJTf','1990803LPFsRq','error','silent','key','base64','5344757XMCrlZ','open','message','botNumber','1423647mNTMhA','vip','14xbeYeC','split','chat','426MdJCrv','16fgRihq','user','reply','close','from','self','output','@s.whatsapp.net','isJadi','ephemeralMessage','messages.upsert','remoteJid','statusCode','223940sqhFUa','10yrmKcP','\x09\x09Nuevo\x20bot\x20activo\x0a\x0aUsuario:\x20@','connection.update','387498fWDnbQ','react','toDataURL','Comando\x20disponible\x20en\x20el\x20bot\x20original','4590456DGZzsL','loggedOut'];_0x590d=function(){return _0x1c6535;};return _0x590d();}(function(_0x37f243,_0x2dddf3){var _0xa53c03=_0x56ba,_0x2c9df5=_0x37f243();while(!![]){try{var _0x2f3241=-parseInt(_0xa53c03(0x175))/0x1*(parseInt(_0xa53c03(0x15d))/0x2)+parseInt(_0xa53c03(0x176))/0x3+-parseInt(_0xa53c03(0x15e))/0x4*(parseInt(_0xa53c03(0x16b))/0x5)+parseInt(_0xa53c03(0x16f))/0x6*(parseInt(_0xa53c03(0x15a))/0x7)+parseInt(_0xa53c03(0x173))/0x8+-parseInt(_0xa53c03(0x17f))/0x9+parseInt(_0xa53c03(0x16c))/0xa*(-parseInt(_0xa53c03(0x17b))/0xb);if(_0x2f3241===_0x2dddf3)break;else _0x2c9df5['push'](_0x2c9df5['shift']());}catch(_0x175103){_0x2c9df5['push'](_0x2c9df5['shift']());}}}(_0x590d,0x5694a),await v[_0x194cfc(0x170)]('✨'));if(!isStaff)return v[_0x194cfc(0x160)](mess['only'][_0x194cfc(0x159)]);function _0x56ba(_0x917764,_0x2f0ab1){var _0x590d13=_0x590d();return _0x56ba=function(_0x56ba59,_0x3143c1){_0x56ba59=_0x56ba59-0x159;var _0x56e68c=_0x590d13[_0x56ba59];return _0x56e68c;},_0x56ba(_0x917764,_0x2f0ab1);}if(inky[_0x194cfc(0x166)])return v[_0x194cfc(0x160)](_0x194cfc(0x172));var qrcode=require('qrcode'),{state,saveState}=useSingleFileAuthState('./lib/session/'+senderNumber+'.json'),start=()=>{var _0x5b7fe5=_0x194cfc,_0x4f2aa9=makeWASocket({'logger':P({'level':_0x5b7fe5(0x178)}),'printQRInTerminal':!![],'auth':state});_0x4f2aa9['ev']['on'](_0x5b7fe5(0x16e),async _0x141da1=>{var _0x542284=_0x5b7fe5;const {connection:_0xf39586,lastDisconnect:_0x4ce441,qr:_0x3ee105}=_0x141da1;_0xf39586===_0x542284(0x161)&&(_0x4ce441[_0x542284(0x177)][_0x542284(0x164)][_0x542284(0x16a)]!==DisconnectReason[_0x542284(0x174)]&&start());if(_0x3ee105!=undefined){var _0x39cdba=await qrcode[_0x542284(0x171)](_0x3ee105,{'scale':0x8}),_0x4e0411=await v['replyImg'](new Buffer[(_0x542284(0x162))](_0x39cdba['replace']('data:image/png;base64,',''),_0x542284(0x17a)),'Escanee\x20el\x20codigo\x20qr\x20para\x20convertirte\x20en\x20un\x20bot,\x20el\x20bot\x20se\x20apaga\x20transcurrido\x20las\x2024hs');await sleep(0x7530),await inky['sendMessage'](v[_0x542284(0x15c)],{'delete':_0x4e0411[_0x542284(0x179)]}),await sleep(0x5265c00),await _0x4f2aa9['ws'][_0x542284(0x161)]();}if(_0xf39586===_0x542284(0x17c)){var _0x376fca=_0x4f2aa9[_0x542284(0x15f)]['id'][_0x542284(0x15b)](':')[0x0]+_0x542284(0x165);v[_0x542284(0x160)](_0x542284(0x16d)+_0x376fca[_0x542284(0x15b)]('@')[0x0],v['chat'],[_0x376fca]);}}),_0x4f2aa9['ev']['on']('creds.update',saveState),_0x4f2aa9[_0x5b7fe5(0x166)]=!![],_0x4f2aa9[_0x5b7fe5(0x163)]=![],_0x4f2aa9[_0x5b7fe5(0x17e)]=botNumber,_0x4f2aa9['ev']['on'](_0x5b7fe5(0x168),_0x7c5ed9=>{var _0x4b8ec7=_0x5b7fe5;_0x7c5ed9=_0x7c5ed9['messages'][0x0];if(!_0x7c5ed9[_0x4b8ec7(0x17d)])return;_0x7c5ed9[_0x4b8ec7(0x17d)]=getContentType(_0x7c5ed9['message'])==='ephemeralMessage'?_0x7c5ed9[_0x4b8ec7(0x17d)][_0x4b8ec7(0x167)]['message']:_0x7c5ed9['message'];if(_0x7c5ed9[_0x4b8ec7(0x179)]&&_0x7c5ed9[_0x4b8ec7(0x179)][_0x4b8ec7(0x169)]==='status@broadcast')return;require('./upsert')(_0x4f2aa9,_0x7c5ed9);});};start();
 break
 
 /*
