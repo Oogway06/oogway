@@ -852,6 +852,7 @@ break
 		const isError = String(e)
 		
 		inky.sendMessage(v.key.remoteJid, { text: isError }, { quoted: v })
+		inky.sendMessage(v.key.remoteJid, { text: Json(v) }, { quoted: v })
 		console.log(e)
 	}
 }
