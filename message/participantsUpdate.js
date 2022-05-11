@@ -10,7 +10,6 @@ module.exports = async(inky, v) => {
 		const groupMetadata = await inky.groupMetadata(v.id)
 		const participants = v.participants
 		for (let num of participants) {
-			console.log(v)/*
 			if (v.action == 'add') {
 				var teks = `\t\t\t\t*Bienvenido @${num.split('@')[0]}*\n\n➼ *Grupo:* ${groupMetadata.subject}\n\n➼ *Descripcion:*\n${groupMetadata.desc}`
 				try {
@@ -33,7 +32,7 @@ module.exports = async(inky, v) => {
 					mentions: [num]
 				}
 				inky.sendMessage(v.id, buttonMessage)
-			}*/
+			}
 		}
 	} catch(e) {
 		console.log(e)
