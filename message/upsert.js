@@ -229,7 +229,7 @@ await v.react('✨')
 if (!v.quoted) return v.reply('Responda a un mensaje del bot, con el comando ' + prefix + command)
 if (!v.quoted.fromMe) return v.reply('Solo puedo borrar mensajes enviados por mi')
 if (v.isGroup && !isGroupAdmins) return v.reply(mess.only.admins)
-v.quoted.delete()
+await v.quoted.delete()
 break
 
 case 'viewonce':
