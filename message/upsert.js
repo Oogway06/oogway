@@ -600,6 +600,7 @@ break
 case 'igdl':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('instagram.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+v.reply(mess.wait)
 hx.igdl(q)
 	.then(x => v.replyVid({url: x.medias[0].url}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
