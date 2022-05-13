@@ -199,7 +199,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
-➼ ${prefix}sendFile <texto>
+➼ ${prefix}sendfile <texto>
 
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -758,11 +758,11 @@ for (var x of sFiles[0].video) {
 		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
 	}
 }
-teks += `\n\nUse *${prefix}sendFile <nombre del archivo>* para visualizarlo${!inky.isJadi ? `\n\nUse *${prefix}delfile <nombre del archivo>* para eliminarlo` : ''}`
+teks += `\n\nUse *${prefix}sendfile <nombre del archivo>* para visualizarlo${!inky.isJadi ? `\n\nUse *${prefix}delfile <nombre del archivo>* para eliminarlo` : ''}`
 v.reply(teks)
 break
 
-case 'sendFile':
+case 'sendfile':
 await v.react('✨')
 var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
