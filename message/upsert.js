@@ -505,18 +505,6 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 	var stik = await videoToWebp(nameMp4)
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
-} else if (!v.quoted && !(mentionUser[0] === undefined)) {
-	try {
-		ppimg = await inky.profilePictureUrl(mentionUser[0], 'image')
-	} catch {
-		ppimg = 'https://images4.alphacoders.com/921/921653.png'
-	}
-	var img = await getBuffer(ppimg)
-	var nameJpg = getRandom('.jpg')
-	await fs.writeFileSync(nameJpg, img)
-	var stik = await imageToWebp(img)
-	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
-		.then(x => v.replyS(x))
 } else {
 	v.reply('Responda a una imagen o video con el comando ' + prefix + command)
 }
