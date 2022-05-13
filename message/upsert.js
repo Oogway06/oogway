@@ -505,9 +505,9 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 	var stik = await videoToWebp(nameMp4)
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
-} else if (!v.quoted && (mentionUser[0] != undefined)) {
+} else if (!v.quoted && !(mentionUser[0] === undefined)) {
 	try {
-		ppimg = await inky.profilePictureUrl([mentionUser[0]], 'image')
+		ppimg = await inky.profilePictureUrl(mentionUser[0], 'image')
 	} catch {
 		ppimg = 'https://images4.alphacoders.com/921/921653.png'
 	}
