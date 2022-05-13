@@ -194,6 +194,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 \t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
 ➼ ${prefix}play <texto>
 ➼ ${prefix}tiktok <link>
+➼ ${prefix}igdl <link>
 
 \t●Ⓢⓣⓐⓕⓕ●
 ➼ ${prefix}bc <texto>
@@ -592,6 +593,14 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.ttdownloader(q)
+	.then(x => v.replyVid({url: x.nowm}, fake))
+	.catch(e => v.reply('Hubo un error al descargar su archivo'))
+break
+
+case 'igdl':
+await v.react('✨')
+if (!q || !isUrl(q) && !q.includes('instagram.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
+hx.igdl(q)
 	.then(x => v.replyVid({url: x.nowm}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
