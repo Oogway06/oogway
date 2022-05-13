@@ -517,7 +517,6 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 	var stik = await imageToWebp(img)
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
-	await fs.unlinkSync(nameJpg)
 } else {
 	v.reply('Responda a una imagen o video con el comando ' + prefix + command)
 }
