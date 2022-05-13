@@ -36,6 +36,7 @@ const money = JSON.parse(fs.readFileSync('./database/user/money.json'))
 // Grupo
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
+const welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
 
 module.exports = async(inky, v, store) => {
 	try {
@@ -93,6 +94,7 @@ module.exports = async(inky, v, store) => {
 		
 		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
 		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : false
+		const isWelcome = v.isGroup ? welcome.includes(v.chat) : false
 		
 		const replyTempImg = (teks, footer, buttons = [], img) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
@@ -167,7 +169,8 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓖⓡⓤⓟⓞⓢ●
 ➼ ${prefix}antilink <0/1>
-➼ ${prefix}antiviewonce <0/1>
+➼ ${prefix}antiviewonce <0/1>${!inky.isJadi ? `
+➼ ${prefix}welcome <0/1>` : ''}
 ➼ ${prefix}promote / ${prefix}demote
 ➼ ${prefix}kick
 ➼ ${prefix}linkgc
@@ -199,7 +202,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
-➼ ${prefix}rfile <texto>
+➼ ${prefix}sendFile <texto>
 
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -284,6 +287,26 @@ if (Number(q) === 1) {
 	antilink.splice(v.chat)
 	fs.writeFileSync('./database/group/antilink.json', Json(antilink))
 	v.reply('Se ha desactivado el antilink')
+} else {
+	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+}
+break
+
+case 'welcome':
+if (inky.isJadi) return v.react('❌')
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
+if (Number(q) === 1) {
+	if (isWelcome) return v.reply('El mensaje de bienvenida ya estaba activo')
+	welcome.push(v.chat)
+	fs.writeFileSync('./database/group/welcome.json', Json(welcome))
+	v.reply('Se ha activado el mensaje de bienvenida')
+} else if (Number(q) === 0) {
+	if (!isWelcome) return v.reply('El mensaje de bienvenida ya estaba desactivado')
+	welcome.splice(v.chat)
+	fs.writeFileSync('./database/group/welcome.json', Json(welcome))
+	v.reply('Se ha desactivado el mensaje de bienvenida')
 } else {
 	v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
 }
@@ -727,11 +750,11 @@ for (var x of sFiles[0].video) {
 		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
 	}
 }
-teks += `\n\nUse *${prefix}rfile <nombre del archivo>* para visualizarlo${!inky.isJadi ? `\n\nUse *${prefix}delfile <nombre del archivo>* para eliminarlo` : ''}`
+teks += `\n\nUse *${prefix}sendFile <nombre del archivo>* para visualizarlo${!inky.isJadi ? `\n\nUse *${prefix}delfile <nombre del archivo>* para eliminarlo` : ''}`
 v.reply(teks)
 break
 
-case 'rfile':
+case 'sendFile':
 await v.react('✨')
 var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '.mp3')) || (sFiles[0].image.includes(q + '.jpg')) || (sFiles[0].video.includes(q + '.mp4'))) {
