@@ -109,13 +109,15 @@ module.exports = async(inky, v, store) => {
 		}
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
 			var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
+			var jids = [v.sender]
+			mentionUser.map(x => jids.push(x))
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('.jpg')
-				v.replyImg(await v.download(nameJpg), teks)
+				v.replyImg(await v.download(nameJpg), teks, v.chat, jids)
 				await fs.unlinkSync(nameJpg)
 			} else if (v.msg.type === 'videoMessage') {
 				var nameMp4 = getRandom('.mp4')
-				v.replyVid(await v.download(nameMp4), teks)
+				v.replyVid(await v.download(nameMp4), teks, v.chat, jids)
 				await fs.unlinkSync(nameMp4)
 			}
 		}
