@@ -822,9 +822,8 @@ break
 					}
 					if (v.body.startsWith('>')) {
 						try {
-							var value = await eval(`(async () => {${v.body.slice(1)}})()`)
-							v.reply(util.format(value))
-						} catch(e){
+							v.reply(util.format(await eval(`(async () => {${v.body.slice(1)}})()`)))
+						} catch(e) {
 							v.reply(util.format(e))
 						}
 					}
