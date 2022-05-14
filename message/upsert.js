@@ -385,6 +385,28 @@ var user = groupMembers[none].id
 v.reply('Ha sido elegido @' + user.split('@')[0], v.chat, [user])
 break
 
+case 'hidetag':
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+var jids = []
+groupMembers.map(x => jids.push(x))
+v.reply(q, v.chat, jids)
+break
+
+case 'tagall':
+await v.react('✨')
+if (!v.isGroup) return v.reply(mess.only.group)
+if (!isGroupAdmins) return v.reply(mess.only.admins)
+var jids = []
+groupMembers.map(x => jids.push(x))
+var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ Total de administradores: ${groupAdmins.length}\n➫ Total de miembros: ${groupMembers.length}\n`
+for (let x of jids) {
+	teks += `\n| ➼ @${x.split('@')[0]}`
+}
+v.reply(teks, v.chat, jids)
+break
+
 /*
 	Economia
 */
