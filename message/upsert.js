@@ -400,7 +400,7 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var jids = []
 groupMembers.map(x => jids.push(x.id))
-var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ Total de administradores: ${groupAdmins.length}\n➫ Total de miembros: ${groupMembers.length}\n`
+var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ *Total de admins:* ${groupAdmins.length}\n➫ *Total de miembros:* ${groupMembers.length}\n`
 for (let x of jids) {
 	teks += `\n| ➼ @${x.split('@')[0]}`
 }
@@ -446,7 +446,7 @@ let jidsTop = []
 var total = 10
 if (money.length < 10) total = money.length
 for (let i = 0; i < total; i++) {
-	teks += `\n│ ➼ @${money[i].id} > $${h2k(money[i].money)}`
+	teks += `\n│ ➼ @${money[i].id} ......... $${h2k(money[i].money)}`
 	jidsTop.push(money[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, jidsTop)
