@@ -390,7 +390,7 @@ await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var jids = []
-groupMembers.map(x => jids.push(x))
+groupMembers.map(x => jids.push(x.id))
 v.reply(q, v.chat, jids)
 break
 
@@ -399,7 +399,7 @@ await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var jids = []
-groupMembers.map(x => jids.push(x))
+groupMembers.map(x => jids.push(x.id))
 var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ Total de administradores: ${groupAdmins.length}\n➫ Total de miembros: ${groupMembers.length}\n`
 for (let x of jids) {
 	teks += `\n| ➼ @${x.split('@')[0]}`
