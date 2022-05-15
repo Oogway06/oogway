@@ -106,11 +106,11 @@ module.exports = async(inky, v, store) => {
 			var jids = [v.sender]
 			v.mentionUser.map(x => jids.push(x))
 			if (v.msg.type === 'imageMessage') {
-				var nameJpg = getRandom('.jpg')
+				var nameJpg = getRandom('')
 				v.replyImg(await v.download(nameJpg), teks, v.chat, jids)
 				await fs.unlinkSync(nameJpg)
 			} else if (v.msg.type === 'videoMessage') {
-				var nameMp4 = getRandom('.mp4')
+				var nameMp4 = getRandom('')
 				v.replyVid(await v.download(nameMp4), teks, v.chat, jids)
 				await fs.unlinkSync(nameMp4)
 			}
@@ -236,11 +236,11 @@ var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${v.quoted.sender.
 var jids = [v.quoted.sender]
 v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
-	var nameJpg = getRandom('.jpg')
+	var nameJpg = getRandom('')
 	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, jids)
 	await fs.unlinkSync(nameJpg)
 } else if (v.quoted.msg.type === 'videoMessage') {
-	var nameMp4 = getRandom('.mp4')
+	var nameMp4 = getRandom('')
 	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, jids)
 	await fs.unlinkSync(nameMp4)
 }
@@ -514,14 +514,14 @@ case 'sticker':
 await v.react('✨')
 if ((v.type === 'imageMessage') || isQuotedImage) {
 	v.reply(mess.wait)
-	var nameJpg = getRandom('.jpg')
+	var nameJpg = getRandom('')
 	isQuotedImage ? await v.quoted.download(nameJpg) : await v.download(nameJpg)
 	var stik = await imageToWebp(nameJpg)
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
 } else if ((v.type === 'videoMessage') || isQuotedVideo) {
 	v.reply(mess.wait)
-	var nameMp4 = getRandom('.mp4')
+	var nameMp4 = getRandom('')
 	isQuotedVideo ? await v.quoted.download(nameMp4) : await v.download(nameMp4)
 	var stik = await videoToWebp(nameMp4)
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
@@ -537,7 +537,7 @@ if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + p
 var pack = q.split('|')[0]
 var author = q.split('|')[1]
 v.reply(mess.wait)
-var nameWebp = getRandom('.webp')
+var nameWebp = getRandom('')
 var media = await v.quoted.download(nameWebp)
 await writeExif(media, {packname: pack, author: author})
 	.then(x => v.replyS(x))
@@ -548,7 +548,7 @@ case 'inkys':
 await await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
 v.reply(mess.wait)
-var nameWebp = getRandom('.webp')
+var nameWebp = getRandom('')
 var media = await v.quoted.download(nameWebp)
 await writeExif(media)
 	.then(x => v.replyS(x))
@@ -559,10 +559,10 @@ case 'toimg':
 await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
 v.reply(mess.wait)
-var nameWebp = getRandom('.webp')
+var nameWebp = getRandom('')
 var nameJpg = getRandom('.jpg')
 await v.quoted.download(nameWebp)
-exec(`ffmpeg -i ${nameWebp} ${nameJpg}`, async(err) => {
+exec(`ffmpeg -i ${nameWebp}.webp ${nameJpg}`, async(err) => {
 	fs.unlinkSync(nameWebp)
 	if (err) return v.reply(String(err))
 	await v.replyImg(fs.readFileSync(nameJpg))
@@ -574,10 +574,10 @@ case 'tomp3':
 await v.react('✨')
 if (!isQuotedVideo) return v.reply('Responda a un video con el comando ' + prefix + command)
 v.reply(mess.wait)
-var nameMp4 = getRandom('.mp4')
+var nameMp4 = getRandom('')
 var nameMp3 = getRandom('.mp3')
 await v.quoted.download(nameMp4)
-exec(`ffmpeg -i ${nameMp4} ${nameMp3}`, async(err) => {
+exec(`ffmpeg -i ${nameMp4}.mp4 ${nameMp3}`, async(err) => {
 	fs.unlinkSync(nameMp4)
 	if (err) return v.reply(String(err))
 	await v.replyAud(fs.readFileSync(nameMp3))
@@ -719,31 +719,31 @@ if (!v.quoted) return v.reply('Responde a un archivo para guardarlo')
 var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.readdirSync('./media/audio'), image: fs.readdirSync('./media/image'), video: fs.readdirSync('./media/video') })
 if (isQuotedSticker) {
 	if (sFiles[0].sticker.includes(q + '.webp')) return v.reply('Ya existe un sticker con ese nombre')
-	var nameWebp = getRandom('.webp')
+	var nameWebp = getRandom('')
 	var media = await v.quoted.download(nameWebp)
 	await fs.writeFileSync(`./media/sticker/${q}.webp`, media)
-	fs.unlinkSync(nameWebp)
+	fs.unlinkSync(nameWebp + '.webp')
 	v.reply('Sticker guardado exitosamente')
 } else if (isQuotedAudio) {
 	if (sFiles[0].audio.includes(q + '.mp3')) return v.reply('Ya existe un audio con ese nombre')
-	var nameMp3 = getRandom('.mp3')
+	var nameMp3 = getRandom('')
 	var media = await v.quoted.download(nameMp3)
 	await fs.writeFileSync(`./media/audio/${q}.mp3`, media)
-	fs.unlinkSync(nameMp3)
+	fs.unlinkSync(nameMp3 + '.mp3')
 	v.reply('Audio guardado exitosamente')
 } else if (isQuotedImage) {
 	if (sFiles[0].image.includes(q + '.jpg')) return v.reply('Ya existe una imagen con ese nombre')
-	var nameJpg = getRandom('.jpg')
+	var nameJpg = getRandom('')
 	var media = await v.quoted.download(nameJpg)
 	await fs.writeFileSync(`./media/image/${q}.jpg`, media)
-	fs.unlinkSync(nameJpg)
+	fs.unlinkSync(nameJpg + '.jpg')
 	v.reply('Imagen guardado exitosamente')
 } else if (isQuotedVideo) {
 	if (sFiles[0].video.includes(q + '.mp4')) return v.reply('Ya existe un video con ese nombre')
-	var nameMp4 = getRandom('.mp4')
+	var nameMp4 = getRandom('')
 	var media = await v.quoted.download(nameMp4)
 	await fs.writeFileSync(`./media/video/${q}.mp4`, media)
-	fs.unlinkSync(nameMp4)
+	fs.unlinkSync(nameMp4 + '.mp4')
 	v.reply('Video guardado exitosamente')
 } else {
 	v.reply('Responde a un archivo para guardarlo')
