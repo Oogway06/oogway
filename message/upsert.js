@@ -180,6 +180,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓙⓤⓔⓖⓞⓢ●
 ➼ ${prefix}blackjack <monto>
+➼ ${prefix}casino <monto>
 
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
 ➼ ${prefix}sticker
@@ -499,23 +500,27 @@ if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
 bj.push(obj)
-removeBal(senderNumber, q)
+await removeBal(senderNumber, Number(q))
 inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bj[position(bj, v.chat, v.sender)].pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *${getHandValue(bj[position(bj, v.chat, v.sender)].balance).slice(1)}$*\nBalance: *${userBal-getHandValue(bj[position(bj, v.chat, v.sender)].balance)}$*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1, mentions: [v.sender] }, { quoted: v })
 break
 
 case 'casino':
-if (!isOwner) return v.react('❌')
 await v.react('✨')
-var deck = ['10','5','5','5']
+if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
+if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
+if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
+if (userBal < q) return v.reply('No tienes suficiente dinero')
+await removeBal(senderNumber, Number(q))
+var deck = ['5', '10', '5']
 var ran = deck[Math.floor(Math.random() * deck.length)]
 var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
 var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
-const fail1 = fail[Math.floor(Math.random() * fail.length)]
-const fail2 = fail[Math.floor(Math.random() * fail.length)]
-const win1 = win[Math.floor(Math.random() * win.length)]     
-if (ran < 10) return v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${fail1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nNo has logrado alinearlos\nSuerte para la proxima :D`)
-v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${win1}\n┃ ├──────────┤ ┃\n        ${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $25`)
-addBal(senderNumber, 25)
+var fail1 = fail[Math.floor(Math.random() * fail.length)]
+var fail2 = fail[Math.floor(Math.random() * fail.length)]
+var win1 = win[Math.floor(Math.random() * win.length)]     
+if (ran < 10) return v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${fail1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nNo has logrado alinearlos\nY has perdido $${q}\nSuerte para la proxima :D`)
+await v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${win1}\n┃ ├──────────┤ ┃\n        ${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $${q}`)
+await addBal(senderNumber, (Number(q) * 2))
 break
 
 /*
