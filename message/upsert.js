@@ -108,11 +108,11 @@ module.exports = async(inky, v, store) => {
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('')
 				v.replyImg(await v.download(nameJpg), teks, v.chat, jids)
-				await fs.unlinkSync(nameJpg)
+				await fs.unlinkSync(nameJpg  + '.jpg')
 			} else if (v.msg.type === 'videoMessage') {
 				var nameMp4 = getRandom('')
 				v.replyVid(await v.download(nameMp4), teks, v.chat, jids)
-				await fs.unlinkSync(nameMp4)
+				await fs.unlinkSync(nameMp4 + '.mp4')
 			}
 		}
 		if (isAntiLink && isBotAdmin && !isGroupAdmins && v.body.includes('chat.whatsapp.com/')) {
@@ -238,11 +238,11 @@ v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
 	var nameJpg = getRandom('')
 	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, jids)
-	await fs.unlinkSync(nameJpg)
+	await fs.unlinkSync(nameJpg + '.jpg')
 } else if (v.quoted.msg.type === 'videoMessage') {
 	var nameMp4 = getRandom('')
 	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, jids)
-	await fs.unlinkSync(nameMp4)
+	await fs.unlinkSync(nameMp4 + '.mp4')
 }
 break
 
@@ -541,7 +541,7 @@ var nameWebp = getRandom('')
 var media = await v.quoted.download(nameWebp)
 await writeExif(media, {packname: pack, author: author})
 	.then(x => v.replyS(x))
-await fs.unlinkSync(nameWebp)
+await fs.unlinkSync(nameWebp + '.webp')
 break
 
 case 'inkys':
@@ -552,7 +552,7 @@ var nameWebp = getRandom('')
 var media = await v.quoted.download(nameWebp)
 await writeExif(media)
 	.then(x => v.replyS(x))
-await fs.unlinkSync(nameWebp)
+await fs.unlinkSync(nameWebp + '.webp')
 break
 
 case 'toimg':
@@ -563,7 +563,7 @@ var nameWebp = getRandom('')
 var nameJpg = getRandom('.jpg')
 await v.quoted.download(nameWebp)
 exec(`ffmpeg -i ${nameWebp}.webp ${nameJpg}`, async(err) => {
-	fs.unlinkSync(nameWebp)
+	fs.unlinkSync(nameWebp + '.webp')
 	if (err) return v.reply(String(err))
 	await v.replyImg(fs.readFileSync(nameJpg))
 	fs.unlinkSync(nameJpg)
