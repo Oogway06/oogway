@@ -503,6 +503,21 @@ removeBal(senderNumber, q)
 inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bj[position(bj, v.chat, v.sender)].pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *${getHandValue(bj[position(bj, v.chat, v.sender)].balance).slice(1)}$*\nBalance: *${userBal-getHandValue(bj[position(bj, v.chat, v.sender)].balance)}$*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1, mentions: [v.sender] }, { quoted: v })
 break
 
+case 'casino':
+if (!isOwner) return v.react('❌')
+await v.react('✨')
+var deck = ['10','5','5','5']
+var ran = deck[Math.floor(Math.random() * deck.length)]
+var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
+var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
+const fail1 = fail[Math.floor(Math.random() * fail.length)]
+const fail2 = fail[Math.floor(Math.random() * fail.length)]
+const win1 = win[Math.floor(Math.random() * win.length)]     
+if (ran < 10) return v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${fail1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nNo has logrado alinearlos\nSuerte para la proxima :D`)
+v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${win1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $25`)
+addBal(senderNumber, 25)
+break
+
 /*
 	Convertidor
 */
