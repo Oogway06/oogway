@@ -516,14 +516,14 @@ if ((v.type === 'imageMessage') || isQuotedImage) {
 	v.reply(mess.wait)
 	var nameJpg = getRandom('')
 	isQuotedImage ? await v.quoted.download(nameJpg) : await v.download(nameJpg)
-	var stik = await imageToWebp(nameJpg)
+	var stik = await imageToWebp(nameJpg + '.jpg')
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
 } else if ((v.type === 'videoMessage') || isQuotedVideo) {
 	v.reply(mess.wait)
 	var nameMp4 = getRandom('')
 	isQuotedVideo ? await v.quoted.download(nameMp4) : await v.download(nameMp4)
-	var stik = await videoToWebp(nameMp4)
+	var stik = await videoToWebp(nameMp4 + '.mp4')
 	writeExif(stik, {packname: 'ღ ' + v.pushName + ' 乂 ' + senderNumber + ' ღ', author: ''})
 		.then(x => v.replyS(x))
 } else {
