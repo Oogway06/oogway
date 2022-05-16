@@ -107,11 +107,11 @@ module.exports = async(inky, v, store) => {
 			v.mentionUser.map(x => jids.push(x))
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('')
-				v.replyImg(await v.download(nameJpg), teks, v.chat, jids)
+				v.replyImg(await v.download(nameJpg), teks, v.chat, {mention: jids})
 				await fs.unlinkSync(nameJpg  + '.jpg')
 			} else if (v.msg.type === 'videoMessage') {
 				var nameMp4 = getRandom('')
-				v.replyVid(await v.download(nameMp4), teks, v.chat, jids)
+				v.replyVid(await v.download(nameMp4), teks, v.chat, {mention: jids})
 				await fs.unlinkSync(nameMp4 + '.mp4')
 			}
 		}
@@ -238,11 +238,11 @@ var jids = [v.quoted.sender]
 v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
 	var nameJpg = getRandom('')
-	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, jids)
+	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, {mention: jids})
 	await fs.unlinkSync(nameJpg + '.jpg')
 } else if (v.quoted.msg.type === 'videoMessage') {
 	var nameMp4 = getRandom('')
-	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, jids)
+	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, {mention: jids})
 	await fs.unlinkSync(nameMp4 + '.mp4')
 }
 break
@@ -393,7 +393,7 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var jids = []
 groupMembers.map(x => jids.push(x.id))
-v.reply(q, v.chat, jids)
+v.reply(q, v.chat, {mention: jids})
 break
 
 case 'tagall':
@@ -406,7 +406,7 @@ var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ *Total de admins:* ${gro
 for (let x of jids) {
 	teks += `\n| ➼ @${x.split('@')[0]}`
 }
-v.reply(teks, v.chat, jids)
+v.reply(teks, v.chat, {mention: jids})
 break
 
 /*
@@ -436,7 +436,7 @@ if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
 addBal(v.mentionUser[0].split('@')[0], ((args[0] * 2) / 2))
 removeBal(senderNumber, ((args[0] * 2) / 2))
-v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, v.chat, [v.mentionUser[0], v.sender])
+v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, v.chat, {mention: [v.mentionUser[0], v.sender]})
 break
 
 case 'baltop':
@@ -451,7 +451,7 @@ for (let i = 0; i < total; i++) {
 	teks += `\n│ ➼ @${money[i].id} ......... $${h2k(money[i].money)}`
 	jidsTop.push(money[i].id + '@s.whatsapp.net')
 }
-v.reply(teks, v.chat, jidsTop)
+v.reply(teks, v.chat, {mention: jidsTop})
 break
 
 case 'shop':
@@ -655,7 +655,7 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(x => v.replyAud({url: x.mp3}, true))
+	.then(x => v.replyAud({url: x.mp3}, v.chat, {ptt: true}))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
@@ -691,7 +691,7 @@ for (let id of groupsID) {
 	var groupMdata = await inky.groupMetadata(id)
 	var groupMem = groupMdata.participants
 	groupMem.map(x => jids.push(x.id))
-	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, jids)
+	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, {mention: jids})
 }
 break
 
@@ -719,7 +719,7 @@ if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario ya tiene el rango *✨ Vip ✨*')
 vip.push(v.mentionUser[0].split('@')[0])
 fs.writeFileSync('./database/user/vip.json', Json(vip))
-v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('@')[0], v.chat, [v.sender, v.mentionUser[0]])
+v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('@')[0], v.chat, {mention: [v.sender, v.mentionUser[0]]})
 break
 
 case 'removevip':
@@ -730,7 +730,7 @@ if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (!vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario no es usuario *✨ Vip ✨*')
 vip.splice(v.mentionUser[0].split('@')[0])
 fs.writeFileSync('./database/user/vip.json', Json(vip))
-v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + v.mentionUser[0].split('@')[0], v.chat, [v.sender, v.mentionUser[0]])
+v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + v.mentionUser[0].split('@')[0], v.chat, {mention: [v.sender, v.mentionUser[0]]})
 break
 
 case 'save':
@@ -816,7 +816,7 @@ if ((sFiles[0].sticker.includes(q + '.webp')) || (sFiles[0].audio.includes(q + '
 		v.replyS(fs.readFileSync('./media/sticker/' + q + '.webp'))
 	}
 	if (sFiles[0].audio.includes(q + '.mp3')) {
-		v.replyAud(fs.readFileSync('./media/audio/' + q + '.mp3'), true)
+		v.replyAud(fs.readFileSync('./media/audio/' + q + '.mp3'), v.chat, {ptt: true})
 	}
 	if (sFiles[0].image.includes(q + '.jpg')) {
 		v.replyImg(fs.readFileSync('./media/image/' + q + '.jpg'), fake)
