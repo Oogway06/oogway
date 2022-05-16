@@ -97,6 +97,7 @@ module.exports = async(inky, v, store) => {
 		if (isCmd) {
 			if (!checkBalReg(senderNumber)) {
 				addUser(senderNumber)
+				addBal(senderNumber, 5000)
 			}
 		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && !isFiltered(senderNumber)) {
 			addBal(senderNumber, 5)
