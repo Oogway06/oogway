@@ -99,7 +99,7 @@ module.exports = async(inky, v, store) => {
 				addUser(senderNumber)
 				addFilter(senderNumber)
 			}
-		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && !isFiltered(senderNumber)) {
+		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && isFiltered(senderNumber)) {
 			addBal(senderNumber, 5)
 		}
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
