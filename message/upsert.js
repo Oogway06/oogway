@@ -626,8 +626,7 @@ var teks = `\t\t\t► ${botName} Youtube
 var buttons = [
 	{urlButton: {displayText: '🔗 Link del Video 🔗', url: play.all[0].url}},
 	{quickReplyButton: {displayText: '🎵 Audio 🎵', id: prefix + 'ytmp3 ' + play.all[0].url}},
-	{quickReplyButton: {displayText: '🎬 Video 🎬', id: prefix + 'ytmp4 ' + play.all[0].url}},
-	{quickReplyButton: {displayText: '📦 Audio Documento 📦', id: prefix + 'ytmp3doc ' + play.all[0].url}}
+	{quickReplyButton: {displayText: '🎬 Video 🎬', id: prefix + 'ytmp4 ' + play.all[0].url}}
 ]
 var buffer = await getBuffer(play.all[0].image)
 replyTempImg(teks, fake, buttons, buffer)
@@ -656,7 +655,10 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(x => v.replyAud({url: x.mp3}, v.chat, {ptt: true}))
+	.then(x => {
+	v.replyAud({url: x.mp3}, v.chat, {ptt: true})
+	v.replyDoc({url: x.mp3}, v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'})
+})
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
 
@@ -667,15 +669,6 @@ v.reply(mess.wait)
 hx.youtube(q)
 	.then(x => v.replyVid({url: x.link}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
-break
-
-case 'ytmp3doc':
-await v.react('✨')
-if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
-v.reply(mess.wait)
-hx.youtube(q)
-	.then(async(x) => v.replyDoc(await getBuffer(x.mp3), v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'}))
-	.catch(e => v.reply(e))
 break
 
 /*
