@@ -674,7 +674,7 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(async(x) => v.replyDoc(await getBuffer(x.mp3), {mimetype: 'audio/mpeg', filename: x.title + '.mp3'}))
+	.then(async(x) => v.replyDoc(await getBuffer(x.mp3), v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'}))
 	.catch(e => v.reply(e))
 break
 
