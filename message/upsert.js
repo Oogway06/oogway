@@ -508,19 +508,22 @@ case 'casino':
 await v.react('✨')
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
-if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
+if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
-await removeBal(senderNumber, Number(q))
-var deck = ['5', '10', '5']
+var deck = ['5', '5', '10', '5', '5']
 var ran = deck[Math.floor(Math.random() * deck.length)]
 var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
 var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
 var fail1 = fail[Math.floor(Math.random() * fail.length)]
 var fail2 = fail[Math.floor(Math.random() * fail.length)]
 var win1 = win[Math.floor(Math.random() * win.length)]     
-if (ran < 10) return v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${fail1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nNo has logrado alinearlos\nY has perdido $${q}\nSuerte para la proxima :D`)
-await v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${win1}\n┃ ├──────────┤ ┃\n        ${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $${q}`)
-await addBal(senderNumber, (Number(q) * 2))
+if (ran < 10) {
+	v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${fail1}\n┃ ├──────────┤ ┃\n        ${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nNo has logrado alinearlos\nY has perdido $${q}\nSuerte para la proxima :D`)
+	removeBal(senderNumber, Number(q))
+} else {
+	v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n        🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n        ${win1}\n┃ ├──────────┤ ┃\n        ${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $${(q * 5)}`)
+	addBal(senderNumber, (Number(q) * 5))
+}
 break
 
 /*
