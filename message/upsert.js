@@ -97,10 +97,10 @@ module.exports = async(inky, v, store) => {
 		if (isCmd) {
 			if (!checkBalReg(senderNumber)) {
 				addUser(senderNumber)
-				addFilter(senderNumber)
 			}
-		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && isFiltered(senderNumber)) {
+		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && !isFiltered(senderNumber)) {
 			addBal(senderNumber, 5)
+			addFilter(senderNumber)
 		}
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
 			var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
