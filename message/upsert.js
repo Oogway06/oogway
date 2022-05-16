@@ -20,7 +20,7 @@ const bj = []
 
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
-const { addUser, addBal, checkBal, checkBalReg, removeBal } = require('../lib/money')
+const { addFilter, addUser, addBal, checkBal, checkBalReg, isFiltered, removeBal } = require('../lib/money')
 const { sms } = require('../lib/simple')
 
 const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require('../lib/game/blackjack')
@@ -97,8 +97,9 @@ module.exports = async(inky, v, store) => {
 		if (isCmd) {
 			if (!checkBalReg(senderNumber)) {
 				addUser(senderNumber)
+				addFilter(senderNumber)
 			}
-		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi) {
+		} else if (v.msg && checkBalReg(senderNumber) && !inky.isJadi && !isFiltered(senderNumber)) {
 			addBal(senderNumber, 5)
 		}
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
