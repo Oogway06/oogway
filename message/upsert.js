@@ -463,7 +463,7 @@ var teks = `\t\t\t${botName} Shop
 
 ╭───── *✨ Vip ✨* ─────
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
-│ ➼ *Precio:* _$250 K_
+│ ➼ *Precio:* _$750 K_
 │ ➼ *Ventajas:*
 │ \t\t- Acceso al comando *${prefix}join*${!inky.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
@@ -476,8 +476,8 @@ var teks = `\t\t\t${botName} Shop
 Para comprar un articulo use *${prefix + command} <articulo>*`
 if (q.toLowerCase().includes('vip')) {
 	if (isVip) return v.reply('Usted ya tiene el rango *✨ Vip ✨*')
-	if (userBal < 250000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
-	removeBal(senderNumber, 250000)
+	if (userBal < 750000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
+	removeBal(senderNumber, 750000)
 	vip.push(senderNumber)
 	fs.writeFileSync('./database/user/vip.json', Json(vip))
 	v.reply('@' + senderNumber + ' has comprado exitosamente el rango *✨ Vip ✨*, espero que lo disfrutes :D')
@@ -510,7 +510,7 @@ if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
-var deck = ['5', '10', '5']
+var deck = ['5', '5', '10', '5', '5']
 var ran = deck[Math.floor(Math.random() * deck.length)]
 var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
 var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
