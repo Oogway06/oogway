@@ -107,11 +107,11 @@ module.exports = async(inky, v, store) => {
 			v.mentionUser.map(x => jids.push(x))
 			if (v.msg.type === 'imageMessage') {
 				var nameJpg = getRandom('')
-				v.replyImg(await v.download(nameJpg), teks, v.chat, {mention: jids})
+				v.replyImg(await v.download(nameJpg), teks, v.chat, {mentions: jids})
 				await fs.unlinkSync(nameJpg  + '.jpg')
 			} else if (v.msg.type === 'videoMessage') {
 				var nameMp4 = getRandom('')
-				v.replyVid(await v.download(nameMp4), teks, v.chat, {mention: jids})
+				v.replyVid(await v.download(nameMp4), teks, v.chat, {mentions: jids})
 				await fs.unlinkSync(nameMp4 + '.mp4')
 			}
 		}
@@ -238,11 +238,11 @@ var jids = [v.quoted.sender]
 v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
 	var nameJpg = getRandom('')
-	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, {mention: jids})
+	v.replyImg(await v.quoted.download(nameJpg), teks, v.chat, {mentions: jids})
 	await fs.unlinkSync(nameJpg + '.jpg')
 } else if (v.quoted.msg.type === 'videoMessage') {
 	var nameMp4 = getRandom('')
-	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, {mention: jids})
+	v.replyVid(await v.quoted.download(nameMp4), teks, v.chat, {mentions: jids})
 	await fs.unlinkSync(nameMp4 + '.mp4')
 }
 break
@@ -339,9 +339,9 @@ if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (v.sender === v.mentionUser[0]) return v.reply('No puede promotearse usted mismo')
-if (groupAdmins.includes(v.mentionUser[0])) return v.reply(`El usuario @${v.mentionUser[0].split('@')[0]} ya es administrador`, v.chat, [v.mentionUser[0], v.sender])
+if (groupAdmins.includes(v.mentionUser[0])) return v.reply(`El usuario @${v.mentionUser[0].split('@')[0]} ya es administrador`, v.chat, {mentions: [v.mentionUser[0], v.sender]})
 inky.groupParticipantsUpdate(v.chat, [v.mentionUser[0]], 'promote')
-	.then(x => v.reply(`Ha sido promovido a @${v.mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, [v.mentionUser[0], v.sender]))
+	.then(x => v.reply(`Ha sido promovido a @${v.mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, {mentions: [v.mentionUser[0], v.sender]}))
 	.catch(e => v.reply(e))
 break
 
@@ -352,9 +352,9 @@ if (!isGroupAdmins) return v.reply(mess.only.admins)
 if (!isBotAdmin) return v.reply(mess.only.badmin)
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (v.sender === v.mentionUser[0]) return v.reply('No puede demotearse usted mismo')
-if (!groupAdmins.includes(v.mentionUser[0])) return v.reply(`El usuario @${v.mentionUser[0].split('@')[0]} no es administrador`, v.chat, [v.mentionUser[0], v.sender])
+if (!groupAdmins.includes(v.mentionUser[0])) return v.reply(`El usuario @${v.mentionUser[0].split('@')[0]} no es administrador`, v.chat, {mentions: [v.mentionUser[0], v.sender]})
 inky.groupParticipantsUpdate(v.chat, [v.mentionUser[0]], 'demote')
-	.then(x => v.reply(`Ha sido removido a @${v.mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, [v.mentionUser[0], v.sender]))
+	.then(x => v.reply(`Ha sido removido a @${v.mentionUser[0].split('@')[0]} como administrador por @${senderNumber}`, v.chat, {mentions: [v.mentionUser[0], v.sender]}))
 	.catch(e => v.reply(e))
 break
 
@@ -367,7 +367,7 @@ if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (v.sender === v.mentionUser[0]) return v.reply('No puede kickearse usted mismo')
 if (groupAdmins.includes(v.mentionUser[0])) return v.reply('No es posible eliminar a un administrador')
 inky.groupParticipantsUpdate(v.chat, [v.mentionUser[0]], 'remove')
-	.then(x => v.reply(`Ha sido eliminado @${v.mentionUser[0].split('@')[0]} del grupo por @${senderNumber}`, v.chat, [v.mentionUser[0], v.sender]))
+	.then(x => v.reply(`Ha sido eliminado @${v.mentionUser[0].split('@')[0]} del grupo por @${senderNumber}`, v.chat, {mentions: [v.mentionUser[0], v.sender]}))
 	.catch(e => v.reply(e))
 break
 
@@ -384,7 +384,7 @@ await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 var none = Math.floor(Math.random() * groupMembers.length + 0)
 var user = groupMembers[none].id
-v.reply('Ha sido elegido @' + user.split('@')[0], v.chat, [user])
+v.reply('Ha sido elegido @' + user.split('@')[0], v.chat, {mentions: [user]})
 break
 
 case 'hidetag':
@@ -393,7 +393,7 @@ if (!v.isGroup) return v.reply(mess.only.group)
 if (!isGroupAdmins) return v.reply(mess.only.admins)
 var jids = []
 groupMembers.map(x => jids.push(x.id))
-v.reply(q, v.chat, {mention: jids})
+v.reply(q, v.chat, {mentions: jids})
 break
 
 case 'tagall':
@@ -406,7 +406,7 @@ var teks = `\t\t\t\t\t*${groupMetadata.subject}*\n\n➫ *Total de admins:* ${gro
 for (let x of jids) {
 	teks += `\n| ➼ @${x.split('@')[0]}`
 }
-v.reply(teks, v.chat, {mention: jids})
+v.reply(teks, v.chat, {mentions: jids})
 break
 
 /*
@@ -436,7 +436,7 @@ if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
 addBal(v.mentionUser[0].split('@')[0], ((args[0] * 2) / 2))
 removeBal(senderNumber, ((args[0] * 2) / 2))
-v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, v.chat, {mention: [v.mentionUser[0], v.sender]})
+v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, v.chat, {mentions: [v.mentionUser[0], v.sender]})
 break
 
 case 'baltop':
@@ -451,7 +451,7 @@ for (let i = 0; i < total; i++) {
 	teks += `\n│ ➼ @${money[i].id} ......... $${h2k(money[i].money)}`
 	jidsTop.push(money[i].id + '@s.whatsapp.net')
 }
-v.reply(teks, v.chat, {mention: jidsTop})
+v.reply(teks, v.chat, {mentions: jidsTop})
 break
 
 case 'shop':
@@ -500,7 +500,7 @@ if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
 bj.push(obj)
-await removeBal(senderNumber, Number(q))
+removeBal(senderNumber, Number(q))
 inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bj[position(bj, v.chat, v.sender)].pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *${getHandValue(bj[position(bj, v.chat, v.sender)].balance).slice(1)}$*\nBalance: *${userBal-getHandValue(bj[position(bj, v.chat, v.sender)].balance)}$*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1, mentions: [v.sender] }, { quoted: v })
 break
 
@@ -518,12 +518,13 @@ var fail1 = fail[Math.floor(Math.random() * fail.length)]
 var fail2 = fail[Math.floor(Math.random() * fail.length)]
 var win1 = win[Math.floor(Math.random() * win.length)]     
 if (ran < 10) {
-	v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n\t\t\t\t\t🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail1}\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nHas perdido $${q}`)
+	var teks = `╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n\t\t\t\t\t🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail1}\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail2}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nHas perdido $${q}`
 	removeBal(senderNumber, Number(q))
 } else {
-	v.reply(`╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n\t\t\t\t\t🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n\t\t\t\t\t${win1}\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $${(q * 10)}`)
+	var teks = `╭─╼┥${botName}┝╾─╮\n╽ ┌──────────┐ ┃\n\t\t\t\t\t🍋 : 🍌 : 🍍\n┃ ├──────────┤ ┃\n\t\t\t\t\t${win1}\n┃ ├──────────┤ ┃\n\t\t\t\t\t${fail1}\n╿ └──────────┘ ╿\n╰──┥${botName}┠──╯\n\nFelicidades has ganado $${(q * 10)}`
 	addBal(senderNumber, (Number(q) * 10))
 }
+v.reply(teks)
 break
 
 /*
@@ -691,7 +692,7 @@ for (let id of groupsID) {
 	var groupMdata = await inky.groupMetadata(id)
 	var groupMem = groupMdata.participants
 	groupMem.map(x => jids.push(x.id))
-	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, {mention: jids})
+	v.reply(`\t\t\t\t*${botName} BroadCast*\n\n${q}`, id, {mentions: jids})
 }
 break
 
@@ -719,7 +720,7 @@ if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario ya tiene el rango *✨ Vip ✨*')
 vip.push(v.mentionUser[0].split('@')[0])
 fs.writeFileSync('./database/user/vip.json', Json(vip))
-v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('@')[0], v.chat, {mention: [v.sender, v.mentionUser[0]]})
+v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('@')[0], v.chat, {mentions: [v.sender, v.mentionUser[0]]})
 break
 
 case 'removevip':
@@ -730,7 +731,7 @@ if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (!vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario no es usuario *✨ Vip ✨*')
 vip.splice(v.mentionUser[0].split('@')[0])
 fs.writeFileSync('./database/user/vip.json', Json(vip))
-v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + v.mentionUser[0].split('@')[0], v.chat, {mention: [v.sender, v.mentionUser[0]]})
+v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + v.mentionUser[0].split('@')[0], v.chat, {mentions: [v.sender, v.mentionUser[0]]})
 break
 
 case 'save':
