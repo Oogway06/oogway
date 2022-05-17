@@ -202,7 +202,7 @@ ${isStaff ? `
 ➼ ${prefix}bc <texto>
 ➼ ${prefix}mode <public/self>${!inky.isJadi ? `
 ➼ ${prefix}addvip / ${prefix}removevip
-➼ ${prefix}addbal <monto> <@usuario> / ${prefix}removebal <monto> <@usuario>
+➼ ${prefix}addbal <monto> / ${prefix}removebal <monto>
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
