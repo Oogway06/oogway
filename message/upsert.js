@@ -445,14 +445,15 @@ break
 case 'baltop':
 case 'topbal':
 await v.react('✨')
+var none = JSON.parse(fs.readFileSync('./database/user/money.json'))
 var teks = '\t\t\t' + botName + ' Balance Top\n'
-money.sort((a, b) => (a.money < b.money) ? 1 : -1)
+none.sort((a, b) => (a.money < b.money) ? 1 : -1)
 let jidsTop = []
 var total = 10
-if (money.length < 10) total = money.length
+if (none.length < 10) total = none.length
 for (let i = 0; i < total; i++) {
-	teks += `\n│ ➼ @${money[i].id} ......... $${h2k(money[i].money)}`
-	jidsTop.push(money[i].id + '@s.whatsapp.net')
+	teks += `\n│ ➼ @${none[i].id} ......... $${h2k(none[i].money)}`
+	jidsTop.push(none[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, {mentions: jidsTop})
 break
@@ -891,7 +892,7 @@ break
 					await v.react('✨')
 					var bjPosition = bj[position(bj, v.chat, v.sender)]
 					bjPosition.pHand.push(drawRandomCard())
-					if (getHandValue(bjPosition.bHand) <= 9) {
+					if (getHandValue(bjPosition.bHand) <= 10) {
 						bjPosition.bHand.push(drawRandomCard())
 					}
 					if (getHandValue(bjPosition.pHand) > 21) {
@@ -908,7 +909,7 @@ break
 					bj.splice(bj.indexOf(bjPosition), 1)
 					if (getHandValue(bjPosition.pHand) < getHandValue(bjPosition.bHand)) {
 						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Has perdido ${bjPosition.balance}$* 🃏`)
-					} else if (getHandValue(bjPosition.pHand) == getHandValue(bjPosition.bHand)) {
+					} else if (getHandValue(bjPosition.pHand) === getHandValue(bjPosition.bHand)) {
 						var result = Number(bjPosition.balance)
 						addBal(senderNumber, result)
 						v.reply(`*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bjPosition.pHand)}*\n➫ Mano del bot: *${getHandValue(bjPosition.bHand)}*\n\n🃏 *Ha sido un empate* 🃏`)
