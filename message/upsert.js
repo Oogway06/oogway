@@ -207,7 +207,7 @@ ${isStaff ? `
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}sendfile <texto>
-``: ''}
+`: ''}
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
 \t\t╚════ ▓▓ ࿇ ▓▓ ════╝`
