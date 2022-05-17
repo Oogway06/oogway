@@ -712,6 +712,27 @@ if (q.toLowerCase() === 'public') {
 }
 break
 
+case 'addbal':
+if (!isStaff) return v.react('❌')
+if (inky.isJadi) return v.react('❌')
+await v.react('✨')
+if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (isNaN(args[0])) return v.reply('El monto tiene que ser un numero')
+addBal(v.mentionUser[0].split('@')[0], Number(q))
+v.reply(`\t\t\tDeposito de dinero\n\n│ ➼ Monto: $${args[0]}\n│ ➼ Usuario: @${v.mentionUser[0].split('@')[0]}`, v.chat, {mentions: [v.mentionUser[0]]})
+break
+
+case 'removebal':
+if (!isStaff) return v.react('❌')
+if (inky.isJadi) return v.react('❌')
+await v.react('✨')
+if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
+if (isNaN(args[0])) return v.reply('El monto tiene que ser un numero')
+if ((checkBal(v.mentionUser[0].split('@')[0]) ? checkBal(v.mentionUser[0].split('@')[0]) : '0') < args[0]) return v.reply('El usuario no cuenta con suficiente dinero')
+removeBal(v.mentionUser[0].split('@')[0], Number(q))
+v.reply(`\t\t\tDescuento de dinero\n\n│ ➼ Monto: $${args[0]}\n│ ➼ Usuario: @${v.mentionUser[0].split('@')[0]}`, v.chat, {mentions: [v.mentionUser[0]]})
+break
+
 case 'addvip':
 if (!isStaff) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
