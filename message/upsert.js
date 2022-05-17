@@ -197,7 +197,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}play <texto>
 ➼ ${prefix}tiktok <link>
 ➼ ${prefix}igdl <link>
-
+${isStaff ? `
 \t●Ⓢⓣⓐⓕⓕ●
 ➼ ${prefix}bc <texto>
 ➼ ${prefix}mode <public/self>${!inky.isJadi ? `
@@ -207,7 +207,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}sendfile <texto>
-
+``: ''}
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
 \t\t╚════ ▓▓ ࿇ ▓▓ ════╝`
