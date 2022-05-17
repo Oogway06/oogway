@@ -176,7 +176,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
 ➼ ${prefix}balance
-➼ ${prefix}transfer <monto> <@usuario>
+➼ ${prefix}transferir <monto> <@usuario>
 ➼ ${prefix}topbal
 ➼ ${prefix}shop
 
@@ -430,6 +430,7 @@ v.reply(`\t\t\t*${botName} Balance*
 break
 
 case 'transfer':
+case 'transferir':
 await v.react('✨')
 if (!q) return v.reply('Ingrese el monto que desea transferir')
 if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
