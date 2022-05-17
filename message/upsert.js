@@ -446,13 +446,13 @@ case 'baltop':
 case 'topbal':
 await v.react('✨')
 var none = JSON.parse(fs.readFileSync('./database/user/money.json'))
-var teks = '\t\t\t' + botName + ' Balance Top\n'
+var teks = '\t\t\t\t\t*' + botName + ' Top Bal*\n'
 none.sort((a, b) => (a.money < b.money) ? 1 : -1)
 let jidsTop = []
 var total = 10
 if (none.length < 10) total = none.length
 for (let i = 0; i < total; i++) {
-	teks += `\n${i} ➼ @${none[i].id} ......... $${h2k(none[i].money)}`
+	teks += `\n${i + 1})- @${none[i].id} ......... $${h2k(none[i].money)}`
 	jidsTop.push(none[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, {mentions: jidsTop})
