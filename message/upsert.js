@@ -94,6 +94,9 @@ module.exports = async(inky, v, store) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
+		if (inky.self) {
+			if (!isStaff) return
+		}
 		if (isCmd) {
 			if (!checkBalReg(senderNumber)) {
 				addUser(senderNumber)
