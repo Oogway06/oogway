@@ -466,7 +466,7 @@ let jidsTop = []
 var total = 10
 if (none.length < 10) total = none.length
 for (let i = 0; i < total; i++) {
-	teks += `\n${i + 1})- @${none[i].id} ......... $${h2k(none[i].money)}`
+	teks += `\n${i + 1} ➫  @${none[i].id}\n\t\t\t│ ➼ $${h2k(none[i].money)}`
 	jidsTop.push(none[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, {mentions: jidsTop})
