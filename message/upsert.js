@@ -705,8 +705,8 @@ await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
 hx.youtube(q)
-	.then(x => {
-	v.replyAud({url: x.mp3}, v.chat, {ptt: true})
+	.then(async(x) => {
+	await v.replyAud({url: x.mp3}, v.chat, {ptt: true})
 	v.replyDoc({url: x.mp3}, v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'})
 })
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
