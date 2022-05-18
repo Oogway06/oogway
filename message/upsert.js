@@ -63,7 +63,7 @@ module.exports = async(inky, v, store) => {
 		const isGroupAdmins = v.isGroup ? groupAdmins.includes(v.sender) : false
 		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
-		const isStaff = staff.includes(senderNumber) || isOwner
+		const isStaff = staff.includes(senderNumber) || isMe || isOwner
 		const isVip = vip.includes(senderNumber) || isStaff
 		
 		if (isOwner) {
@@ -450,6 +450,7 @@ if (!q) return v.reply('Ingrese el monto que desea transferir')
 if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione al usuario que desea transferirle')
 if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
+if (args[0].includes('.')) return v.reply('No se puede jugar con numero decimales')
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
 addBal(v.mentionUser[0].split('@')[0], Number(args[0]))
 removeBal(senderNumber, Number(args[0]))
@@ -515,6 +516,7 @@ if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya 
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
+if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
 bj.push(obj)
@@ -527,6 +529,7 @@ await v.react('✨')
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
+if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var deck = ['5', '5', '10', '5', '5']
 var ran = deck[Math.floor(Math.random() * deck.length)]
