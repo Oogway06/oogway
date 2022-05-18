@@ -276,6 +276,7 @@ if (isVip) {
 	if (!q) return v.reply('Ingrese el enlace del grupo')
 	if (!isUrl(q) && !q.includes('whatsapp.com')) return v.reply('Link invalido')
 	removeBal(senderNumber, 10000)
+	v.reply('Ha sido debitado de su cuenta *$10k*')
 	none()
 }
 break
@@ -438,7 +439,7 @@ await v.react('✨')
 v.reply(`\t\t\t*${botName} Balance*
 
 │ ➼ Usuario: *@${senderNumber}*
-│ ➼ Balance: *$${bal}* (${userBal})
+│ ➼ Balance: *$${bal}*${!isNaN(bal) ? ` (${userBal})` : ''}
 │ ➼ Rango: *${rank}*`)
 break
 
@@ -656,7 +657,7 @@ case 'tiktok':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.ttdownloader(q)
+hx.ttdownloader(isUrl(q)[0])
 	.then(x => v.replyVid({url: x.nowm}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
@@ -665,7 +666,7 @@ case 'igdl':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('instagram.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.igdl(q)
+hx.igdl(isUrl(q)[0])
 	.then(x => v.replyVid({url: x.medias[0].url}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
@@ -674,7 +675,7 @@ case 'ytmp3':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.youtube(q)
+hx.youtube(isUrl(q)[0])
 	.then(x => {
 	v.replyAud({url: x.mp3}, v.chat, {ptt: true})
 	v.replyDoc({url: x.mp3}, v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'})
@@ -686,7 +687,7 @@ case 'ytmp4':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.youtube(q)
+hx.youtube(isUrl(q)[0])
 	.then(x => v.replyVid({url: x.link}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
