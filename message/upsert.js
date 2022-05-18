@@ -686,7 +686,7 @@ case 'tiktok':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('tiktok.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.ttdownloader(isUrl(q)[0])
+hx.ttdownloader(q)
 	.then(x => v.replyVid({url: x.nowm}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
@@ -695,7 +695,7 @@ case 'igdl':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('instagram.com')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.igdl(isUrl(q)[0])
+hx.igdl(q)
 	.then(x => v.replyVid({url: x.medias[0].url}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
@@ -704,7 +704,7 @@ case 'ytmp3':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.youtube(isUrl(q)[0])
+hx.youtube(q)
 	.then(x => {
 	v.replyAud({url: x.mp3}, v.chat, {ptt: true})
 	v.replyDoc({url: x.mp3}, v.chat, {mimetype: 'audio/mpeg', filename: x.title + '.mp3'})
@@ -716,7 +716,7 @@ case 'ytmp4':
 await v.react('✨')
 if (!q || !isUrl(q) && !q.includes('youtu')) return v.reply('Comando incorrecto, use: *' + prefix + command + ' <link>*')
 v.reply(mess.wait)
-hx.youtube(isUrl(q)[0])
+hx.youtube(q)
 	.then(x => v.replyVid({url: x.link}, fake))
 	.catch(e => v.reply('Hubo un error al descargar su archivo'))
 break
