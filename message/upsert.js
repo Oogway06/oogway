@@ -439,7 +439,7 @@ await v.react('✨')
 v.reply(`\t\t\t*${botName} Balance*
 
 │ ➼ Usuario: *@${senderNumber}*
-│ ➼ Balance: *$${bal}*${!isNaN(bal) ? ` (${userBal})` : ''}
+│ ➼ Balance: *$${bal}*${isNaN(bal) ? ` (${userBal})` : ''}
 │ ➼ Rango: *${rank}*`)
 break
 
