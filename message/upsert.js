@@ -481,7 +481,7 @@ var teks = `\t\t\t${botName} Shop
 
 ╭───── *✨ Vip ✨* ─────
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
-│ ➼ *Precio:* _$750 K_
+│ ➼ *Precio:* _$750K_
 │ ➼ *Ventajas:*
 │ \t\t- Acceso al comando *${prefix}join* gratis${!inky.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
