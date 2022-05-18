@@ -31,7 +31,6 @@ const { drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer } = require
 
 // Usuario
 const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
-const money = JSON.parse(fs.readFileSync('./database/user/money.json'))
 
 // Grupo
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
