@@ -141,6 +141,30 @@ break
 		
 		switch (command) {
 
+/*
+	Test
+*/
+
+case 'giveaway':
+var listMessage = {
+	text: 'a',
+	buttonText: 'Abrir Aqui',
+	sections: [
+		{
+			title: 'Seccion 1',
+			rows: [
+				{title: 'asd', rowId: 'asd'}
+			]
+		}
+	]
+}
+inky.sendMessage(v.chat, listMessage)
+break
+
+/*
+	End Test
+*/
+
 case 'menu':
 await v.react('✨')
 var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
