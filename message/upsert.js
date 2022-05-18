@@ -528,7 +528,11 @@ if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
-var deck = ['5', '5', '10', '5', '5']
+if (isOwner) {
+	var deck = ['10']
+} else {
+	var deck = ['5', '5', '10', '5', '5']
+}
 var ran = deck[Math.floor(Math.random() * deck.length)]
 var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
 var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
