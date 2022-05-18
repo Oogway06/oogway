@@ -146,6 +146,8 @@ break
 */
 
 case 'giveaway':
+var jids = []
+groupMembers.map(x => jids.push(x.id))
 var listMessage = {
 	text: 'a',
 	buttonText: 'Abrir Aqui',
@@ -156,9 +158,10 @@ var listMessage = {
 				{title: 'asd', rowId: 'asd'}
 			]
 		}
-	]
+	],
+	mentions: jids
 }
-inky.sendMessage(v.chat, listMessage)
+await inky.sendMessage(v.chat, listMessage)
 break
 
 /*
