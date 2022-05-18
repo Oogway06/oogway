@@ -259,16 +259,26 @@ break
 
 case 'join':
 await v.react('✨')
-if (!isVip) return v.reply(mess.only.vip)
-if (!q) return v.reply('Ingrese el enlace del grupo')
-if (!isUrl(q) && !q.includes('whatsapp.com')) return v.reply('Link invalido')
-v.reply(mess.wait)
-inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
-	.then(x => {
-	v.reply('He ingresado exitosamente al grupo')
-	v.reply('He sido añadido al grupo por pedido de @' + senderNumber, x)
-})
-	.catch(e => v.reply('No he podido ingresar al grupo, verifique que el enlace funcione'))
+var none = () => {
+	v.reply(mess.wait)
+	inky.groupAcceptInvite(q.split('chat.whatsapp.com/')[1])
+		.then(x => {
+		v.reply('He ingresado exitosamente al grupo')
+		v.reply('He sido añadido al grupo por pedido de @' + senderNumber, x)
+	})
+		.catch(e => v.reply('No he podido ingresar al grupo, verifique que el enlace funcione'))
+}
+if (isVip) {
+	if (!q) return v.reply('Ingrese el enlace del grupo')
+	if (!isUrl(q) && !q.includes('whatsapp.com')) return v.reply('Link invalido')
+	none()
+} else {
+	if (userBal < 10000) return v.reply('Necesitas *$10 K* para usar este comando')
+	if (!q) return v.reply('Ingrese el enlace del grupo')
+	if (!isUrl(q) && !q.includes('whatsapp.com')) return v.reply('Link invalido')
+	removeBal(senderNumber, 10000)
+	none()
+}
 break
 
 case 'serbot':
@@ -441,8 +451,8 @@ if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione al usuario que desea transferirle')
 if (args[0] < 100) return v.reply('Monto minimo para transferir es de $100')
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
-addBal(v.mentionUser[0].split('@')[0], ((args[0] * 2) / 2))
-removeBal(senderNumber, ((args[0] * 2) / 2))
+addBal(v.mentionUser[0].split('@')[0], Number(args[0]))
+removeBal(senderNumber, Number(args[0]))
 v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, v.chat, {mentions: [v.mentionUser[0], v.sender]})
 break
 
@@ -473,7 +483,7 @@ var teks = `\t\t\t${botName} Shop
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
 │ ➼ *Precio:* _$750 K_
 │ ➼ *Ventajas:*
-│ \t\t- Acceso al comando *${prefix}join*${!inky.isJadi ? `
+│ \t\t- Acceso al comando *${prefix}join* gratis${!inky.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
 ╰───────────────╮
 
