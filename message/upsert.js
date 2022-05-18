@@ -198,15 +198,16 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}igdl <link>
 ${isStaff ? `
 \t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}bc <texto>
 ➼ ${prefix}mode <public/self>${!inky.isJadi ? `
-➼ ${prefix}addvip / ${prefix}removevip
-➼ ${prefix}addbal <monto> / ${prefix}removebal <monto>
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}sendfile <texto>
-`: ''}
+`: ''}${isOwner ? `
+➼ ${prefix}bc <texto>
+➼ ${prefix}addvip / ${prefix}removevip
+➼ ${prefix}addbal <monto> / ${prefix}removebal <monto>
+` : ''}
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
 \t\t╚════ ▓▓ ࿇ ▓▓ ════╝`
@@ -697,7 +698,7 @@ break
 */
 
 case 'bc':
-if (!isStaff) return v.react('❌')
+if (!isOwner) return v.react('❌')
 await v.react('✨')
 var getGroups = await inky.groupFetchAllParticipating()
 var groupsID = Object.entries(getGroups).slice(0).map(x => x[1]).map(x => x.id)
@@ -727,7 +728,7 @@ if (q.toLowerCase() === 'public') {
 break
 
 case 'addbal':
-if (!isStaff) return v.react('❌')
+if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
@@ -737,7 +738,7 @@ v.reply(`\t\t\tDeposito de dinero\n\n│ ➼ Monto: $${h2k(args[0])}\n│ ➼ Us
 break
 
 case 'removebal':
-if (!isStaff) return v.react('❌')
+if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
@@ -748,7 +749,7 @@ v.reply(`\t\t\tDescuento de dinero\n\n│ ➼ Monto: $${h2k(args[0])}\n│ ➼ U
 break
 
 case 'addvip':
-if (!isStaff) return v.react('❌')
+if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
@@ -759,7 +760,7 @@ v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('
 break
 
 case 'removevip':
-if (!isStaff) return v.react('❌')
+if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
