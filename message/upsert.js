@@ -199,13 +199,14 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ${isStaff ? `
 \t●Ⓢⓣⓐⓕⓕ●
 ➼ ${prefix}mode <public/self>${!inky.isJadi ? `
+➼ ${prefix}addvip / ${prefix}removevip
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
 ➼ ${prefix}sendfile <texto>
 `: ''}${isOwner ? `
+\t●Ⓞⓦⓝⓔⓡ●
 ➼ ${prefix}bc <texto>
-➼ ${prefix}addvip / ${prefix}removevip
 ➼ ${prefix}addbal <monto> / ${prefix}removebal <monto>
 ` : ''}
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
