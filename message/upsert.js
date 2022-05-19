@@ -490,13 +490,13 @@ case 'baltop':
 case 'topbal':
 await v.react('✨')
 var none = JSON.parse(fs.readFileSync('./database/user/money.json'))
-var teks = '\t\t\t\t\t*' + botName + ' Top Bal*\n'
+var teks = '\t\t\t\t\t*' + botName + ' Top Bal*'
 none.sort((a, b) => (a.money < b.money) ? 1 : -1)
 let jidsTop = []
 var total = 10
 if (none.length < 10) total = none.length
 for (let i = 0; i < total; i++) {
-	teks += `\n${i + 1} ➫  @${none[i].id}\n\t\t\t│ ➼ $${h2k(none[i].money)}`
+	teks += `\n\n${i + 1} ➫  @${none[i].id}\n\t\t\t│ ➼ $${h2k(none[i].money)}`
 	jidsTop.push(none[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, {mentions: jidsTop})
@@ -511,7 +511,7 @@ var teks = `\t\t\t${botName} Shop
 
 ╭───── *✨ Vip ✨* ─────
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
-│ ➼ *Precio:* _$750K_
+│ ➼ *Precio:* _$150K_
 │ ➼ *Ventajas:*
 │ \t\t- Acceso al comando *${prefix}join* gratis${!inky.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
@@ -524,8 +524,8 @@ var teks = `\t\t\t${botName} Shop
 Para comprar un articulo use *${prefix + command} <articulo>*`
 if (q.toLowerCase().includes('vip')) {
 	if (isVip) return v.reply('Usted ya tiene el rango *✨ Vip ✨*')
-	if (userBal < 750000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
-	removeBal(senderNumber, 750000)
+	if (userBal < 150000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
+	removeBal(senderNumber, 150000)
 	vip.push(senderNumber)
 	fs.writeFileSync('./database/user/vip.json', Json(vip))
 	v.reply('@' + senderNumber + ' has comprado exitosamente el rango *✨ Vip ✨*, espero que lo disfrutes :D')
