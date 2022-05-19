@@ -495,20 +495,12 @@ none.sort((a, b) => (a.money < b.money) ? 1 : -1)
 let jidsTop = []
 var total = 10
 var userRank = (user) => {
-	if (owner.includes(user)) {
-		var rankS = '👑 Owner 👑'
-	} else if (staff.includes(user)) {
-		var rankS = '🎮 Staff 🎮'
-	} else if (vip.includes(user)) {
-		var rankS = '✨ Vip ✨'
-	} else {
-		var rankS = 'Usuario'
-	}
+	if (owner.includes(user)) {var rankS = '👑 Owner 👑'} else if (staff.includes(user)) {var rankS = '🎮 Staff 🎮'} else if (vip.includes(user)) {var rankS = '✨ Vip ✨'} else {var rankS = 'Usuario'}
 	return rankS
 }
 if (none.length < 10) total = none.length
 for (let i = 0; i < total; i++) {
-	teks += `\n\n${i + 1} ➫  @${none[i].id}\n\t\t\t│ ➼ $${h2k(none[i].money)}\n\t\t\t│ ➼ ${userRank(none[i].id)}`
+	teks += `\n\n${i + 1}.  @${none[i].id}\n\t\t│ ➼ Balance: *$${h2k(none[i].money)}*\n\t\t│ ➼ Rango: *${userRank(none[i].id)}*`
 	jidsTop.push(none[i].id + '@s.whatsapp.net')
 }
 v.reply(teks, v.chat, {mentions: jidsTop})
