@@ -515,7 +515,7 @@ var teks = `\t\t\t${botName} Shop
 
 ╭───── *✨ Vip ✨* ─────
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
-│ ➼ *Precio:* _$150K_
+│ ➼ *Precio:* _$500K_
 │ ➼ *Ventajas:*
 │ \t\t- Acceso al comando *${prefix}join* gratis${!inky.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
@@ -528,8 +528,8 @@ var teks = `\t\t\t${botName} Shop
 Para comprar un articulo use *${prefix + command} <articulo>*`
 if (q.toLowerCase().includes('vip')) {
 	if (isVip) return v.reply('Usted ya tiene el rango *✨ Vip ✨*')
-	if (userBal < 150000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
-	removeBal(senderNumber, 150000)
+	if (userBal < 500000) return v.reply('No tienes suficiente dinero para comprar el rango *✨ Vip ✨*')
+	removeBal(senderNumber, 500000)
 	vip.push(senderNumber)
 	fs.writeFileSync('./database/user/vip.json', Json(vip))
 	v.reply('@' + senderNumber + ' has comprado exitosamente el rango *✨ Vip ✨*, espero que lo disfrutes :D')
@@ -551,7 +551,7 @@ if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
 if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
-if (q > 10000) return v.reply('Maximo para apostar es de *$10K*')
+if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
 bj.push(obj)
