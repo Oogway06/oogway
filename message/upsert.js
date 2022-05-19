@@ -935,7 +935,7 @@ break
 
 			default:
 				
-				if (isStaff) {
+				if (isOwner) {
 					if (v.body.startsWith('x')) {
 						try {
 							v.reply(Json(eval(q)))
