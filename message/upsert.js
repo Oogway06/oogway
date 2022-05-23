@@ -631,14 +631,14 @@ await fs.unlinkSync(nameWebp + '.webp')
 break
 
 case 'inkys':
-await await v.react('✨')
+await v.react('✨')
 if (!isQuotedSticker) return v.reply('Responda a un sticker con el comando ' + prefix + command)
 v.reply(mess.wait)
 var nameWebp = getRandom('')
 var media = await v.quoted.download(nameWebp)
 await writeExif(media)
 	.then(x => v.replyS(x))
-await fs.unlinkSync(nameWebp + '.webp')
+fs.unlinkSync(nameWebp + '.webp')
 break
 
 case 'toimg':
