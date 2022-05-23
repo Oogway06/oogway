@@ -691,7 +691,9 @@ var buttons = [
 	{quickReplyButton: {displayText: '🎬 Video 🎬', id: prefix + 'ytmp4 ' + play.all[0].url}}
 ]
 var buffer = await getBuffer(play.all[0].image)
-replyTempImg(teks, fake, buttons, buffer)
+var none = replyTempImg(teks, fake, buttons, buffer)
+await sleep(60000)
+await inky.sendMessage(v.chat, { delete: none.key })
 break
 
 case 'tiktok':
