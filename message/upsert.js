@@ -89,7 +89,7 @@ module.exports = async(inky, v, store) => {
 		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : false
 		const isWelcome = v.isGroup ? welcome.includes(v.chat) : false
 		
-		const replyTempImg = (teks, footer, buttons = [], img) => {
+		const replyTempImg = (teks = '', footer = fake, buttons = [{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}], img = fs.readFileSync('./media/image/menu.jpg')) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
@@ -244,7 +244,7 @@ var buttons = [
 	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}},
 	{quickReplyButton: {displayText: '👑 Creador 👑', id: prefix + 'creador'}}
 ]
-replyTempImg(teks, footer, buttons, fs.readFileSync('./media/image/menu.jpg'))
+replyTempImg(teks, footer, buttons)
 break
 
 case 'dueño':
