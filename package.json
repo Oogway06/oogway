@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "node inky.js"
+    "start": "node inky.js",
+    "dev": "pm2 start inky.js && pm2 monit"
   },
   "dependencies": {
     "@adiwajshing/baileys": "^4.1.0",
