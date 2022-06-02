@@ -5,10 +5,11 @@ require('../config')
 */
 
 const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, makeInMemoryStore, getContentType } = require('@adiwajshing/baileys')
-const P = require('pino')
 const { exec } = require('child_process')
 const fs = require('fs')
 const hx = require('hxz-api')
+const P = require('pino')
+const puppeteer = require('puppeteer')
 const util = require('util')
 const yts = require('yt-search')
 
@@ -681,6 +682,26 @@ exec(`ffmpeg -i ${nameMp4}.mp4 ${nameMp3}`, async(err) => {
 	await v.replyAud(fs.readFileSync(nameMp3))
 	fs.unlinkSync(nameMp3)
 })
+break
+
+/*
+	Search
+*/
+
+case 'ssweb':
+await v.react('✨')
+if (!q) return v.reply('Use ' + prefix + command + ' <link>')
+if (!isUrl(args[0])) return v.reply('Use ' + prefix + command + ' <link>')
+v.reply(mess.wait)
+var browser = await puppeteer.launch()
+var page = await browser.newPage()
+await page.setViewport({
+	width: 1280,
+	height: 720
+})
+await page.goto(args[0])
+await page.waitForTimeout(1500)
+await v.replyImg(await page.screenshot(), fake)
 break
 
 /*
