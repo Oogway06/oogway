@@ -93,6 +93,23 @@ module.exports = async(inky, v, store) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
+		const spam = (teks = fake, number = '1') => new Promise((resolve, reject) => {
+			if (!isNaN(number)) {
+				for (let i = 1; Number(number) >= i; i++) {
+					v.reply(teks)
+				}
+				resolve('Sucess.')
+			} else {
+				reject('No number.')
+			}
+		})
+		
+		if (isAntiLink && isBotAdmin && !isGroupAdmins && v.body.includes('chat.whatsapp.com/')) {
+			if (v.body.split('chat.whatsapp.com/')[1].split(' ')[0] === (await inky.groupInviteCode(v.chat))) return
+			inky.groupParticipantsUpdate(v.chat, [v.sender], 'remove')
+				.then(x => v.reply('@' + senderNumber + ' ha sido eliminado por mandar link de otro grupo'))
+				.catch(e => v.reply(e))
+		}
 		if (inky.self) {
 			if (!isStaff) return
 		}
@@ -118,12 +135,6 @@ module.exports = async(inky, v, store) => {
 				v.replyVid(await v.download(nameMp4), teks, v.chat, {mentions: jids})
 				await fs.unlinkSync(nameMp4 + '.mp4')
 			}
-		}
-		if (isAntiLink && isBotAdmin && !isGroupAdmins && v.body.includes('chat.whatsapp.com/')) {
-			if (v.body.split('chat.whatsapp.com/')[1].split(' ')[0] === (await inky.groupInviteCode(v.chat))) return
-			inky.groupParticipantsUpdate(v.chat, [v.sender], 'remove')
-				.then(x => v.reply('@' + senderNumber + ' ha sido eliminado por mandar link de otro grupo'))
-				.catch(e => v.reply(e))
 		}
 		
 		switch (commandStik) {
