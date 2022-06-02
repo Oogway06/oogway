@@ -93,10 +93,10 @@ module.exports = async(inky, v, store) => {
 			inky.sendMessage(v.chat, { image: img, caption: teks, footer: footer, templateButtons: buttons })
 		}
 		
-		const spam = (teks = fake, number = '1') => new Promise((resolve, reject) => {
+		const spam = (teks = fake, number = '1') => new Promise(async(resolve, reject) => {
 			if (!isNaN(number)) {
 				for (let i = 1; Number(number) >= i; i++) {
-					v.reply(teks)
+					await v.reply(teks)
 				}
 				resolve('Sucess.')
 			} else {
