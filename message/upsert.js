@@ -22,7 +22,6 @@ const bj = []
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { addFilter, addUser, addBal, checkBal, checkBalReg, isFiltered, removeBal } = require('../lib/money')
-const { gitClone } = require('../lib/inkyScraper')
 const { sms } = require('../lib/simple')
 
 const { addSetBJ, drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer, isSpamBJ } = require('../lib/game/blackjack')
