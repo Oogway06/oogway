@@ -1,12 +1,10 @@
 require('../config')
 
-const welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
-
 const { getBuffer } = require('../lib/functions')
 
 module.exports = async(inky, v) => {
 	try {
-		if (!welcome.includes(v.id)) return
+		if (!JSON.parse(fs.readFileSync('./database/group/welcome.json')).includes(v.id)) return
 		const groupMetadata = await inky.groupMetadata(v.id)
 		const participants = v.participants
 		for (let num of participants) {
