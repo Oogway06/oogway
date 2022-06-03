@@ -31,11 +31,13 @@ const { addSetBJ, drawRandomCard, getHandValue, position, isBJFrom, isBJPlayer, 
 */
 
 // Usuario
+const ban = JSON.parse(fs.readFileSync('./database/user/ban.json'))
 const vip = JSON.parse(fs.readFileSync('./database/user/vip.json'))
 
 // Grupo
 const antiviewonce = JSON.parse(fs.readFileSync('./database/group/antiviewonce.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
+const mute = JSON.parse(fs.readFileSync('./database/group/mute.json'))
 const welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
 
 module.exports = async(inky, v, store) => {
