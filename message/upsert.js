@@ -20,7 +20,7 @@ const yts = require('yt-search')
 const bj = []
 
 const { imageToWebp, videoToWebp, writeExif } = require('../lib/exif')
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
+const { fetchJson, getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { addFilter, addUser, addBal, checkBal, checkBalReg, isFiltered, removeBal } = require('../lib/money')
 const { sms } = require('../lib/simple')
 
