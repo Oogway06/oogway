@@ -998,8 +998,8 @@ break
 					v.replyS(fs.readFileSync('./media/sticker/Tetas♡.webp'))
 				}
 				if (v.body.toLowerCase().startsWith('bot')) {
-					fetchJson(`https://api.simsimi.net/v2/?text=${v.body.slice(3)}&lc=es`)
-						.then(async(x) => await v.reply(Json(x).success))
+					var none = await fetchJson(`https://api.simsimi.net/v2/?text=${v.body.slice(3)}&lc=es`)
+					v.reply(none.success)
 				}
 				
 				if (isCmd) {
