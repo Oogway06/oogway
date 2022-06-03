@@ -216,13 +216,13 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ➼ ${prefix}random
 
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
-➼ ${prefix}balance
-➼ ${prefix}transferir <monto> <@usuario>
+➼ ${prefix}balance${!inky.isJadi ? `
+➼ ${prefix}transferir <monto> <@usuario>`: ''}
 ➼ ${prefix}topbal
 ➼ ${prefix}shop
 
-\t●Ⓙⓤⓔⓖⓞⓢ●
-➼ ${prefix}blackjack <monto>
+\t●Ⓙⓤⓔⓖⓞⓢ●${!inky.isJadi ? `
+➼ ${prefix}blackjack <monto>` : ''}
 ➼ ${prefix}casino <monto>
 
 \t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
@@ -487,6 +487,7 @@ break
 
 case 'transfer':
 case 'transferir':
+if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Ingrese el monto que desea transferir')
 if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
@@ -557,6 +558,7 @@ break
 
 case 'bj':
 case 'blackjack':
+if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
 if (isSpamBJ(senderNumber)) return v.reply('Espere 10 segundos para jugar de nuevo')
