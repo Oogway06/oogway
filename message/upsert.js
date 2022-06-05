@@ -277,11 +277,11 @@ var jids = [v.quoted.sender]
 v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
 	var nameJpg = getRandom('')
-	v.replyImg(await v.quoted.download(nameJpg), teks,{mentions: jids})
+	v.replyImg(await v.quoted.download(nameJpg), teks, {mentions: jids})
 	await fs.unlinkSync(nameJpg + '.jpg')
 } else if (v.quoted.msg.type === 'videoMessage') {
 	var nameMp4 = getRandom('')
-	v.replyVid(await v.quoted.download(nameMp4), teks,{mentions: jids})
+	v.replyVid(await v.quoted.download(nameMp4), teks, {mentions: jids})
 	await fs.unlinkSync(nameMp4 + '.mp4')
 }
 break
