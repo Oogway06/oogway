@@ -211,7 +211,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 \t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
 ➼ ${prefix}balance${!inky.isJadi ? `
 ➼ ${prefix}transferir <monto> <@usuario>`: ''}
-➼ ${prefix}topbal
+➼ ${prefix}top
 ➼ ${prefix}shop
 
 \t●Ⓙⓤⓔⓖⓞⓢ●${!inky.isJadi ? `
@@ -231,7 +231,7 @@ var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
 ${isStaff ? `
 \t●Ⓢⓣⓐⓕⓕ●
 ➼ ${prefix}mode <public/self>${!inky.isJadi ? `
-➼ ${prefix}addvip / ${prefix}removevip
+➼ ${prefix}addvip / ${prefix}delvip
 ➼ ${prefix}save <texto>
 ➼ ${prefix}delfile <texto>` : ''}
 ➼ ${prefix}storage
@@ -239,7 +239,7 @@ ${isStaff ? `
 `: ''}${isOwner ? `
 \t●Ⓞⓦⓝⓔⓡ●
 ➼ ${prefix}bc <texto>
-➼ ${prefix}addbal <monto> / ${prefix}removebal <monto>
+➼ ${prefix}addbal <monto> / ${prefix}delbal <monto>
 ` : ''}
 \t\t╔════ ▓▓ ࿇ ▓▓ ════╗
 \t\t\t\t\t࿇𖣐${botName}𖣐࿇
@@ -493,6 +493,7 @@ removeBal(senderNumber, Number(args[0]))
 v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, {mentions: [v.mentionUser[0], v.sender]})
 break
 
+case 'top':
 case 'baltop':
 case 'topbal':
 await v.react('✨')
@@ -804,7 +805,7 @@ addBal(v.mentionUser[0].split('@')[0], Number(q))
 v.reply(`\t\t\tDeposito de dinero\n\n│ ➼ Monto: $${h2k(args[0])}\n│ ➼ Usuario: @${v.mentionUser[0].split('@')[0]}`, {mentions: [v.mentionUser[0]]})
 break
 
-case 'removebal':
+case 'delbal':
 if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
@@ -822,18 +823,18 @@ await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario ya tiene el rango *✨ Vip ✨*')
 vip.push(v.mentionUser[0].split('@')[0])
-fs.writeFileSync('./database/user/vip.json', Json(vip))
+await fs.writeFileSync('./database/user/vip.json', Json(vip))
 v.reply('Ha sido agregado el rango *✨ Vip ✨* a @' + v.mentionUser[0].split('@')[0], {mentions: [v.sender, v.mentionUser[0]]})
 break
 
-case 'removevip':
+case 'delvip':
 if (!isOwner) return v.react('❌')
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (v.mentionUser[0] === undefined) return v.reply('Mencione a un usuario')
 if (!vip.includes(v.mentionUser[0].split('@')[0])) return v.reply('El usuario no es usuario *✨ Vip ✨*')
 vip.splice(v.mentionUser[0].split('@')[0])
-fs.writeFileSync('./database/user/vip.json', Json(vip))
+await fs.writeFileSync('./database/user/vip.json', Json(vip))
 v.reply('Ha sido removido el rango *✨ Vip ✨* de @' + v.mentionUser[0].split('@')[0], {mentions: [v.sender, v.mentionUser[0]]})
 break
 
