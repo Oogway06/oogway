@@ -490,7 +490,7 @@ if (args[0].includes('.')) return v.reply('No se puede jugar con numero decimale
 if (userBal < args[0]) return v.reply('No tienes suficiente dinero')
 addBal(v.mentionUser[0].split('@')[0], Number(args[0]))
 removeBal(senderNumber, Number(args[0]))
-v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${args[0]}`, {mentions: [v.mentionUser[0], v.sender]})
+v.reply(`\t\t\t${botName} Transfer\n\n│ ➼ Transferido de: @${senderNumber}\n│ ➼ Transferido a: @${v.mentionUser[0].split('@')[0]}\n│ ➼ Monto: $${h2k(args[0])} (${args[0]})`, {mentions: [v.mentionUser[0], v.sender]})
 break
 
 case 'top':
