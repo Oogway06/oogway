@@ -1046,7 +1046,7 @@ break
 	} catch (e) {
 		const isError = String(e)
 		
-		inky.sendMessage(v.key.remoteJid, { text: isError }, { quoted: v })
+		//inky.sendMessage(v.key.remoteJid, { text: isError }, { quoted: v })
 		console.log(e)
 	}
 }
