@@ -586,7 +586,9 @@ if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
 if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
-if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
+if (!isOwner) {
+	if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
+}
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 if (isOwner) {
 	var deck = ['10']
