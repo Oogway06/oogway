@@ -554,7 +554,6 @@ case 'bj':
 case 'blackjack':
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
-if (!isOwner) return v.reply('Juego en mantenimiento...')
 if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
 if (isSpamBJ(senderNumber)) return v.reply('Espere 25 segundos para jugar de nuevo')
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
