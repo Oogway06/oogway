@@ -116,6 +116,9 @@ module.exports = async(inky, v, store) => {
 		if (inky.self) {
 			if (!isStaff) return
 		}
+		if (isCmd && !checkBalReg(senderNumber)) {
+			addUser(senderNumber)
+		}
 		if (isAntiViewOnce && (v.type === 'viewOnceMessage')) {
 			var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${senderNumber}\n│ ➼ *Texto:* ${v.msg.caption ? v.msg.caption : 'Sin Texto'}`
 			var jids = [v.sender]
