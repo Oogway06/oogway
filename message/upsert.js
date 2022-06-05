@@ -555,7 +555,9 @@ case 'blackjack':
 if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
-if (isSpamBJ(senderNumber)) return v.reply('Espere 25 segundos para jugar de nuevo')
+if (!isOwner) {
+	if (isSpamBJ(senderNumber)) return v.reply('Espere 25 segundos para jugar de nuevo')
+}
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
