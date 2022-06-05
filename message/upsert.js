@@ -570,7 +570,11 @@ if (!isOwner) {
 	}
 }
 if (userBal < q) return v.reply('No tienes suficiente dinero')
-var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
+if (isOwner) {
+	var obj = {id: v.sender, from: v.chat, balance: q, pHand: [10, 11], bHand: [(drawRandomCard() - 1), drawRandomCard()]}
+} else {
+	var obj = {id: v.sender, from: v.chat, balance: q, pHand: [(drawRandomCard() - 1), drawRandomCard()], bHand: [(drawRandomCard() - 1), drawRandomCard()]}
+}
 bj.push(obj)
 removeBal(senderNumber, Number(q))
 inky.sendMessage(v.chat, { text: `*♣️ BlackJack ♠️*\n\n➫ Mano de @${senderNumber}: *${getHandValue(bj[position(bj, v.chat, v.sender)].pHand)}*\n\n🃏 Usa *Hit* o *Stand* 🃏`, footer: `Apuesta: *$${h2k(getHandValue(bj[position(bj, v.chat, v.sender)].balance).slice(1))}*\nBalance: *$${h2k(userBal-getHandValue(bj[position(bj, v.chat, v.sender)].balance))}*`, buttons: [{buttonId: 'bHit', buttonText: {displayText: 'Hit'}, type: 1}, {buttonId: 'bStand', buttonText: {displayText: 'Stand'}, type: 1}], headerType: 1, mentions: [v.sender] }, { quoted: v })
@@ -584,7 +588,11 @@ if (q < 50) return v.reply('Monto minimo debe de ser de 50$')
 if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
 if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
 if (userBal < q) return v.reply('No tienes suficiente dinero')
-var deck = ['5', '5', '10', '5', '5']
+if (isOwner) {
+	var deck = ['10']
+} else {
+	var deck = ['5', '5', '10', '5', '5']
+}
 var ran = deck[Math.floor(Math.random() * deck.length)]
 var fail = ['🍊 : 🍒 : 🍐', '🍒 : 🔔 : 🍊', '🍊 : 🍋 : 🔔', '🔔 : 🍒 : 🍐', '🔔 : 🍒 : 🍊', '🍊 : 🍋 : 🔔', '🍐 : 🍒 : 🍋', '🍊 : 🍒 : 🍒', '🔔 : 🔔 : 🍇', '🍌 : 🍒 : 🔔', '🍐 : 🔔 : 🔔', '🍊 : 🍋 : 🍒', '🍋 : 🍋 : 🍌', '🔔 : 🔔 : 🍇', '🔔 : 🍐 : 🍇']
 var win = ['🍇 : 🍇 : 🍇', '🍐 : 🍐 : 🍐', '🔔 : 🔔 : 🔔', '🍒 : 🍒 : 🍒', '🍊 : 🍊 : 🍊', '🍌 : 🍌 : 🍌']
