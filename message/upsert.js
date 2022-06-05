@@ -556,15 +556,17 @@ if (inky.isJadi) return v.react('❌')
 await v.react('✨')
 if (!isOwner) return v.reply('Juego en mantenimiento...')
 if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
-if (isSpamBJ(senderNumber)) return v.reply('Espere 10 segundos para jugar de nuevo')
+if (isSpamBJ(senderNumber)) return v.reply('Espere 25 segundos para jugar de nuevo')
 if (!q) return v.reply(`Ingrese un monto, ejemplo: ${prefix + command} <monto>`)
 if (isNaN(q)) return v.reply('El monto tiene que ser un numero')
 if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
 if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
-if (isVip) {
-	if (q > 10000) return v.reply('Maximo para apostar es de *$10K*')
-} else {
-	if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
+if (!isOwner) {
+	if (isVip) {
+		if (q > 10000) return v.reply('Maximo para apostar es de *$10K*')
+	} else{
+		if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
+	}
 }
 if (userBal < q) return v.reply('No tienes suficiente dinero')
 var obj = {id: v.sender, from: v.chat, balance: q, pHand: [drawRandomCard(), drawRandomCard()], bHand: [drawRandomCard(), drawRandomCard()]}
