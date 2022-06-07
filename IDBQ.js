@@ -28,7 +28,7 @@ const delSession = async() => {
 	var none = await fs.readdirSync('./lib/session')
 	if (none.length > 2) {
 		for (var x of none) {
-			if (x.includes('@InkyGod03')) return
+			if (x.includes('@oogway06')) return
 			if (x.includes('session.json')) return
 			await fs.unlinkSync('./lib/session/' + x)
 		}
@@ -47,15 +47,15 @@ const store = makeInMemoryStore({ logger: P().child({ level: 'silent', stream: '
 const start = () => {
 	delSession()
 	
-	const inky = makeWASocket({
+	const IDBQ = makeWASocket({
 		logger: P({ level: 'silent' }),
 		printQRInTerminal: true,
 		auth: state,
 	})
 	
-	store.bind(inky.ev)
+	store.bind(IDBQ.ev)
 	
-	inky.ev.on('connection.update', v => {
+	('connection.update', v => {
 		const { connection, lastDisconnect } = v
 		if (connection === 'close') {
 			if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
@@ -78,11 +78,11 @@ const start = () => {
 		v.message = (getContentType(v.message) === 'ephemeralMessage') ? v.message.ephemeralMessage.message : v.message
 		if (v.key && v.key.remoteJid === 'status@broadcast') return
 		
-		require('./message/upsert')(inky, v, store)
+		require('./message/upsert')(IDBQ, v, store)
 	})
 	
 	inky.ev.on('group-participants.update', v => {
-		require('./message/participantsUpdate.js')(inky, v)
+		require('./message/participantsUpdate.js')(IDBQ, v)
 	})
 }
 
