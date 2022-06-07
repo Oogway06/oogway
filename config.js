@@ -1,15 +1,15 @@
 global.prefix = '-'
-global.botName = '𝐈𝐧𝐤𝐲𝐁𝐨𝐭-𝐌𝐃'
-global.fake = botName + ' ➣ ©ｴɳƙყᴳᵒᵈ'
-global.groupSupport = 'https://chat.whatsapp.com/L5KgudBpBA21mA9ude4cVG'
+global.botName = 'oogway-bot'
+global.fake = botName + ' ➣ ♪oogway♪'
+global.groupSupport = 'https://chat.whatsapp.com/FopVpOQGiO8EZPuFIjKs4p'
 
 global.staff = [
-	'595993265466' // YameteKudasai
+	'595983315802' // ∞
 ]
 global.owner = [
-	'595995660558', // Inky +595
-	'5492612301593', // Inky +54
-	'50768666666' // _`Kevin
+	'595984664076', // IDBQ +595
+
+	
 ]
 
 global.mess = {
