@@ -40,9 +40,9 @@ const antilink = JSON.parse(fs.readFileSync('./database/group/antilink.json'))
 const mute = JSON.parse(fs.readFileSync('./database/group/mute.json'))
 const welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
 
-module.exports = async(inky, v, store) => {
+module.exports = async(IDBQ, v, store) => {
 	try {
-		v = sms(inky, v)
+		v = sms(I, v)
 		if (v.isBaileys) return
 		
 		const isCmd = v.body.startsWith(prefix)
@@ -52,17 +52,17 @@ module.exports = async(inky, v, store) => {
 		const args = v.body.trim().split(/ +/).slice(1)
 		const q = args.join(' ')
 		const senderNumber = v.sender.split('@')[0]
-		const botNumber = inky.user.id.split(':')[0]
+		const botNumber = IDBQ.user.id.split(':')[0]
 		const userBal = checkBalReg(senderNumber) ? checkBal(senderNumber) : '0'
-		try { var bio = (await inky.fetchStatus(v.sender)).status } catch { var bio = 'Sin Bio' }
+		try { var bio = (await IDBQ.fetchStatus(v.sender)).status } catch { var bio = 'Sin Bio' }
 		const bal = h2k(userBal)
 		
-		const groupMetadata = v.isGroup ? await inky.groupMetadata(v.chat) : {}
+		const groupMetadata = v.isGroup ? await IDBQ.groupMetadata(v.chat) : {}
 		const groupMembers = v.isGroup ? groupMetadata.participants : []
-		const groupAdmins = v.isGroup ? getGroupAdmins(groupMembers) : false
+		const groupAdmins = v.isGroup ? getGroupAdmins(groupMembers) : true
 		
 		const isMe = botNumber.includes(senderNumber)
-		const isGroupAdmins = v.isGroup ? groupAdmins.includes(v.sender) : false
+		const isGroupAdmins = v.isGroup ? groupAdmins.includes(v.sender) : true
 		const isBotAdmin = v.isGroup ? groupAdmins.includes(botNumber + '@s.whatsapp.net') : false
 		const isOwner = owner.includes(senderNumber)
 		const isStaff = staff.includes(senderNumber) || isOwner
@@ -79,17 +79,17 @@ module.exports = async(inky, v, store) => {
 		}
 		
 		const isMedia = (v.type === 'imageMessage' || v.type === 'videoMessage')
-		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : false
-		const isQuotedViewOnce = v.quoted ? (v.quoted.type === 'viewOnceMessage') : false
+		const isQuotedMsg = v.quoted ? (v.quoted.type === 'conversation') : true
+		const isQuotedViewOnce = v.quoted ? (v.quoted.type === 'viewOnceMessage') : true
 		const isQuotedImage = v.quoted ? ((v.quoted.type === 'imageMessage') || (isQuotedViewOnce ? (v.quoted.msg.type === 'imageMessage') : false)) : false
 		const isQuotedVideo = v.quoted ? ((v.quoted.type === 'videoMessage') || (isQuotedViewOnce ? (v.quoted.msg.type === 'videoMessage') : false)) : false
-		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : false
-		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : false
+		const isQuotedSticker = v.quoted ? (v.quoted.type === 'stickerMessage') : true
+		const isQuotedAudio = v.quoted ? (v.quoted.type === 'audioMessage') : true
 		
 		const buttonsResponseID = (v.type == 'buttonsResponseMessage') ? v.message.buttonsResponseMessage.selectedButtonId : ''
 		
 		const isAntiViewOnce = v.isGroup ? antiviewonce.includes(v.chat) : false
-		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : false
+		const isAntiLink = v.isGroup ? antilink.includes(v.chat) : true
 		const isWelcome = v.isGroup ? welcome.includes(v.chat) : false
 		
 		const replyTempImg = (teks = '', footer = fake, buttons = [{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}}], img = fs.readFileSync('./media/image/menu.jpg')) => {
@@ -169,7 +169,7 @@ var listMessage = {
 	],
 	mentions: jids
 }
-await inky.sendMessage(v.chat, listMessage)
+await IDBQ.sendMessage(v.chat, listMessage)
 break
 
 /*
@@ -178,75 +178,75 @@ break
 
 case 'menu':
 await v.react('✨')
-var teks = `\t\t╔═══❖•ೋ° °ೋ•❖═══╗
-\t\t\t『༺࿕༒🖤Iɴᴋʏ🖤༒࿖༻』
-\t\t╚═══❖•ೋ° °ೋ•❖═══╝
+var teks = `\t\t╔═══∆    ∆═══╗
+\t\t\t『====♠IDBQ♠====』
+\t\t╚═══❖•≠≠≠≠•❖═══╝
 
-\t\t\t𖣘✿Ⓑⓞⓣ Ⓘⓝⓕⓞ✿𖣘
+\t\t\t𖣘♪_bot_ _info_♪𖣘
 
-│ ➼ Prefijo: *⌜ ${prefix} ⌟*
-│ ➼ Modo: *${inky.self ? 'Privado' : 'Publico'}*${inky.isJadi ? `
-│ ➼ Bot Original: https://wa.me/${inky.botNumber}` : ''}
-│ ➼ Libreria: *@adiwajshing/baileys@4.1.0*
+│ - Prefijo: *⌜ ${prefix} ⌟*
+│ - Modo: *${IDBQ.self ? 'Privado' : 'Publico'}*${IDBQ.isJadi ? `
+│ - Bot Original: https://wa.me/${Oogway.botNumber}` : ''}
+│ - ∞≠El ayer es historia,el mañana es un misterio y el hoy es un obsequio,por eso se llama presente✨✨
 
-\t\t\t𖣘✿Ⓤⓢⓔⓡ Ⓘⓝⓕⓞ✿𖣘
+\t\t\t∆user info∆
 
-│ ➼ Nombre: *${v.pushName}*
-│ ➼ Bio: *${bio}*
-│ ➼ Rango: *${rank}*
-│ ➼ Balance: *$${bal}*
+│ - Nombre: *${v.pushName}*
+│ - Bio: *${bio}*
+│ - Rango: *${rank}*
+│ - Balance: *$${bal}*
 ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏
-\t\t\t𖣘✿🄲🄾🄼🄰🄽🄳🄾🅂✿𖣘
+\t\t\t∆comandos∆
 
-\t●Ⓥⓘⓟ●
-➼ ${prefix}join <link>${!inky.isJadi ? `
-➼ ${prefix}serbot` : ''}
+\t●VIP●
+- ${prefix}join <link>${!inky.isJadi ? `
+- ${prefix}serbot` : ''}
 
-\t●Ⓖⓡⓤⓟⓞⓢ●
-➼ ${prefix}antilink <0/1>
-➼ ${prefix}antiviewonce <0/1>${!inky.isJadi ? `
-➼ ${prefix}welcome <0/1>` : ''}
-➼ ${prefix}promote / ${prefix}demote
-➼ ${prefix}kick
-➼ ${prefix}linkgc
-➼ ${prefix}random
+\t●GRUPOS●
+- ${prefix}antilink <0/1>
+- ${prefix}antiviewonce <0/1>${!inky.isJadi ? `
+- ${prefix}welcome <0/1>` : ''}
+- ${prefix}promote / ${prefix}demote
+- ${prefix}kick
+- ${prefix}linkgc
+- ${prefix}random
 
-\t●Ⓔⓒⓞⓝⓞⓜⓘⓐ●
-➼ ${prefix}balance${!inky.isJadi ? `
-➼ ${prefix}transferir <monto> <@usuario>`: ''}
-➼ ${prefix}top
-➼ ${prefix}shop
+\t●ECONOMIA●
+- ${prefix}balance${!IDBQ.isJadi ? `
+- ${prefix}transferir <monto> <@usuario>`: ''}
+- ${prefix}top
+- ${prefix}shop
 
-\t●Ⓙⓤⓔⓖⓞⓢ●${!inky.isJadi ? `
-➼ ${prefix}blackjack <monto>` : ''}
-➼ ${prefix}casino <monto>
+\t●JUEGOS●${!IDBQ.isJadi ? `
+- ${prefix}blackjack <monto>` : ''}
+- ${prefix}casino <monto>
 
-\t●Ⓒⓞⓝⓥⓔⓡⓣⓘⓓⓞⓡ●
-➼ ${prefix}sticker
-➼ ${prefix}robar <texto>
-➼ ${prefix}toimg
-➼ ${prefix}tomp3
+\t●CONVERTIDOR●
+- ${prefix}sticker
+- ${prefix}robar <texto>
+- ${prefix}toimg
+- ${prefix}tomp3
 
-\t●Ⓓⓔⓢⓒⓐⓡⓖⓐ●
-➼ ${prefix}play <texto>
-➼ ${prefix}tiktok <link>
-➼ ${prefix}igdl <link>
+\t●DESCARGAS●
+- ${prefix}play <texto>
+- ${prefix}tiktok <link>
+- ${prefix}igdl <link>
 ${isStaff ? `
-\t●Ⓢⓣⓐⓕⓕ●
-➼ ${prefix}mode <public/self>${!inky.isJadi ? `
-➼ ${prefix}addvip / ${prefix}delvip
-➼ ${prefix}save <texto>
-➼ ${prefix}delfile <texto>` : ''}
-➼ ${prefix}storage
-➼ ${prefix}send <texto>
+\t●STAFF●
+- ${prefix}mode <public/self>${!inky.isJadi ? `
+- ${prefix}addvip / ${prefix}delvip
+- ${prefix}save <texto>
+- ${prefix}delfile <texto>` : ''}
+- ${prefix}storage
+- ${prefix}send <texto>
 `: ''}${isOwner ? `
-\t●Ⓞⓦⓝⓔⓡ●
-➼ ${prefix}bc <texto>
-➼ ${prefix}addbal <monto> / ${prefix}delbal <monto>
+\t●👑OWNER👑●
+- ${prefix}bc <texto>
+- ${prefix}addbal <monto> / ${prefix}delbal <monto>
 ` : ''}
-\t\t╔════ ▓▓ ࿇ ▓▓ ════╗
-\t\t\t\t\t࿇𖣐${botName}𖣐࿇
-\t\t╚════ ▓▓ ࿇ ▓▓ ════╝`
+\t\t╔════ ∞∞ ࿇ ∞∞ ════╗
+\t\t\t\t\t࿇𖣐${botName}©࿇
+\t\t╚════ ♪♠ ࿇ ♠♪ ════╝`
 var footer = `│ ➼ ${fake}\n│ ➼ Runtime: ${runtime(process.uptime())}`
 var buttons = [
 	{urlButton: {displayText: 'Grupo de Soporte', url: groupSupport}},
@@ -260,8 +260,11 @@ case 'creador':
 case 'creator':
 case 'owner':
 await v.react('✨')
-v.replyContact('🖤ｴɳƙყᴳᵒᵈ🖤', 'Creador de ' + botName, '595995660558')
-break
+
+	
+
+v.replyContact('IDBQ', 'Creador de ' + botName, '595984664076') break
+
 
 case 'del':
 case 'delete':
@@ -275,7 +278,7 @@ break
 case 'viewonce':
 await v.react('✨')
 if (!isQuotedViewOnce) return
-var teks = `\t\t\t\t*AntiViewOnce*\n\n│ ➼ *Enviado por:* @${v.quoted.sender.split('@')[0]}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
+var teks = `\t\t\t\t*AntiViewOnce*\n\n│ - *Enviado por:* @${v.quoted.sender.split('@')[0]}\n│ ➼ *Texto:* ${v.quoted.msg.caption ? v.quoted.msg.caption : 'Sin Texto'}`
 var jids = [v.quoted.sender]
 v.quoted.mentionUser.map(x => jids.push(x))
 if (v.quoted.msg.type === 'imageMessage') {
@@ -319,7 +322,7 @@ if (isVip) {
 break
 
 case 'serbot':
-if (inky.isJadi) return v.react('❌')
+if (IDBQ.isJadi) return v.react('❌')
 v.reply('Comando en mantenimiento...')
 break
 
@@ -347,7 +350,7 @@ if (Number(q) === 1) {
 break
 
 case 'welcome':
-if (inky.isJadi) return v.react('❌')
+if (IDBQ.isJadi) return v.react('❌')
 await v.react('✨')
 if (!v.isGroup) return v.reply(mess.only.group)
 if (!q) return v.reply(`Use *${prefix + command} 1* para activarlo o *${prefix + command} 0* para desactivarlo`)
@@ -476,14 +479,14 @@ case 'guita':
 await v.react('✨')
 v.reply(`\t\t\t*${botName} Balance*
 
-│ ➼ Usuario: *@${senderNumber}*
-│ ➼ Balance: *$${bal}*${isNaN(bal) ? ` (${userBal})` : ''}
-│ ➼ Rango: *${rank}*`)
+│ - Usuario: *@${senderNumber}*
+│ - Balance: *$${bal}*${isNaN(bal) ? ` (${userBal})` : ''}
+│ - Rango: *${rank}*`)
 break
 
 case 'transfer':
 case 'transferir':
-if (inky.isJadi) return v.react('❌')
+if (IDBQ.isJadi) return v.react('❌')
 await v.react('✨')
 if (!q) return v.reply('Ingrese el monto que desea transferir')
 if (isNaN(args[0])) return v.reply('El monto ingresado debe de ser un numero')
@@ -522,19 +525,19 @@ case 'tienda':
 await v.react('✨')
 var teks = `\t\t\t${botName} Shop
 
-\t\t\t\t\t*༒ Rangos ༒*
+\t\t\t\t\t* /Rangos\ *
 
 ╭───── *✨ Vip ✨* ─────
 │ \t${isVip ? '*Ya tienes el rango ✨ Vip ✨*' : 'Usa *' + prefix + command + ' vip* para comprar el rango *✨ Vip ✨*'}
-│ ➼ *Precio:* _$750K_
-│ ➼ *Ventajas:*
-│ \t\t- Acceso al comando *${prefix}join* gratis${!inky.isJadi ? `
+│ - *Precio:* _$750K_
+│ - *Ventajas:*
+│ \t\t- Acceso al comando *${prefix}join* gratis${!IDBQ.isJadi ? `
 │ \t\t- Acceso al comando *${prefix}serbot*` : ''}
 ╰───────────────╮
 
-│ ➼ Usuario: *@${senderNumber}*
-│ ➼ Balance: *$${bal}*
-│ ➼ Rango: *${rank}*
+│ - Usuario: *@${senderNumber}*
+│ - Balance: *$${bal}*
+│ - Rango: *${rank}*
 
 Para comprar un articulo use *${prefix + command} <articulo>*`
 if (q.toLowerCase().includes('vip')) {
@@ -555,7 +558,7 @@ break
 
 case 'bj':
 case 'blackjack':
-if (inky.isJadi) return v.react('❌')
+if (IDBQ.isJadi) return v.react('❌')
 await v.react('✨')
 if (isBJFrom(bj, v.chat) ? isBJPlayer(bj, v.sender) : false) return v.reply('Ya tienes un juego en curso')
 if (!isOwner) {
@@ -567,12 +570,12 @@ if (q < 100) return v.reply('Monto minimo debe de ser de 100$')
 if (q.includes('.')) return v.reply('No se puede jugar con numero decimales')
 if (!isOwner) {
 	if (isVip) {
-		if (q > 10000) return v.reply('Maximo para apostar es de *$10K*')
+		if (q > 100000) return v.reply('Maximo para apostar es de *$100K*')
 	} else{
 		if (q > 5000) return v.reply('Maximo para apostar es de *$5K*')
 	}
 }
-if (userBal < q) return v.reply('No tienes suficiente dinero')
+if (userBal < q) return v.reply('No puedes jugar,nde sogue')
 if (isOwner) {
 	var obj = {id: v.sender, from: v.chat, balance: q, pHand: [10, 11], bHand: [(drawRandomCard() - 1), drawRandomCard()]}
 } else {
@@ -901,28 +904,28 @@ var sFiles = new Array({ sticker: fs.readdirSync('./media/sticker'), audio: fs.r
 teks = `\t\t\t\t${botName} Storage\n\nღ *Stickers* (${(sFiles[0].sticker.length - 1)})\n`
 if (sFiles[0].sticker.length === 1) teks += '\n│ ➼ '
 for (var x of sFiles[0].sticker) {
-	if (!(x === '@InkyGod03')) {
+	if (!(x === '@IDBQ')) {
 		teks += `\n│ ➼ ${x.replace('.webp', '')}`
 	}
 }
 teks += `\n\nღ *Audios* (${(sFiles[0].audio.length - 1)})\n`
 if (sFiles[0].audio.length === 1) teks += '\n│ ➼ '
 for (var x of sFiles[0].audio) {
-	if (!(x === '@InkyGod03')) {
+	if (!(x === '@IDBQ')) {
 		teks += `\n│ ➼ ${x.replace('.mp3', '')}`
 	}
 }
 teks += `\n\nღ *Imagenes* (${(sFiles[0].image.length - 1)})\n`
 if (sFiles[0].image.length === 1) teks += '\n│ ➼ '
 for (var x of sFiles[0].image) {
-	if (!(x === '@InkyGod03')) {
+	if (!(x === '@IDBQ')) {
 		teks += `\n│ ➼ ${x.replace('.jpg', '')}`
 	}
 }
 teks += `\n\nღ *Videos* (${(sFiles[0].video.length - 1)})\n`
 if (sFiles[0].video.length === 1) teks += '\n│ ➼ '
 for (var x of sFiles[0].video) {
-	if (!(x === '@InkyGod03')) {
+	if (!(x === '@IDBQ')) {
 		teks += `\n│ ➼ ${x.replace('.mp4', '')}`
 	}
 }
