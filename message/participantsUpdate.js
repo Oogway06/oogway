@@ -2,9 +2,9 @@ require('../config')
 
 const { getBuffer } = require('../lib/functions')
 
-module.exports = async(inky, v) => {
+module.exports = async(IDBQ, v) => {
 	try {
-		const groupMetadata = await inky.groupMetadata(v.id)
+		const groupMetadata = await IDBQ.groupMetadata(v.id)
 		const participants = v.participants
 		for (let num of participants) {
 			if (v.action == 'add') {
